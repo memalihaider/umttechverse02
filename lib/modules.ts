@@ -1,0 +1,18 @@
+export const modules = [
+  { name: 'AI Hackathon', fee: 2500, teamSize: '2-4 members', contact: 'Umair Khan - +92 308 6707770' },
+  { name: 'Cyber Hackathon', fee: 1500, teamSize: '1-3 members', contact: 'Nabaha Umar - +92 349 4709369' },
+  { name: 'FIFA 26', fee: 1000, teamSize: 'Individual/Team', contact: 'Asad - +92 324 8443622' },
+  { name: 'Line Following Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
+  { name: 'Obstacle Avoidance Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
+  { name: 'PUBG Mobile', fee: 2000, teamSize: '2-4 members', contact: 'Mueez - +92 307 8630935' },
+  { name: 'Scavenger Hunt', fee: 2000, teamSize: '3-5 members', contact: 'Zunaira Maalik - +92 342 5486444' },
+  { name: 'Speed Programming', fee: 2500, teamSize: '1-3 members', contact: 'Ali Raza - +92 313 0669834' },
+  { name: 'Speed Wiring', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
+  { name: 'Sumo War Robot', fee: 2000, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
+  { name: 'Tekken 8', fee: 1000, teamSize: 'Individual', contact: 'Zain - +92 331 5758888' },
+  { name: 'UI/UX Competition', fee: 2000, teamSize: '2-4 members', contact: 'Zainab Salman - +92 302 1402652' },
+  { name: 'Valorant', fee: 2500, teamSize: '5 members + 1 sub', contact: 'Muhammad Moeed - +92 324 4932912' },
+  { name: 'Web Hackathon', fee: 2500, teamSize: '1-3 members', contact: 'Muhammad Faizan - +92 341 4123652' },
+  { name: 'CyberQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081' },
+  { name: 'Business Innovation', fee: 3999, teamSize: '1-5 members', contact: 'Largify Solutions - +966 59 736 9443 & +92 310 6207245' },
+]
