@@ -174,7 +174,11 @@ export async function POST(request: NextRequest) {
       // Don't fail the registration if email fails, just log it
     }
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ 
+      success: true, 
+      accessCode,
+      uniqueId: uniqueCertificateId 
+    })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Registration failed' }, { status: 500 })
