@@ -468,21 +468,31 @@ export default function RegistrationForm() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto bg-black/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-purple-500/20 p-8">
-        <div className="text-center mb-8">
-          <h3 className="text-1xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 py-6 px-3 sm:py-8 sm:px-4 lg:px-8">
+      <div className="max-w-5xl mx-auto bg-black/90 backdrop-blur-md rounded-3xl shadow-2xl border border-purple-500/30 p-4 sm:p-6 lg:p-10">
+        <div className="text-center mb-8 sm:mb-10">
+          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-3">
             Powered By Largify Solutions
           </h3>
-          <p className="mt-2 text-purple-300">Fill out the form below to register for your chosen module.</p>
+          <p className="text-base sm:text-lg text-purple-300 max-w-2xl mx-auto leading-relaxed">
+            Fill out the form below to register for your chosen module and join Techverse 2026.
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-6 text-blue-300">Personal Information</h2>
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-purple-200">Full Name</label>
+        <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
+          {/* Personal Information Section */}
+          <div className="bg-linear-to-br from-purple-900/40 to-blue-900/40 rounded-2xl p-6 sm:p-8 border border-purple-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-6 sm:mb-8">
+              <div className="shrink-0 w-12 h-12 bg-linear-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-blue-300">Personal Information</h2>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+              <div className="lg:col-span-2">
+                <label htmlFor="name" className="block text-base font-semibold text-purple-200 mb-3">Full Name</label>
                 <input
                   type="text"
                   id="name"
@@ -490,11 +500,12 @@ export default function RegistrationForm() {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                  className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                  placeholder="Enter your full name"
                 />
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-purple-200">Email</label>
+              <div className="lg:col-span-2">
+                <label htmlFor="email" className="block text-base font-semibold text-purple-200 mb-3">Email Address</label>
                 <input
                   type="email"
                   id="email"
@@ -502,17 +513,23 @@ export default function RegistrationForm() {
                   required
                   value={formData.email}
                   onChange={(e) => handleEmailChange(e, 'email')}
-                  className={`mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400 ${
-                    emailErrors.email ? 'border-red-500' : ''
+                  className={`w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60 ${
+                    emailErrors.email ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                   }`}
+                  placeholder="your.email@example.com"
                 />
                 {emailErrors.email && (
-                  <p className="mt-1 text-sm text-red-400">{emailErrors.email}</p>
+                  <p className="mt-2 text-sm text-red-400 flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {emailErrors.email}
+                  </p>
                 )}
-                <p className="mt-1 text-sm text-purple-400">Enter your original email address - we will send important updates and access codes to this email.</p>
+                <p className="mt-2 text-sm text-purple-400">Enter your original email address - we will send important updates and access codes to this email.</p>
               </div>
               <div>
-                <label htmlFor="cnic" className="block text-sm font-medium text-purple-200">CNIC</label>
+                <label htmlFor="cnic" className="block text-base font-semibold text-purple-200 mb-3">CNIC Number</label>
                 <input
                   type="text"
                   id="cnic"
@@ -521,17 +538,23 @@ export default function RegistrationForm() {
                   value={formData.cnic}
                   onChange={handleCNICChange}
                   maxLength={17}
-                  className={`mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400 ${
-                    cnicError ? 'border-red-500' : ''
+                  className={`w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60 ${
+                    cnicError ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                   }`}
+                  placeholder="12345-1234567-1"
                 />
-                <p className="mt-1 text-sm text-purple-400">Enter your CNIC in any format - Enter your origional CNIC</p>
+                <p className="mt-2 text-sm text-purple-400">Enter your CNIC in any format</p>
                 {cnicError && (
-                  <p className="mt-1 text-sm text-red-400">{cnicError}</p>
+                  <p className="mt-2 text-sm text-red-400 flex items-center">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {cnicError}
+                  </p>
                 )}
               </div>
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-purple-200">Phone Number</label>
+                <label htmlFor="phone" className="block text-base font-semibold text-purple-200 mb-3">Phone Number</label>
                 <input
                   type="tel"
                   id="phone"
@@ -540,12 +563,13 @@ export default function RegistrationForm() {
                   value={formData.phone}
                   onChange={handlePhoneChange}
                   maxLength={15}
-                  className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                  className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                  placeholder="+92 300 1234567"
                 />
-                <p className="mt-1 text-sm text-purple-400">Enter your correct phone number, we can verify by calling you.</p>
+                <p className="mt-2 text-sm text-purple-400">Enter your correct phone number, we can verify by calling you.</p>
               </div>
               <div>
-                <label htmlFor="university" className="block text-sm font-medium text-purple-200">University Name</label>
+                <label htmlFor="university" className="block text-base font-semibold text-purple-200 mb-3">University Name</label>
                 <input
                   type="text"
                   id="university"
@@ -553,11 +577,12 @@ export default function RegistrationForm() {
                   required
                   value={formData.university}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                  className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                  placeholder="University of Management and Technology"
                 />
               </div>
               <div>
-                <label htmlFor="rollNo" className="block text-sm font-medium text-purple-200">Roll Number</label>
+                <label htmlFor="rollNo" className="block text-base font-semibold text-purple-200 mb-3">Roll Number</label>
                 <input
                   type="text"
                   id="rollNo"
@@ -565,25 +590,34 @@ export default function RegistrationForm() {
                   required
                   value={formData.rollNo}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                  className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                  placeholder="Your roll number"
                 />
               </div>
             </div>
           </div>
 
-          <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">Module Selection</h2>
-            <div>
-              <label htmlFor="module" className="block text-sm font-medium text-purple-200">Choose a module</label>
+          {/* Module Selection Section */}
+          <div className="bg-linear-to-br from-blue-900/40 to-purple-900/40 rounded-2xl p-6 sm:p-8 border border-blue-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-6 sm:mb-8">
+              <div className="shrink-0 w-12 h-12 bg-linear-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-blue-300">Module Selection</h2>
+            </div>
+            <div className="mb-6">
+              <label htmlFor="module" className="block text-base font-semibold text-purple-200 mb-4">Choose Your Module</label>
               <select
                 id="module"
                 name="module"
                 required
                 value={formData.module}
                 onChange={handleInputChange}
-                className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white"
+                className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60 appearance-none"
               >
-                <option value="" className="bg-black">Select a module</option>
+                <option value="" className="bg-black">Select a module to participate in</option>
                 {modules.map((module) => (
                   <option key={module.name} value={module.name} className="bg-black">
                     {module.name} - PKR {module.fee.toLocaleString()} ({module.teamSize})
@@ -594,21 +628,74 @@ export default function RegistrationForm() {
 
             {/* Module Details Display */}
             {formData.module && (
-              <div className="mt-6 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-                <h3 className="text-lg font-semibold mb-3 text-blue-300">📋 Module Details</h3>
+              <div className="bg-linear-to-br from-blue-900/30 to-purple-900/30 rounded-xl p-6 border border-blue-500/40 shadow-lg">
+                <h3 className="text-xl sm:text-2xl font-bold mb-6 text-blue-300 flex items-center">
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Module Details
+                </h3>
                 {(() => {
                   const selectedModule = modules.find(m => m.name === formData.module)
                   return selectedModule ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-purple-200"><strong>Module:</strong> {selectedModule.name}</p>
-                        <p className="text-purple-200"><strong>Team Size:</strong> {selectedModule.teamSize}</p>
-                        <p className="text-purple-200"><strong>Contact:</strong> {selectedModule.contactPerson}</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-purple-300 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4h10M7 4v10a2 2 0 002 2h6a2 2 0 002-2V4" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Module</p>
+                            <p className="text-white text-lg">{selectedModule.name}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-purple-300 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Team Size</p>
+                            <p className="text-white text-lg">{selectedModule.teamSize}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-purple-300 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Contact</p>
+                            <p className="text-white text-lg">{selectedModule.contactPerson}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-purple-200"><strong>Entry Fee:</strong> PKR {selectedModule.fee.toLocaleString()}</p>
-                        <p className="text-green-300"><strong>Winner Prize:</strong> PKR {selectedModule.winnerPrize.toLocaleString()}</p>
-                        <p className="text-yellow-300"><strong>Runner-up Prize:</strong> PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
+                      <div className="space-y-4">
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-green-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Entry Fee</p>
+                            <p className="text-green-300 text-xl font-bold">PKR {selectedModule.fee.toLocaleString()}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-yellow-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Winner Prize</p>
+                            <p className="text-yellow-300 text-xl font-bold">PKR {selectedModule.winnerPrize.toLocaleString()}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <svg className="w-5 h-5 text-blue-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                          <div>
+                            <p className="text-purple-200 font-semibold">Runner-up Prize</p>
+                            <p className="text-blue-300 text-xl font-bold">PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ) : null
@@ -618,10 +705,17 @@ export default function RegistrationForm() {
           </div>
 
           {/* Ambassador Code Section */}
-          <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">Ambassador Code (Optional)</h2>
+          <div className="bg-linear-to-br from-green-900/40 to-blue-900/40 rounded-2xl p-6 sm:p-8 border border-green-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-6">
+              <div className="shrink-0 w-12 h-12 bg-linear-to-br from-green-500 to-yellow-500 rounded-xl flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-green-300">Ambassador Code</h2>
+            </div>
             <div>
-              <label htmlFor="ambassadorCode" className="block text-sm font-medium text-purple-200">Ambassador Code</label>
+              <label htmlFor="ambassadorCode" className="block text-base font-semibold text-purple-200 mb-4">Ambassador Code (Optional)</label>
               <input
                 type="text"
                 id="ambassadorCode"
@@ -629,118 +723,161 @@ export default function RegistrationForm() {
                 value={formData.ambassadorCode}
                 onChange={handleInputChange}
                 placeholder="Enter ambassador code for 10% discount"
-                className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
               />
-              <p className="mt-1 text-sm text-purple-400">
-                Enter a valid ambassador code to get discount on your module fee. Leave empty if you don't have one.
-              </p>
+              <div className="mt-4 p-4 bg-green-900/20 border border-green-500/30 rounded-lg">
+                <p className="text-sm text-green-200 flex items-start">
+                  <svg className="w-5 h-5 text-green-400 mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Enter a valid ambassador code to get <strong>10% discount</strong> on your module fee. Leave empty if you don&apos;t have one.</span>
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">Accommodation</h2>
+          {/* Accommodation Section */}
+          <div className="bg-linear-to-br from-orange-900/40 to-purple-900/40 rounded-2xl p-6 sm:p-8 border border-orange-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-6 sm:mb-8">
+              <div className="shrink-0 w-12 h-12 bg-linear-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-orange-300">Accommodation</h2>
+            </div>
             <div>
-              <label className="block text-sm font-medium text-purple-200 mb-3">Hostel Accommodation (Optional)</label>
-              <div className="space-y-3">
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="hostel-none"
-                    name="hostel"
-                    value="none"
-                    checked={formData.hostel === 'none'}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
-                  />
-                  <label htmlFor="hostel-none" className="ml-3 block text-sm font-medium text-purple-200">
-                    <span className="font-semibold">Self-arranged accommodation</span>
-                    <span className="block text-purple-400 text-xs">I will arrange my own accommodation</span>
+              <label className="block text-base font-semibold text-purple-200 mb-6">Hostel Accommodation (Optional)</label>
+              <div className="space-y-4">
+                <div className="bg-black/40 rounded-xl p-5 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="hostel"
+                      value="none"
+                      checked={formData.hostel === 'none'}
+                      onChange={handleInputChange}
+                      className="w-5 h-5 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
+                    />
+                    <div className="ml-4">
+                      <span className="text-lg font-semibold text-purple-200">Self-arranged accommodation</span>
+                      <p className="text-purple-400 text-sm mt-1">I will arrange my own accommodation</p>
+                    </div>
                   </label>
                 </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="hostel-one-day"
-                    name="hostel"
-                    value="one_day"
-                    checked={formData.hostel === 'one_day'}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
-                  />
-                  <label htmlFor="hostel-one-day" className="ml-3 block text-sm font-medium text-purple-200">
-                    <span className="font-semibold">Hostel for 1 day - PKR 2,000</span>
-                    <span className="block text-purple-400 text-xs">Perfect for day participants or single day attendance</span>
+                <div className="bg-black/40 rounded-xl p-5 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="hostel"
+                      value="one_day"
+                      checked={formData.hostel === 'one_day'}
+                      onChange={handleInputChange}
+                      className="w-5 h-5 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
+                    />
+                    <div className="ml-4">
+                      <span className="text-lg font-semibold text-purple-200">Hostel for 1 day - <span className="text-green-400 font-bold">PKR 2,000</span></span>
+                      <p className="text-purple-400 text-sm mt-1">Perfect for day participants or single day attendance</p>
+                    </div>
                   </label>
                 </div>
-                <div className="flex items-center">
-                  <input
-                    type="radio"
-                    id="hostel-three-days"
-                    name="hostel"
-                    value="three_days"
-                    checked={formData.hostel === 'three_days'}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
-                  />
-                  <label htmlFor="hostel-three-days" className="ml-3 block text-sm font-medium text-purple-200">
-                    <span className="font-semibold">Hostel for 3 days - PKR 5,000</span>
-                    <span className="block text-purple-400 text-xs">Full event coverage (5-11 January 2026)</span>
+                <div className="bg-black/40 rounded-xl p-5 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 cursor-pointer">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="radio"
+                      name="hostel"
+                      value="three_days"
+                      checked={formData.hostel === 'three_days'}
+                      onChange={handleInputChange}
+                      className="w-5 h-5 text-purple-600 focus:ring-purple-500 border-purple-500/50 bg-black/50"
+                    />
+                    <div className="ml-4">
+                      <span className="text-lg font-semibold text-purple-200">Hostel for 3 days - <span className="text-green-400 font-bold">PKR 5,000</span></span>
+                      <p className="text-purple-400 text-sm mt-1">Full event coverage (5-11 January 2026)</p>
+                    </div>
                   </label>
                 </div>
               </div>
-              <div className="mt-4 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
-                <p className="text-sm text-blue-200">
-                  <strong>🏨 Hostel Information:</strong><br />
-                  • Comfortable accommodation at UMT campus<br />
-                  • Separate facilities for male and female participants<br />
-                  • Includes breakfast and basic amenities<br />
-                  • Payment to be made separately at the venue<br />
-                  • Limited rooms available - first come, first served
-                </p>
+              <div className="mt-6 p-5 bg-blue-900/20 border border-blue-500/30 rounded-xl">
+                <h4 className="text-lg font-semibold text-blue-300 mb-3 flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Hostel Information
+                </h4>
+                <div className="space-y-2 text-sm text-purple-200">
+                  <p className="flex items-start">
+                    <span className="text-blue-400 mr-2">🏨</span>
+                    Comfortable accommodation at UMT campus
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-blue-400 mr-2">🚪</span>
+                    Separate facilities for male and female participants
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-blue-400 mr-2">🍽️</span>
+                    Includes breakfast and basic amenities
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-blue-400 mr-2">💰</span>
+                    Payment to be made separately at the venue
+                  </p>
+                  <p className="flex items-start">
+                    <span className="text-blue-400 mr-2">⏰</span>
+                    Limited rooms available - first come, first served
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Total Amount Display */}
           {formData.module && (
-            <div className="bg-green-900/30 rounded-xl p-6 border border-green-500/20">
-              <h2 className="text-2xl font-semibold mb-4 text-green-300">💰 Total Amount Summary</h2>
+            <div className="bg-linear-to-br from-emerald-900/40 to-green-900/40 rounded-2xl p-6 sm:p-8 border border-emerald-500/30 shadow-xl backdrop-blur-sm">
+              <div className="flex items-center mb-6 sm:mb-8">
+                <div className="shrink-0 w-12 h-12 bg-linear-to-br from-emerald-500 to-green-500 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-emerald-300">Payment Summary</h2>
+              </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-green-500/20">
-                  <span className="text-purple-200">Module Fee ({formData.module}):</span>
+                  <span className="text-purple-200 text-sm sm:text-base">Module Fee ({formData.module}):</span>
                   <div className="text-right">
                     {formData.ambassadorCode && VALID_AMBASSADOR_CODES.includes(formData.ambassadorCode.toUpperCase()) ? (
                       <>
-                        <span className="text-red-400 line-through text-sm">PKR {getOriginalModuleFee().toLocaleString()}</span>
+                        <span className="text-red-400 line-through text-xs sm:text-sm">PKR {getOriginalModuleFee().toLocaleString()}</span>
                         <br />
-                        <span className="text-blue-300 font-semibold">PKR {getModuleFee().toLocaleString()}</span>
-                        <span className="text-green-400 text-sm ml-2">(10% discount applied)</span>
+                        <span className="text-blue-300 font-semibold text-sm sm:text-base">PKR {getModuleFee().toLocaleString()}</span>
+                        <span className="text-green-400 text-xs sm:text-sm ml-2">(10% discount applied)</span>
                       </>
                     ) : (
-                      <span className="text-blue-300 font-semibold">PKR {getModuleFee().toLocaleString()}</span>
+                      <span className="text-blue-300 font-semibold text-sm sm:text-base">PKR {getModuleFee().toLocaleString()}</span>
                     )}
                   </div>
                 </div>
                 {getDiscountAmount() > 0 && (
                   <div className="flex justify-between items-center py-2 border-b border-green-500/20">
-                    <span className="text-purple-200">Ambassador Discount (10%):</span>
-                    <span className="text-green-400 font-semibold">- PKR {getDiscountAmount().toLocaleString()}</span>
+                    <span className="text-purple-200 text-sm sm:text-base">Ambassador Discount (10%):</span>
+                    <span className="text-green-400 font-semibold text-sm sm:text-base">- PKR {getDiscountAmount().toLocaleString()}</span>
                   </div>
                 )}
                 {formData.hostel !== 'none' && (
                   <div className="flex justify-between items-center py-2 border-b border-green-500/20">
-                    <span className="text-purple-200">
+                    <span className="text-purple-200 text-sm sm:text-base">
                       Hostel Fee ({formData.hostel === 'one_day' ? '1 Day' : '3 Days'}):
                     </span>
-                    <span className="text-blue-300 font-semibold">PKR {getHostelFee().toLocaleString()}</span>
+                    <span className="text-blue-300 font-semibold text-sm sm:text-base">PKR {getHostelFee().toLocaleString()}</span>
                   </div>
                 )}
                 <div className="flex justify-between items-center py-3 border-t-2 border-green-500/30 pt-3">
-                  <span className="text-lg font-bold text-green-300">Total Amount:</span>
-                  <span className="text-2xl font-bold text-green-400">PKR {calculateTotalAmount().toLocaleString()}</span>
+                  <span className="text-base sm:text-lg font-bold text-green-300">Total Amount:</span>
+                  <span className="text-xl sm:text-2xl font-bold text-green-400">PKR {calculateTotalAmount().toLocaleString()}</span>
                 </div>
               </div>
-              <div className="mt-4 p-3 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+              <div className="mt-4 p-3 sm:p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
                 <p className="text-sm text-yellow-200">
                   <strong>💳 Payment Note:</strong> Please transfer exactly <strong>PKR {calculateTotalAmount().toLocaleString()}</strong> to the bank account shown below.
                   {formData.hostel !== 'none' && ' Hostel fees are included in this total amount.'}
@@ -751,158 +888,249 @@ export default function RegistrationForm() {
           )}
 
           {formData.module && (
-            <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-              <h2 className="text-2xl font-semibold mb-4 text-blue-300">Team Members</h2>
-              <p className="text-sm text-purple-300 mb-4">
+            <div className="bg-linear-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl p-6 sm:p-8 border border-indigo-500/30 shadow-xl backdrop-blur-sm">
+              <div className="flex items-center mb-6 sm:mb-8">
+                <div className="shrink-0 w-12 h-12 bg-linear-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mr-4">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-indigo-300">Team Members</h2>
+              </div>
+              <p className="text-base text-purple-300 mb-6 leading-relaxed">
                 You are the team leader. Add your team members below (optional - only add if you have team members).
               </p>
               {teamMembers.map((member, index) => (
-                <div key={index} className="space-y-2 mb-4 p-4 bg-black/30 rounded-lg border border-purple-500/10">
+                <div key={index} className="space-y-4 sm:space-y-6 mb-6 p-5 sm:p-6 bg-black/40 rounded-xl border border-indigo-500/20 shadow-lg">
                   <div className="flex justify-between items-center">
-                    <h3 className="text-sm font-medium text-purple-200">Team Member {index + 1}</h3>
+                    <h3 className="text-lg font-semibold text-indigo-300 flex items-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      Team Member {index + 1}
+                    </h3>
                     {index > 0 && (
                       <button
                         type="button"
                         onClick={() => removeTeamMember(index)}
-                        className="text-red-400 hover:text-red-300"
+                        className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 hover:bg-red-800/30 transition-all duration-300"
                       >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                         Remove
                       </button>
                     )}
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-purple-200">Name</label>
-                    <input
-                      type="text"
-                      value={member.name}
-                      onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
-                      className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-purple-200">Email</label>
-                    <input
-                      type="email"
-                      value={member.email}
-                      onChange={(e) => {
-                        handleTeamMemberChange(index, 'email', e.target.value)
-                        if (e.target.value) {
-                          validateEmail(e.target.value, `teamMember-${index}`)
-                        } else {
-                          setEmailErrors(prev => ({ ...prev, [`teamMember-${index}`]: '' }))
-                        }
-                      }}
-                      className={`mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400 ${
-                        emailErrors[`teamMember-${index}`] ? 'border-red-500' : ''
-                      }`}
-                    />
-                    {emailErrors[`teamMember-${index}`] && (
-                      <p className="mt-1 text-sm text-red-400">{emailErrors[`teamMember-${index}`]}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-purple-200">University Name</label>
-                    <input
-                      type="text"
-                      value={member.university}
-                      onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
-                      className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-purple-200">Roll Number</label>
-                    <input
-                      type="text"
-                      value={member.rollNo}
-                      onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
-                      className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                    />
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div>
+                      <label className="block text-base font-semibold text-purple-200 mb-3">Name</label>
+                      <input
+                        type="text"
+                        value={member.name}
+                        onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
+                        className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                        placeholder="Enter full name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-base font-semibold text-purple-200 mb-3">Email</label>
+                      <input
+                        type="email"
+                        value={member.email}
+                        onChange={(e) => {
+                          handleTeamMemberChange(index, 'email', e.target.value)
+                          if (e.target.value) {
+                            validateEmail(e.target.value, `teamMember-${index}`)
+                          } else {
+                            setEmailErrors(prev => ({ ...prev, [`teamMember-${index}`]: '' }))
+                          }
+                        }}
+                        className={`w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60 ${
+                          emailErrors[`teamMember-${index}`] ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
+                        }`}
+                        placeholder="member.email@example.com"
+                      />
+                      {emailErrors[`teamMember-${index}`] && (
+                        <p className="mt-2 text-sm text-red-400 flex items-center">
+                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                          </svg>
+                          {emailErrors[`teamMember-${index}`]}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-base font-semibold text-purple-200 mb-3">University Name</label>
+                      <input
+                        type="text"
+                        value={member.university}
+                        onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
+                        className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                        placeholder="University name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-base font-semibold text-purple-200 mb-3">Roll Number</label>
+                      <input
+                        type="text"
+                        value={member.rollNo}
+                        onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
+                        className="w-full bg-black/60 border-2 border-purple-500/40 rounded-xl px-5 py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-base sm:text-lg shadow-lg hover:border-purple-400/60"
+                        placeholder="Roll number"
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
               <button
                 type="button"
                 onClick={addTeamMember}
-                className="inline-flex items-center px-4 py-2 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-purple-900/30 hover:bg-purple-800/30 transition-colors"
+                className="inline-flex items-center px-6 py-3 border-2 border-indigo-500/50 rounded-xl text-base font-semibold text-indigo-200 bg-indigo-900/30 hover:bg-indigo-800/40 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
                 Add Team Member
               </button>
             </div>
           )}
 
-          <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">Payment Details</h2>
-            <div className="bg-yellow-900/30 border border-yellow-500/50 rounded-lg p-4 mb-4">
-              <p className="text-sm text-yellow-200">
-                <strong>Bank Transfer Required</strong><br />
-                {formData.module ? (
-                  <>
-                    Please transfer exactly <strong>PKR {calculateTotalAmount().toLocaleString()}</strong> to our bank account.
-                    {formData.hostel !== 'none' && ' This includes both your module fee and hostel accommodation.'}
-                  </>
-                ) : (
-                  'Please transfer the exact amount for your selected module. Hostel accommodation fees (if selected) will be collected separately at the venue.'
-                )}
-                <br />
-                Click "View Bank Details" to see the account information.
-              </p>
+          <div className="bg-linear-to-br from-amber-900/40 to-yellow-900/40 rounded-2xl p-6 sm:p-8 border border-amber-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-6 sm:mb-8">
+              <div className="shrink-0 w-12 h-12 bg-linear-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center mr-4">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-amber-300">Payment Details</h2>
+            </div>
+            <div className="bg-yellow-900/30 border-2 border-yellow-500/50 rounded-xl p-5 sm:p-6 mb-6">
+              <div className="flex items-start">
+                <svg className="w-6 h-6 text-yellow-400 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+                <div>
+                  <p className="text-yellow-200 font-bold text-lg mb-2">Bank Transfer Required</p>
+                  <p className="text-yellow-200 text-base leading-relaxed">
+                    {formData.module ? (
+                      <>
+                        Please transfer exactly <strong className="text-yellow-300 text-lg">PKR {calculateTotalAmount().toLocaleString()}</strong> to our bank account.
+                        {formData.hostel !== 'none' && ' This includes both your module fee and hostel accommodation.'}
+                      </>
+                    ) : (
+                      'Please transfer the exact amount for your selected module. Hostel accommodation fees (if selected) will be collected separately at the venue.'
+                    )}
+                    <br />
+                    Click &quot;View Bank Details&quot; to see the account information.
+                  </p>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowBankDetails(!showBankDetails)}
-                className="mt-2 inline-flex items-center px-4 py-2 border border-yellow-500/50 rounded-lg text-sm leading-4 font-medium text-yellow-200 bg-yellow-900/30 hover:bg-yellow-800/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
+                className="mt-4 inline-flex items-center px-6 py-3 border-2 border-yellow-500/50 rounded-xl text-base font-semibold text-yellow-200 bg-yellow-900/30 hover:bg-yellow-800/40 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {showBankDetails ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  )}
+                </svg>
                 {showBankDetails ? 'Hide Bank Details' : 'View Bank Details'}
               </button>
               {showBankDetails && (
-                <div className="mt-4 p-4 bg-black/50 border border-purple-500/20 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-2 text-blue-300">Bank Details</h3>
-                  <div className="space-y-1 text-sm text-purple-200">
-                    <p><strong>Account Title:</strong> University of Management and Technology (UMT)</p>
-                    <p><strong>Bank Name:</strong> Habib Bank Limited</p>
-                    <p><strong>Bank Account Number:</strong> 53737000007252</p>
-                    <p><strong>IBAN #</strong> PK10 HABB 0053737000007252</p>
-                    <p><strong>Branch Code:</strong> 5373</p>
-                    <p><strong>Branch:</strong> UMT Branch, Lahore</p>
-                    <p><strong>SWIFT Code:</strong> HABBPKKA</p>
+                <div className="mt-6 p-5 sm:p-6 bg-black/60 border-2 border-purple-500/30 rounded-xl shadow-lg">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-4 text-blue-300 flex items-center">
+                    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Bank Details
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-base text-purple-200">
+                    <div className="space-y-3">
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">Account Title:</span>
+                        <span className="text-white">University of Management and Technology (UMT)</span>
+                      </p>
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">Bank Name:</span>
+                        <span className="text-white">Habib Bank Limited</span>
+                      </p>
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">Account Number:</span>
+                        <span className="text-white font-mono">53737000007252</span>
+                      </p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">IBAN:</span>
+                        <span className="text-white font-mono">PK10 HABB 0053737000007252</span>
+                      </p>
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">Branch Code:</span>
+                        <span className="text-white font-mono">5373</span>
+                      </p>
+                      <p className="flex justify-between">
+                        <span className="font-semibold text-purple-300">SWIFT Code:</span>
+                        <span className="text-white font-mono">HABBPKKA</span>
+                      </p>
+                    </div>
                   </div>
+                  <p className="mt-4 text-sm text-purple-400 bg-purple-900/20 p-3 rounded-lg border border-purple-500/20">
+                    <strong className="text-purple-300">Branch:</strong> UMT Branch, Lahore
+                  </p>
                 </div>
               )}
             </div>
             <div>
-              <label htmlFor="paymentReceipt" className="block text-sm font-medium text-purple-200">
+              <label htmlFor="paymentReceipt" className="block text-base font-semibold text-purple-200 mb-4">
                 Upload Payment Receipt
               </label>
-              <input
-                type="file"
-                id="paymentReceipt"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="mt-1 block w-full text-sm text-purple-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-900/50 file:text-purple-200 hover:file:bg-purple-800/50 file:border-purple-500/50"
-                required={true}
-              />
-              <p className="mt-1 text-sm text-purple-400">
-                Upload a clear image of your payment receipt. Max size: 1MB. Supported formats: JPEG, PNG, GIF, WebP.<br />
-                Note: Your payment receipt is required to complete the registration process and verify your payment.
-              </p>
+              <div className="relative">
+                <input
+                  type="file"
+                  id="paymentReceipt"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="w-full text-base text-purple-200 file:mr-6 file:py-4 file:px-6 file:rounded-xl file:border-0 file:text-base file:font-semibold file:bg-amber-900/50 file:text-amber-200 hover:file:bg-amber-800/60 file:border-amber-500/50 transition-all duration-300 shadow-lg hover:shadow-xl file:transition-all file:duration-300 file:shadow-lg file:hover:shadow-xl file:cursor-pointer"
+                  required={true}
+                />
+              </div>
+              <div className="mt-4 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                <p className="text-sm text-blue-200 flex items-start">
+                  <svg className="w-5 h-5 text-blue-400 mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Upload a clear image of your payment receipt. <strong>Max size: 1MB</strong>. Supported formats: JPEG, PNG, GIF, WebP.<br />
+                  <strong className="text-blue-300">Note:</strong> Your payment receipt is required to complete the registration process and verify your payment.</span>
+                </p>
+              </div>
             </div>
           </div>
 
-          <div>
+          <div className="pt-4">
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
+              className="w-full flex justify-center items-center py-5 px-8 border-2 border-transparent rounded-2xl shadow-2xl text-xl font-bold text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-3xl"
             >
               {loading ? (
                 <div className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin -ml-1 mr-4 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Processing - Powered by Largify Solutions...
+                  <span>Processing - Powered by Largify Solutions...</span>
                 </div>
               ) : (
-                'Submit Registration'
+                <div className="flex items-center">
+                  <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Submit Registration</span>
+                </div>
               )}
             </button>
           </div>

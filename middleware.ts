@@ -26,7 +26,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   'http://localhost:3001',
   'https://techverse-umt.vercel.app',
-  'https://umttechverse02.vercel.app',
+  'https://umttechverse.com',
   // Add your production domain here
 ]
 
