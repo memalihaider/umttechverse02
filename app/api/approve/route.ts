@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase'
 import { sendEmail } from '@/lib/email'
 import { modules } from '@/lib/modules'
 import { quickValidateEmail } from '@/lib/email-validation'
+import { generateApprovedRegistrationEmail } from '@/lib/email-templates'
+import type { RegistrationData } from '@/lib/email-templates'
 
 export async function POST(request: NextRequest) {
   try {
@@ -74,27 +76,35 @@ export async function POST(request: NextRequest) {
       `\n\n<strong>Business Innovation Portal Access:</strong>\nYour unique access code: <strong>${registration.access_code}</strong>\nUse this code along with your email (${registration.email}) to access the Business Innovation portal at: https://techverse2026.com/business-innovation` : ''
     
     const subject = status === 'approved' ? 'Techverse 2026 - Registration Approved' : 'Techverse 2026 - Registration Rejected'
-    const html = status === 'approved' ?
-      `
-        <h1>Registration Approved!</h1>
-        <p>Dear ${registration.name},</p>
-        <p>Congratulations! Your registration for ${registration.module} has been approved.</p>
-        <p><strong>Module Details:</strong></p>
-        <ul>
-          <li>Team Size: ${selectedModule?.teamSize}</li>
-          <li>Entry Fee: PKR ${selectedModule?.fee}</li>
-          <li>Contact: ${selectedModule?.contact}</li>
-        </ul>${teamMembersText}${portalAccessText}
-        <p>Please arrive at the venue on time for the event.</p>
-        <p>Best regards,<br>Techverse 2026 Team</p>
-      ` :
-      `
+
+    let html: string
+    if (status === 'approved') {
+      // Prepare registration data for email template
+      const registrationData: RegistrationData = {
+        name: registration.name,
+        email: registration.email,
+        cnic: registration.cnic,
+        phone: registration.phone,
+        university: registration.university,
+        roll_no: registration.roll_no,
+        module: registration.module,
+        hostel: registration.hostel,
+        ambassador_code: registration.ambassador_code,
+        team_members: registration.team_members,
+        access_code: registration.access_code,
+        unique_id: registration.unique_id,
+        status: 'approved' as const,
+      }
+      html = generateApprovedRegistrationEmail(registrationData)
+    } else {
+      html = `
         <h1>Registration Update</h1>
         <p>Dear ${registration.name},</p>
         <p>We regret to inform you that your registration for ${registration.module} has been rejected.</p>
         <p>If you have any questions, please contact us.</p>
         <p>Best regards,<br>Techverse 2026 Team</p>
       `
+    }
 
     // Send email to all team members
     const emailResults = await Promise.all(emailAddresses.map(async (email) => {

@@ -69,6 +69,8 @@ interface Stats {
   rejected: number
   uniqueUniversities: number
   uniqueModules: number
+  totalAmount: number
+  totalTeams: number
 }
 
 export default function AdminPortal() {
@@ -119,7 +121,7 @@ export default function AdminPortal() {
 
   const [registrations, setRegistrations] = useState<Registration[]>([])
   const [filteredRegistrations, setFilteredRegistrations] = useState<Registration[]>([])
-  const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, approved: 0, rejected: 0, uniqueUniversities: 0, uniqueModules: 0 })
+  const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, approved: 0, rejected: 0, uniqueUniversities: 0, uniqueModules: 0, totalAmount: 0, totalTeams: 0 })
   const [loading, setLoading] = useState(true)
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
@@ -144,6 +146,8 @@ export default function AdminPortal() {
   const [showEvaluationModal, setShowEvaluationModal] = useState(false)
   const [allParticipantEvaluations, setAllParticipantEvaluations] = useState<Evaluation[]>([])
   const [selectedRegistrations, setSelectedRegistrations] = useState<string[]>([])
+  const [showViewModal, setShowViewModal] = useState(false)
+  const [viewRegistration, setViewRegistration] = useState<Registration | null>(null)
   const itemsPerPage = 10
 
   const fetchRegistrations = async () => {
@@ -166,8 +170,14 @@ export default function AdminPortal() {
       const rejected = regs.filter(r => r.status === 'rejected').length
       const uniqueUniversities = new Set(regs.map(r => r.university)).size
       const uniqueModules = new Set(regs.map(r => r.module)).size
+      const totalAmount = regs.reduce((sum, r) => {
+        if (r.hostel === 'one_day') return sum + 2000
+        if (r.hostel === 'three_days') return sum + 5000
+        return sum
+      }, 0)
+      const totalTeams = regs.filter(r => r.team_members && r.team_members.length > 1).length
 
-      setStats({ total, pending, approved, rejected, uniqueUniversities, uniqueModules })
+      setStats({ total, pending, approved, rejected, uniqueUniversities, uniqueModules, totalAmount, totalTeams })
     } catch (error) {
       console.error('Error fetching registrations:', error)
     } finally {
@@ -356,6 +366,48 @@ export default function AdminPortal() {
     }
   }
 
+  const deleteRegistration = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this registration? This action cannot be undone.')) return
+
+    setActionLoading(id)
+    try {
+      const response = await fetch('/api/admin/delete-registration', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      })
+
+      if (!response.ok) throw new Error('Delete failed')
+
+      // Update local state
+      setRegistrations(prev => prev.filter(reg => reg.id !== id))
+      setFilteredRegistrations(prev => prev.filter(reg => reg.id !== id))
+
+      // Update stats
+      const deletedReg = registrations.find(r => r.id === id)
+      if (deletedReg) {
+        const amountToSubtract = deletedReg.hostel === 'one_day' ? 2000 : deletedReg.hostel === 'three_days' ? 5000 : 0
+        const isTeam = deletedReg.team_members && deletedReg.team_members.length > 1 ? 1 : 0
+        setStats(prev => ({
+          ...prev,
+          total: prev.total - 1,
+          [deletedReg.status]: prev[deletedReg.status as keyof Stats] - 1,
+          totalAmount: prev.totalAmount - amountToSubtract,
+          totalTeams: prev.totalTeams - isTeam
+        }))
+      }
+
+      alert('Registration deleted successfully')
+    } catch (error) {
+      console.error('Error deleting registration:', error)
+      alert('Error deleting registration. Please try again.')
+    } finally {
+      setActionLoading(null)
+    }
+  }
+
   const fetchParticipantEvaluations = async (participantId: string) => {
     try {
       const { data, error } = await supabase
@@ -494,7 +546,7 @@ export default function AdminPortal() {
         {currentTab === 'registrations' ? (
           <div>
             {/* Statistics Dashboard */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mb-8">
               <div className="bg-purple-900/30 rounded-xl p-4 text-center border border-purple-500/20">
                 <div className="text-2xl font-bold text-blue-300">{stats.total}</div>
                 <div className="text-purple-200 text-sm">Total</div>
@@ -518,6 +570,14 @@ export default function AdminPortal() {
               <div className="bg-indigo-900/30 rounded-xl p-4 text-center border border-indigo-500/20">
                 <div className="text-2xl font-bold text-indigo-300">{stats.uniqueModules}</div>
                 <div className="text-purple-200 text-sm">Modules</div>
+              </div>
+              <div className="bg-cyan-900/30 rounded-xl p-4 text-center border border-cyan-500/20">
+                <div className="text-2xl font-bold text-cyan-300">PKR {stats.totalAmount.toLocaleString()}</div>
+                <div className="text-purple-200 text-sm">Total Amount</div>
+              </div>
+              <div className="bg-pink-900/30 rounded-xl p-4 text-center border border-pink-500/20">
+                <div className="text-2xl font-bold text-pink-300">{stats.totalTeams}</div>
+                <div className="text-purple-200 text-sm">Total Teams</div>
               </div>
             </div>
 
@@ -734,7 +794,25 @@ export default function AdminPortal() {
                       </div>
 
                       {/* Actions */}
-                      <div className="shrink-0 ml-4">
+                      <div className="shrink-0 ml-4 flex flex-col space-y-2">
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setViewRegistration(reg)
+                              setShowViewModal(true)
+                            }}
+                            className="inline-flex items-center px-3 py-2 border border-blue-500/50 rounded-lg text-sm leading-4 font-medium text-blue-200 bg-blue-900/30 hover:bg-blue-800/30 transition-all duration-300 transform hover:scale-105"
+                          >
+                            👁️ View
+                          </button>
+                          <button
+                            onClick={() => deleteRegistration(reg.id)}
+                            disabled={actionLoading === reg.id}
+                            className="inline-flex items-center px-3 py-2 border border-red-500/50 rounded-lg text-sm leading-4 font-medium text-red-200 bg-red-900/30 hover:bg-red-800/30 disabled:opacity-50 transition-all duration-300 transform hover:scale-105"
+                          >
+                            {actionLoading === reg.id ? '...' : '🗑️'}
+                          </button>
+                        </div>
                         {reg.status === 'pending' && (
                           <div className="flex space-x-2">
                             <button
@@ -907,6 +985,182 @@ export default function AdminPortal() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* View Registration Modal */}
+        {showViewModal && viewRegistration && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-black/90 backdrop-blur-sm rounded-2xl border border-purple-500/20 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 border-b border-purple-500/20">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xl font-semibold text-blue-300">
+                    Registration Details - {viewRegistration.name}
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setShowViewModal(false)
+                      setViewRegistration(null)
+                    }}
+                    className="text-purple-400 hover:text-purple-300 transition-colors"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {/* Basic Info */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-purple-400 font-medium">Name:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.name}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Email:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.email}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">CNIC:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.cnic}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Phone:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.phone}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">University:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.university}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Roll No:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.roll_no}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <span className="text-purple-400 font-medium">Module:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.module}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Hostel:</span>
+                      <span className="text-purple-200 ml-2">
+                        {viewRegistration.hostel === 'none' ? 'Self-arranged' : 
+                         viewRegistration.hostel === 'one_day' ? '1 Day (PKR 2,000)' : 
+                         '3 Days (PKR 5,000)'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Status:</span>
+                      <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeColor(viewRegistration.status)}`}>
+                        {viewRegistration.status}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Access Code:</span>
+                      <span className="text-purple-200 ml-2 font-mono">{viewRegistration.access_code}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Created At:</span>
+                      <span className="text-purple-200 ml-2">{new Date(viewRegistration.created_at).toLocaleString()}</span>
+                    </div>
+                    {viewRegistration.payment_receipt_url && (
+                      <div>
+                        <span className="text-purple-400 font-medium">Payment Receipt:</span>
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/receipts/${viewRegistration.payment_receipt_url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:text-blue-300 ml-2 transition-colors"
+                        >
+                          View Receipt
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Team Members */}
+                {viewRegistration.team_members && viewRegistration.team_members.length > 1 && (
+                  <div className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10">
+                    <h4 className="text-lg font-semibold text-purple-200 mb-4">Team Members ({viewRegistration.team_members.length - 1})</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {viewRegistration.team_members.slice(1).map((member, index) => (
+                        <div key={index} className="bg-black/30 rounded-lg p-4 border border-purple-500/10">
+                          <div className="font-medium text-purple-200 text-lg">{member.name}</div>
+                          <div className="text-sm text-purple-400 mt-1">📧 {member.email}</div>
+                          <div className="text-sm text-purple-400">🏛️ {member.university}</div>
+                          <div className="text-sm text-purple-400">🎓 Roll: {member.rollNo}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Business Innovation Details */}
+                {viewRegistration.module === 'Business Innovation' && viewRegistration.business_idea && (
+                  <div className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10">
+                    <h4 className="text-lg font-semibold text-purple-200 mb-4">Business Innovation Details</h4>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <span className="text-purple-400 font-medium">Current Phase:</span>
+                          <span className="text-purple-200 ml-2">{viewRegistration.current_phase?.replace('_', ' ') || 'idea_selection'}</span>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Submission Status:</span>
+                          <span className="text-purple-200 ml-2">{viewRegistration.submission_status?.replace('_', ' ') || 'not_started'}</span>
+                        </div>
+                      </div>
+                      {viewRegistration.github_repo && (
+                        <div>
+                          <span className="text-purple-400 font-medium">GitHub Repository:</span>
+                          <a
+                            href={viewRegistration.github_repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 hover:text-blue-300 ml-2 transition-colors"
+                          >
+                            {viewRegistration.github_repo}
+                          </a>
+                        </div>
+                      )}
+                      <div className="space-y-3">
+                        <div>
+                          <span className="text-purple-400 font-medium">Business Idea Title:</span>
+                          <span className="text-purple-200 ml-2">{viewRegistration.business_idea.title}</span>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Problem:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.problem}</p>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Solution:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.solution}</p>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Market Size:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.marketSize}</p>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Target Audience:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.targetAudience}</p>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Competitive Advantage:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.competitiveAdvantage}</p>
+                        </div>
+                        <div>
+                          <span className="text-purple-400 font-medium">Revenue Model:</span>
+                          <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.revenueModel}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

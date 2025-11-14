@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { validateEmailForFrontend } from '@/lib/email-validation-client'
+import ConfirmationModal from './ConfirmationModal'
 
 interface TeamMember {
   name: string
@@ -188,6 +189,8 @@ export default function RegistrationForm() {
   const [loading, setLoading] = useState(false)
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [emailErrors, setEmailErrors] = useState<{[key: string]: string}>({})
+  const [cnicError, setCnicError] = useState<string>('')
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
 
   const validateEmail = (email: string, field: string) => {
     const validation = validateEmailForFrontend(email)
@@ -242,7 +245,19 @@ export default function RegistrationForm() {
     if (value.length <= 14) {
       // Try to format it automatically, but allow any input
       const formatted = formatCNIC(value)
-      setFormData(prev => ({ ...prev, cnic: formatted || value }))
+      const finalValue = formatted || value
+      setFormData(prev => ({ ...prev, cnic: finalValue }))
+
+      // Check CNIC uniqueness after a short delay
+      if (finalValue.length >= 13) {
+        const timeoutId = setTimeout(() => {
+          checkCnicUniqueness(finalValue)
+        }, 500) // 500ms delay to avoid too many API calls
+
+        return () => clearTimeout(timeoutId)
+      } else {
+        setCnicError('')
+      }
     }
   }
 
@@ -344,6 +359,32 @@ export default function RegistrationForm() {
     return 0
   }
 
+  const checkCnicUniqueness = async (cnic: string) => {
+    if (!cnic || cnic.length < 13) return // Don't check incomplete CNICs
+
+    try {
+      const response = await fetch('/api/check-cnic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cnic }),
+      })
+
+      const data = await response.json()
+
+      if (data.isRegistered) {
+        setCnicError('This CNIC is already registered. Each CNIC can only be used once.')
+      } else {
+        setCnicError('')
+      }
+    } catch (error) {
+      console.error('Error checking CNIC:', error)
+      // Don't show error for network issues, just clear any existing error
+      setCnicError('')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -360,9 +401,9 @@ export default function RegistrationForm() {
       }
     }
 
-    // Validate team member emails
+    // Validate team member emails only if they have content
     teamMembers.forEach((member, index) => {
-      if (member.email) {
+      if (member.email && member.email.trim() !== '') {
         const validation = validateEmailForFrontend(member.email)
         if (!validation.isValid) {
           newEmailErrors[`teamMember-${index}`] = validation.message
@@ -375,6 +416,12 @@ export default function RegistrationForm() {
 
     if (hasEmailErrors) {
       alert('Please fix the email validation errors before submitting.')
+      return
+    }
+
+    // Check for CNIC error
+    if (cnicError) {
+      alert('Please fix the CNIC error before submitting.')
       return
     }
 
@@ -401,12 +448,20 @@ export default function RegistrationForm() {
         body: formDataToSend,
       })
 
-      if (!response.ok) throw new Error('Registration failed')
+      const responseData = await response.json()
 
-      alert('Registration submitted successfully! Check your email for confirmation.')
+      if (!response.ok) {
+        // Show specific error message from API
+        const errorMessage = responseData.message || responseData.error || responseData.details?.join(', ') || 'Registration failed'
+        throw new Error(errorMessage)
+      }
+
+      // Show confirmation modal instead of alert
+      setShowConfirmationModal(true)
     } catch (error) {
       console.error(error)
-      alert('Error submitting registration. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Error submitting registration. Please try again.'
+      alert(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -466,9 +521,14 @@ export default function RegistrationForm() {
                   value={formData.cnic}
                   onChange={handleCNICChange}
                   maxLength={17}
-                  className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
+                  className={`mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400 ${
+                    cnicError ? 'border-red-500' : ''
+                  }`}
                 />
                 <p className="mt-1 text-sm text-purple-400">Enter your CNIC in any format - Enter your origional CNIC</p>
+                {cnicError && (
+                  <p className="mt-1 text-sm text-red-400">{cnicError}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-purple-200">Phone Number</label>
@@ -541,14 +601,14 @@ export default function RegistrationForm() {
                   return selectedModule ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                       <div>
-                        <p className="text-purple-200"><strong>🏷️ Module:</strong> {selectedModule.name}</p>
-                        <p className="text-purple-200"><strong>👥 Team Size:</strong> {selectedModule.teamSize}</p>
-                        <p className="text-purple-200"><strong>📞 Contact:</strong> {selectedModule.contactPerson}</p>
+                        <p className="text-purple-200"><strong>Module:</strong> {selectedModule.name}</p>
+                        <p className="text-purple-200"><strong>Team Size:</strong> {selectedModule.teamSize}</p>
+                        <p className="text-purple-200"><strong>Contact:</strong> {selectedModule.contactPerson}</p>
                       </div>
                       <div>
-                        <p className="text-purple-200"><strong>💰 Entry Fee:</strong> PKR {selectedModule.fee.toLocaleString()}</p>
-                        <p className="text-green-300"><strong>🏆 Winner Prize:</strong> PKR {selectedModule.winnerPrize.toLocaleString()}</p>
-                        <p className="text-yellow-300"><strong>🥈 Runner-up Prize:</strong> PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
+                        <p className="text-purple-200"><strong>Entry Fee:</strong> PKR {selectedModule.fee.toLocaleString()}</p>
+                        <p className="text-green-300"><strong>Winner Prize:</strong> PKR {selectedModule.winnerPrize.toLocaleString()}</p>
+                        <p className="text-yellow-300"><strong>Runner-up Prize:</strong> PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
                       </div>
                     </div>
                   ) : null
@@ -559,7 +619,7 @@ export default function RegistrationForm() {
 
           {/* Ambassador Code Section */}
           <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-            <h2 className="text-2xl font-semibold mb-4 text-blue-300">🎟️ Ambassador Code (Optional)</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-blue-300">Ambassador Code (Optional)</h2>
             <div>
               <label htmlFor="ambassadorCode" className="block text-sm font-medium text-purple-200">Ambassador Code</label>
               <input
@@ -572,7 +632,7 @@ export default function RegistrationForm() {
                 className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
               />
               <p className="mt-1 text-sm text-purple-400">
-                Enter a valid ambassador code to get 10% discount on your module fee. Leave empty if you don't have one.
+                Enter a valid ambassador code to get discount on your module fee. Leave empty if you don't have one.
               </p>
             </div>
           </div>
@@ -624,7 +684,7 @@ export default function RegistrationForm() {
                   />
                   <label htmlFor="hostel-three-days" className="ml-3 block text-sm font-medium text-purple-200">
                     <span className="font-semibold">Hostel for 3 days - PKR 5,000</span>
-                    <span className="block text-purple-400 text-xs">Full event coverage (13-14-15 November 2025)</span>
+                    <span className="block text-purple-400 text-xs">Full event coverage (5-11 January 2026)</span>
                   </label>
                 </div>
               </div>
@@ -694,7 +754,7 @@ export default function RegistrationForm() {
             <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
               <h2 className="text-2xl font-semibold mb-4 text-blue-300">Team Members</h2>
               <p className="text-sm text-purple-300 mb-4">
-                You are the team leader. Add your team members below (optional for most modules).
+                You are the team leader. Add your team members below (optional - only add if you have team members).
               </p>
               {teamMembers.map((member, index) => (
                 <div key={index} className="space-y-2 mb-4 p-4 bg-black/30 rounded-lg border border-purple-500/10">
@@ -717,7 +777,6 @@ export default function RegistrationForm() {
                       value={member.name}
                       onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
                       className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                      required={index === 0}
                     />
                   </div>
                   <div>
@@ -736,7 +795,6 @@ export default function RegistrationForm() {
                       className={`mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400 ${
                         emailErrors[`teamMember-${index}`] ? 'border-red-500' : ''
                       }`}
-                      required={index === 0}
                     />
                     {emailErrors[`teamMember-${index}`] && (
                       <p className="mt-1 text-sm text-red-400">{emailErrors[`teamMember-${index}`]}</p>
@@ -749,7 +807,6 @@ export default function RegistrationForm() {
                       value={member.university}
                       onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
                       className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                      required={index === 0}
                     />
                   </div>
                   <div>
@@ -759,7 +816,6 @@ export default function RegistrationForm() {
                       value={member.rollNo}
                       onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
                       className="mt-1 block w-full bg-black/50 border-purple-500/50 rounded-lg shadow-sm focus:ring-purple-400 focus:border-purple-400 text-white placeholder-purple-400"
-                      required={index === 0}
                     />
                   </div>
                 </div>
@@ -814,7 +870,7 @@ export default function RegistrationForm() {
             </div>
             <div>
               <label htmlFor="paymentReceipt" className="block text-sm font-medium text-purple-200">
-                Upload Payment Receipt (Optional)
+                Upload Payment Receipt
               </label>
               <input
                 type="file"
@@ -822,10 +878,11 @@ export default function RegistrationForm() {
                 accept="image/*"
                 onChange={handleFileChange}
                 className="mt-1 block w-full text-sm text-purple-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-900/50 file:text-purple-200 hover:file:bg-purple-800/50 file:border-purple-500/50"
+                required={true}
               />
               <p className="mt-1 text-sm text-purple-400">
-                Upload a clear image of your payment receipt. Max size: 5MB. Supported formats: JPEG, PNG, GIF, WebP.<br />
-                Note: You can submit your registration without a payment proof and upload it later.
+                Upload a clear image of your payment receipt. Max size: 1MB. Supported formats: JPEG, PNG, GIF, WebP.<br />
+                Note: Your payment receipt is required to complete the registration process and verify your payment.
               </p>
             </div>
           </div>
@@ -834,13 +891,33 @@ export default function RegistrationForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 transition-all duration-300 transform hover:scale-105"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
             >
-              {loading ? 'Submitting...' : 'Submit Registration'}
+              {loading ? (
+                <div className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing - Powered by Largify Solutions...
+                </div>
+              ) : (
+                'Submit Registration'
+              )}
             </button>
           </div>
         </form>
       </div>
+
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showConfirmationModal}
+        onClose={() => setShowConfirmationModal(false)}
+        title="Registration Successful! 🎉"
+        message="Your registration has been submitted successfully! Please check your email for confirmation details and important updates about Techverse 2026."
+        redirectTo="/"
+        autoRedirectDelay={5000}
+      />
     </div>
   )
 }

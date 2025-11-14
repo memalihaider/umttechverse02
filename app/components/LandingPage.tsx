@@ -1,93 +1,233 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import { modules } from '@/lib/modules'
 
+interface Executive {
+  title: string
+  name: string
+  description: string
+  image: string
+  linkedin: string
+}
+
 export default function LandingPage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [selectedExecutive, setSelectedExecutive] = useState<Executive | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Add scroll animation effect
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up')
+        }
+      })
+    }, observerOptions)
+
+    // Observe all sections
+    const sections = document.querySelectorAll('section')
+    sections.forEach((section) => observer.observe(section))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900">
+    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden">
+      {/* Animated background particles */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-20"></div>
+        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-30 delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-cyan-400 rounded-full animate-pulse opacity-10"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-25 delay-500"></div>
+
+        {/* Enhanced floating geometric shapes */}
+        <div className="absolute top-1/6 left-1/6 w-4 h-4 border-2 border-blue-400/30 rotate-45 animate-bounce opacity-20 delay-300"></div>
+        <div className="absolute top-2/3 right-1/6 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse delay-700"></div>
+        <div className="absolute bottom-1/3 left-1/2 w-2 h-6 bg-cyan-400/15 rounded-full animate-ping delay-1200"></div>
+        <div className="absolute top-1/3 right-1/3 w-5 h-5 border border-pink-400/25 rotate-12 animate-spin opacity-15 delay-500" style={{animationDuration: '8s'}}></div>
+        <div className="absolute bottom-1/6 right-1/4 w-3 h-3 bg-green-400/20 rounded-lg animate-bounce delay-900"></div>
+
+        {/* Gradient wave effects */}
+        <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-b from-blue-500/5 via-transparent to-transparent animate-pulse delay-200"></div>
+        <div className="absolute bottom-0 left-0 w-full h-40 bg-linear-to-t from-purple-500/5 via-transparent to-transparent animate-pulse delay-1000"></div>
+
+        {/* Floating particles with different animations */}
+        <div className="absolute top-1/5 right-1/5 w-1 h-1 bg-yellow-400 rounded-full animate-ping opacity-40 delay-800"></div>
+        <div className="absolute top-4/5 left-1/5 w-2 h-2 bg-orange-400/30 rounded-full animate-pulse delay-1500"></div>
+        <div className="absolute top-2/5 right-2/5 w-1.5 h-1.5 bg-indigo-400/25 rounded-full animate-bounce delay-600"></div>
+        <div className="absolute bottom-2/5 right-1/2 w-2.5 h-2.5 bg-teal-400/20 rounded-full animate-pulse delay-1100"></div>
+
+        {/* Rotating geometric elements */}
+        <div className="absolute top-3/5 left-1/4 w-6 h-6 border border-blue-400/20 rotate-45 animate-spin opacity-10 delay-400" style={{animationDuration: '12s'}}></div>
+        <div className="absolute bottom-1/5 right-1/3 w-4 h-4 bg-purple-400/15 rounded-full animate-spin delay-800" style={{animationDuration: '10s'}}></div>
+      </div>
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-sm border-b border-purple-500/20 z-50">
+      <nav className="fixed top-0 w-full bg-black/90 backdrop-blur-sm border-b border-purple-500/20 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Techverse 2026
+              <h1 className="text-xl sm:text-2xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Techverse Ch02
               </h1>
             </div>
-            <div className="flex items-center space-x-4">
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
               <Link
                 href="#about"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
                 About
               </Link>
               <Link
                 href="#modules"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
                 Modules
               </Link>
               <Link
                 href="#organizers"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
                 Executives
               </Link>
               <Link
                 href="/team"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
                 Team
               </Link>
               <Link
                 href="/business-innovation"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
-                Business Portal
+                Business Innovation
               </Link>
               <Link
                 href="/certificate"
-                className="text-purple-200 hover:text-blue-300 transition-colors"
+                className="text-purple-200 hover:text-blue-300 transition-colors text-sm"
               >
                 Certificate
               </Link>
               <Link
                 href="/register"
-                className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
+                className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 text-sm"
               >
                 Register Now
               </Link>
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-purple-200 hover:text-blue-300 transition-colors p-2"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {isMobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Navigation */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden bg-black/95 backdrop-blur-sm border-t border-purple-500/20">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <Link
+                  href="#about"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  href="#modules"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Modules
+                </Link>
+                <Link
+                  href="#organizers"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Executives
+                </Link>
+                <Link
+                  href="/team"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Team
+                </Link>
+                <Link
+                  href="/business-innovation"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Business Innovation
+                </Link>
+                <Link
+                  href="/certificate"
+                  className="block px-3 py-2 text-purple-200 hover:text-blue-300 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Certificate
+                </Link>
+                <Link
+                  href="/register"
+                  className="block px-3 py-2 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-all duration-300 text-center mt-4"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Register Now
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="bg-black/40 backdrop-blur-sm rounded-3xl p-12 border border-purple-500/20">
-            <h1 className="text-6xl md:text-8xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
+      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-purple-900/5 to-transparent"></div>
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <div className="bg-black/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/20 shadow-2xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight animate-fade-in-up">
               TECHVERSE 2026
             </h1>
-            <p className="text-xl md:text-2xl text-purple-200 mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl text-purple-200 mb-6 sm:mb-8 px-2 animate-slide-in-left delay-200">
               Where Innovation Meets Competition
             </p>
-            <div className="text-lg text-purple-300 mb-8">
-              <p className="mb-2">📅 Date: 13-14 November 2025</p>
-              <p className="mb-2">📍 Venue: University of Management and Technology (UMT), Lahore</p>
+            <div className="text-sm sm:text-base lg:text-lg text-purple-300 mb-6 sm:mb-8 space-y-1 sm:space-y-2 animate-slide-in-right delay-300">
+              <p className="mb-1 sm:mb-2">📅 Date: 5-11 January 2026</p>
+              <p className="mb-1 sm:mb-2">📍 Venue: University of Management and Technology (UMT), Lahore</p>
               <p>🎯 Join Pakistan's Premier Tech Competition Event</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-scale-in delay-500">
               <Link
                 href="/register"
-                className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Register Now
               </Link>
               <a
                 href="#modules"
-                className="border-2 border-purple-500/50 text-purple-200 hover:bg-purple-500/20 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300"
+                className="border-2 border-purple-500/50 text-purple-200 hover:bg-purple-500/20 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300"
               >
                 View Modules
               </a>
@@ -97,86 +237,87 @@ export default function LandingPage() {
       </section>
 
       {/* Event Stats */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20">
-              <div className="text-4xl font-bold text-blue-300 mb-2">16+</div>
-              <div className="text-purple-200">Exciting Modules</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
+              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">16+</div>
+              <div className="text-purple-200 text-sm sm:text-base">Exciting Modules</div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20">
-              <div className="text-4xl font-bold text-blue-300 mb-2">500+</div>
-              <div className="text-purple-200">Expected Participants</div>
+            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
+              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">2000+</div>
+              <div className="text-purple-200 text-sm sm:text-base">Expected Participants</div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20">
-              <div className="text-4xl font-bold text-blue-300 mb-2">PKR 50K+</div>
-              <div className="text-purple-200">Total Prize Pool</div>
+            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
+              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">PKR 480K+</div>
+              <div className="text-purple-200 text-sm sm:text-base">Total Prize Pool</div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20">
-              <div className="text-4xl font-bold text-blue-300 mb-2">48hrs</div>
-              <div className="text-purple-200">Non-Stop Innovation</div>
+            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
+              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">6 Days</div>
+              <div className="text-purple-200 text-sm sm:text-base">Non-Stop Innovation</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Event */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+      <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-blue-900/10"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
               About Techverse 2026
             </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               Techverse 2026 is Pakistan's premier technology competition event, bringing together the brightest minds in technology,
               innovation, and creativity. From AI and cybersecurity to gaming and robotics, experience the future of technology today.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-                <h3 className="text-2xl font-semibold text-blue-300 mb-4">🎯 Our Mission</h3>
-                <p className="text-purple-200">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="space-y-4 sm:space-y-6 animate-slide-in-left">
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 border border-purple-500/20">
+                <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-3 sm:mb-4">🎯 Our Mission</h3>
+                <p className="text-purple-200 text-sm sm:text-base">
                   To create a platform where technology enthusiasts can showcase their skills, learn from peers,
                   and compete in an environment that fosters innovation and collaboration.
                 </p>
               </div>
-              <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
-                <h3 className="text-2xl font-semibold text-blue-300 mb-4">🏆 What to Expect</h3>
-                <p className="text-purple-200">
-                  Intense competitions, networking opportunities, workshops, and prizes worth over PKR 50,000.
-                  Join us for 48 hours of non-stop technological excellence.
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 border border-purple-500/20">
+                <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-3 sm:mb-4">🏆 What to Expect</h3>
+                <p className="text-purple-200 text-sm sm:text-base">
+                  Intense competitions, networking opportunities, workshops, and prizes worth over PKR 480,000.
+                  Join us for 6 days of non-stop technological excellence.
                 </p>
               </div>
             </div>
 
-            <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-500/20">
-              <h3 className="text-2xl font-semibold text-blue-300 mb-6 text-center">Event Highlights</h3>
-              <ul className="space-y-4 text-purple-200">
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">⚡</span>
-                  16+ Diverse Technology Modules
+            <div className="bg-purple-900/30 rounded-xl p-6 sm:p-8 border border-purple-500/20 animate-slide-in-right">
+              <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-4 sm:mb-6 text-center">Event Highlights</h3>
+              <ul className="space-y-3 sm:space-y-4 text-purple-200 text-sm sm:text-base">
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⚡</span>
+                  <div>16+ Diverse Technology Modules</div>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">🎮</span>
-                  Gaming, AI, Robotics & Cybersecurity
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🎮</span>
+                  <div>Gaming, AI, Robotics & Cybersecurity</div>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">💰</span>
-                  Massive Prize Pool & Certificates
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">💰</span>
+                  <div>Massive Prize Pool & Certificates</div>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">🤝</span>
-                  Networking with Industry Experts
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🤝</span>
+                  <div>Networking with Industry Experts</div>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">🏢</span>
-                  Hosted at UMT Lahore Campus
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🏢</span>
+                  <div>Hosted at UMT Lahore Campus</div>
                 </li>
-                <li className="flex items-center">
-                  <span className="text-blue-400 mr-3">⏰</span>
-                  48 Hours of Continuous Innovation
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
+                  <div>48 Hours of Continuous Innovation</div>
                 </li>
               </ul>
             </div>
@@ -185,87 +326,86 @@ export default function LandingPage() {
       </section>
 
       {/* Business Innovation Signature Module */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-blue-900/20 via-purple-900/20 to-blue-900/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-yellow-500/20 border border-yellow-500/50 rounded-full px-4 py-2 mb-6">
-              <span className="text-yellow-300 font-semibold text-sm">⭐ SIGNATURE MODULE</span>
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-blue-900/20 via-purple-900/20 to-blue-900/20 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-yellow-500/5 via-transparent to-orange-500/5"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <div className="inline-flex items-center bg-yellow-500/20 border border-yellow-500/50 rounded-full px-3 sm:px-4 py-1 sm:py-2 mb-4 sm:mb-6">
+              <span className="text-yellow-300 font-semibold text-xs sm:text-sm">⭐ SIGNATURE MODULE</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-linear-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-4 sm:mb-6 px-2">
               Business Innovation Challenge
             </h2>
-            <p className="text-xl md:text-2xl text-purple-200 max-w-4xl mx-auto">
+            <p className="text-lg sm:text-xl text-purple-200 max-w-4xl mx-auto px-4">
               Techverse 2026's flagship competition where entrepreneurship meets technology.
               Transform your innovative ideas into real business solutions.
             </p>
+            <div className="text-center mb-4">
+              <p className="text-yellow-300 text-sm sm:text-base font-medium">
+                🗓️ Starts: 18 December 2025 • Duration: 18+ Days
+              </p>
+            </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-12 sm:mb-16">
             {/* Left Side - Challenge Details */}
-            <div className="space-y-8">
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30">
-                <h3 className="text-2xl font-bold text-yellow-300 mb-6 flex items-center">
-                  <span className="text-3xl mr-3">🚀</span>
+            <div className="space-y-6 sm:space-y-8">
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
+                <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
+                  <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">🚀</span>
                   Challenge Overview
                 </h3>
-                <div className="space-y-4 text-purple-200">
-                  <p className="text-lg">
+                <div className="space-y-3 sm:space-y-4 text-purple-200">
+                  <p className="text-sm sm:text-base">
                     Develop groundbreaking business solutions that address real-world problems using cutting-edge technology,
                     innovative thinking, and entrepreneurial vision.
                   </p>
-                  <div className="grid grid-cols-2 gap-4 mt-6">
-                    <div className="bg-purple-900/40 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-blue-300">PKR 50K</div>
-                      <div className="text-sm text-purple-300">1st Prize</div>
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
+                    <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center">
+                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 40K</div>
+                      <div className="text-xs sm:text-sm text-purple-300">1st Prize</div>
                     </div>
-                    <div className="bg-purple-900/40 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-blue-300">PKR 30K</div>
-                      <div className="text-sm text-purple-300">2nd Prize</div>
+                    <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center">
+                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 30K</div>
+                      <div className="text-xs sm:text-sm text-purple-300">2nd Prize</div>
                     </div>
-                    <div className="bg-purple-900/40 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-blue-300">PKR 20K</div>
-                      <div className="text-sm text-purple-300">3rd Prize</div>
-                    </div>
-                    <div className="bg-purple-900/40 rounded-lg p-4 text-center">
-                      <div className="text-2xl font-bold text-blue-300">Special</div>
-                      <div className="text-sm text-purple-300">Mentions</div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
 
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30">
-                <h3 className="text-2xl font-bold text-yellow-300 mb-6 flex items-center">
-                  <span className="text-3xl mr-3">📊</span>
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
+                <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
+                  <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">📊</span>
                   Competition Phases
                 </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">1</div>
                     <div>
-                      <h4 className="text-blue-300 font-semibold">Idea Selection</h4>
-                      <p className="text-purple-300 text-sm">Submit your innovative business concept</p>
+                      <h4 className="text-blue-300 font-semibold text-sm sm:text-base">Idea Selection</h4>
+                      <p className="text-purple-300 text-xs sm:text-sm">Submit your innovative business concept</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">2</div>
                     <div>
-                      <h4 className="text-purple-300 font-semibold">Design Phase</h4>
-                      <p className="text-purple-300 text-sm">Develop detailed business plans and prototypes</p>
+                      <h4 className="text-purple-300 font-semibold text-sm sm:text-base">Design Phase</h4>
+                      <p className="text-purple-300 text-xs sm:text-sm">Develop detailed business plans and prototypes</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">3</div>
                     <div>
-                      <h4 className="text-green-300 font-semibold">Development</h4>
-                      <p className="text-purple-300 text-sm">Build MVP and validate market fit</p>
+                      <h4 className="text-green-300 font-semibold text-sm sm:text-base">Development</h4>
+                      <p className="text-purple-300 text-xs sm:text-sm">Build MVP and validate market fit</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold">4</div>
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">4</div>
                     <div>
-                      <h4 className="text-yellow-300 font-semibold">Final Submission</h4>
-                      <p className="text-purple-300 text-sm">Present to judges and compete for prizes</p>
+                      <h4 className="text-yellow-300 font-semibold text-sm sm:text-base">Final Submission</h4>
+                      <p className="text-purple-300 text-xs sm:text-sm">Present to judges and compete for prizes</p>
                     </div>
                   </div>
                 </div>
@@ -273,45 +413,45 @@ export default function LandingPage() {
             </div>
 
             {/* Right Side - Features & CTA */}
-            <div className="space-y-8">
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30">
-                <h3 className="text-2xl font-bold text-yellow-300 mb-6 flex items-center">
-                  <span className="text-3xl mr-3">🏆</span>
+            <div className="space-y-6 sm:space-y-8">
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
+                <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
+                  <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">🏆</span>
                   Why Join Business Innovation?
                 </h3>
-                <ul className="space-y-4 text-purple-200">
+                <ul className="space-y-3 sm:space-y-4 text-purple-200 text-sm sm:text-base">
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Real-World Impact:</strong> Solve actual business problems with technology
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Industry Mentorship:</strong> Get guidance from successful entrepreneurs
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Live Scoring:</strong> Real-time evaluation and leaderboard tracking
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Networking:</strong> Connect with investors and industry leaders
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Career Boost:</strong> Internship opportunities and job placements
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-400 mr-3 mt-1">✓</span>
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
                     <div>
                       <strong className="text-blue-300">Comprehensive Support:</strong> Templates, workshops, and resources
                     </div>
@@ -319,47 +459,47 @@ export default function LandingPage() {
                 </ul>
               </div>
 
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30">
-                <h3 className="text-2xl font-bold text-yellow-300 mb-6 flex items-center">
-                  <span className="text-3xl mr-3">🎯</span>
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
+                <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
+                  <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">🎯</span>
                   Evaluation Criteria
                 </h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">30%</div>
-                    <div className="text-sm text-purple-300">Problem-Solution Fit</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">30%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Problem-Solution Fit</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">25%</div>
-                    <div className="text-sm text-purple-300">Market Potential</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">25%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Market Potential</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">20%</div>
-                    <div className="text-sm text-purple-300">Technical Feasibility</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">20%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Technical Feasibility</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">15%</div>
-                    <div className="text-sm text-purple-300">Business Model</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">15%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Business Model</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">10%</div>
-                    <div className="text-sm text-purple-300">Presentation</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">10%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Presentation</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-300">100%</div>
-                    <div className="text-sm text-purple-300">Total Score</div>
+                    <div className="text-lg sm:text-2xl font-bold text-blue-300">100%</div>
+                    <div className="text-xs sm:text-sm text-purple-300">Total Score</div>
                   </div>
                 </div>
               </div>
 
-              <div className="text-center space-y-4">
+              <div className="text-center space-y-3 sm:space-y-4">
                 <Link
                   href="/business-innovation"
-                  className="bg-linear-to-r from-yellow-500 via-orange-500 to-yellow-500 hover:from-yellow-600 hover:via-orange-600 hover:to-yellow-600 text-black px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-block"
+                  className="bg-linear-to-r from-yellow-500 via-orange-500 to-yellow-500 hover:from-yellow-600 hover:via-orange-600 hover:to-yellow-600 text-black px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg inline-block"
                 >
                   🚀 Enter Business Innovation Challenge
                 </Link>
-                <p className="text-purple-300 text-sm">
+                <p className="text-purple-300 text-xs sm:text-sm">
                   Limited spots available • Early registration recommended
                 </p>
               </div>
@@ -367,23 +507,23 @@ export default function LandingPage() {
           </div>
 
           {/* Stats Banner */}
-          <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 border border-yellow-500/30">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-yellow-300 mb-2">50+</div>
-                <div className="text-purple-200">Teams Expected</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">30+</div>
+                <div className="text-purple-200 text-sm sm:text-base">Teams Expected</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-yellow-300 mb-2">4</div>
-                <div className="text-purple-200">Competition Phases</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">4</div>
+                <div className="text-purple-200 text-sm sm:text-base">Competition Phases</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-yellow-300 mb-2">PKR 100K+</div>
-                <div className="text-purple-200">Total Rewards</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">PKR 80K+</div>
+                <div className="text-purple-200 text-sm sm:text-base">Total Rewards</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-yellow-300 mb-2">48hrs</div>
-                <div className="text-purple-200">Innovation Time</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">18+ Days</div>
+                <div className="text-purple-200 text-sm sm:text-base">Innovation Time</div>
               </div>
             </div>
           </div>
@@ -391,52 +531,60 @@ export default function LandingPage() {
       </section>
 
       {/* Modules Section */}
-      <section id="modules" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
+      <section id="modules" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-blue-900/5 to-transparent"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
               Competition Modules
             </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               Choose from our diverse range of technology competitions. Each module offers unique challenges
               and opportunities to showcase your skills.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
             {modules.map((module, index) => (
               <Link
                 key={index}
                 href={`/modules/${encodeURIComponent(module.name)}`}
-                className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block"
+                className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block group"
               >
-                <div className="h-48 bg-linear-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
-                  <div className="text-6xl">
-                    {module.name.includes('AI') && '🤖'}
-                    {module.name.includes('Cyber') && '🔒'}
-                    {module.name.includes('FIFA') && '⚽'}
-                    {module.name.includes('Robot') && '🤖'}
-                    {module.name.includes('PUBG') && '🎮'}
-                    {module.name.includes('Programming') && '💻'}
-                    {module.name.includes('Wiring') && '⚡'}
-                    {module.name.includes('Sumo') && '🤼'}
-                    {module.name.includes('Tekken') && '🥊'}
-                    {module.name.includes('UI/UX') && '🎨'}
-                    {module.name.includes('Valorant') && '🎯'}
-                    {module.name.includes('Web') && '🌐'}
-                    {module.name.includes('Business') && '💼'}
-                    {!module.name.includes('AI') && !module.name.includes('Cyber') && !module.name.includes('FIFA') && !module.name.includes('Robot') && !module.name.includes('PUBG') && !module.name.includes('Programming') && !module.name.includes('Wiring') && !module.name.includes('Sumo') && !module.name.includes('Tekken') && !module.name.includes('UI/UX') && !module.name.includes('Valorant') && !module.name.includes('Web') && !module.name.includes('Business') && '🏆'}
-                  </div>
+                <div className="h-32 sm:h-36 md:h-40 bg-linear-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={
+                      module.name === 'AI Hackathon' ? 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Cyber Hackathon' ? 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'FIFA 26' ? 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Line Following Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Obstacle Avoidance Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'PUBG Mobile' ? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Scavenger Hunt' ? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Speed Programming' ? 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Speed Wiring' ? 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Sumo War Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Tekken 8' ? 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'UI/UX Competition' ? 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Valorant' ? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Web Hackathon' ? 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'CyberQuest' ? 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop&crop=center' :
+                      module.name === 'Business Innovation' ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center' :
+                      'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center'
+                    }
+                    alt={module.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-blue-300 mb-2">{module.name}</h3>
-                  <div className="space-y-2 text-sm text-purple-200">
+                <div className="p-3 sm:p-4 md:p-5">
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">{module.name}</h3>
+                  <div className="space-y-1 text-sm text-purple-200">
                     <p><span className="font-medium">Fee:</span> PKR {module.fee}</p>
                     <p><span className="font-medium">Team Size:</span> {module.teamSize}</p>
                     <p><span className="font-medium">Contact:</span> {module.contact}</p>
                   </div>
-                  <div className="mt-4 text-center">
-                    <span className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                  <div className="mt-2 sm:mt-3 text-center">
+                    <span className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
                       Learn More →
                     </span>
                   </div>
@@ -447,113 +595,602 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Video Highlights */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
-              Event Highlights
+      {/* Collaborating Clubs Section */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-transition">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-2xl animate-pulse delay-500"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6 backdrop-blur-sm">
+              <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">🚀 COLLABORATING CLUBS</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4 sm:mb-6">
+              Our Partner Communities
             </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
-              Experience the excitement and energy of Techverse through our highlight videos.
+            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
+              These amazing clubs made Techverse 2026 possible through their collaboration and support.
+              Join them to be part of the tech community at UMT.
             </p>
           </div>
 
-          <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-500/20">
-            <div className="aspect-video bg-black/50 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🎥</div>
-                <p className="text-purple-200 text-lg">Event highlight videos will be available soon!</p>
-                <p className="text-purple-400 text-sm mt-2">Stay tuned for exciting content from Techverse 2026</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8">
+            {/* ACM */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-blue-400/50 bg-linear-to-br from-blue-600/20 to-cyan-600/20 p-2 group-hover:border-blue-300/80 transition-all duration-300">
+                  <Image
+                    src="https://www.acm.org/binaries/content/gallery/acm/logos/logo_footer_acm.png"
+                    alt="ACM Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">ACM</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Association for Computing Machinery</p>
+                <a
+                  href="https://www.instagram.com/acm.umt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@acm.umt</span>
+                </a>
+              </div>
+            </div>
+
+            {/* UMT Cybersecurity */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-green-500/30 hover:border-green-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-green-400/50 bg-linear-to-br from-green-600/20 to-emerald-600/20 p-2 group-hover:border-green-300/80 transition-all duration-300">
+                  <Image
+                    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center"
+                    alt="UMT Cybersecurity Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-green-300 mb-2 group-hover:text-emerald-300 transition-colors duration-300">Cybersecurity</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Cybersecurity Society at UMT</p>
+                <a
+                  href="https://www.instagram.com/umtcybersecurity/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@umtcybersecurity</span>
+                </a>
+              </div>
+            </div>
+
+            {/* IEEE UMT Branch */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-red-600 via-pink-600 to-red-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-red-500/30 hover:border-red-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-red-400/50 bg-linear-to-br from-red-600/20 to-pink-600/20 p-2 group-hover:border-red-300/80 transition-all duration-300">
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/IEEE_logo.svg/1200px-IEEE_logo.svg.png"
+                    alt="IEEE Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-red-300 mb-2 group-hover:text-pink-300 transition-colors duration-300">IEEE UMT</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Institute of Electrical and Electronics Engineers</p>
+                <a
+                  href="https://www.instagram.com/ieeeumt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@ieeeumt</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Gamer Lounge */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-purple-600 via-violet-600 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 hover:border-purple-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-purple-400/50 bg-linear-to-br from-purple-600/20 to-violet-600/20 p-2 group-hover:border-purple-300/80 transition-all duration-300">
+                  <Image
+                    src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop&crop=center"
+                    alt="Gamer Lounge Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-purple-300 mb-2 group-hover:text-violet-300 transition-colors duration-300">Gamer Lounge</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Gaming Community at UMT</p>
+                <a
+                  href="https://www.instagram.com/gamerlounge.umt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@gamerlounge.umt</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Intel AI */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-600 via-blue-600 to-cyan-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-cyan-400/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 p-2 group-hover:border-cyan-300/80 transition-all duration-300">
+                  <Image
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png"
+                    alt="Intel AI Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2 group-hover:text-blue-300 transition-colors duration-300">Intel AI</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Artificial Intelligence Club at UMT</p>
+                <a
+                  href="https://www.instagram.com/intelai.umt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@intelai.umt</span>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Organizers */}
-      <section id="organizers" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+      {/* Sponsors Section */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-black via-purple-900/20 to-blue-900/20 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-cyan-500/5 via-transparent to-purple-500/5"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
+              Our Sponsors
+            </h2>
+            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
+              We are grateful to our sponsors for their generous support in making Techverse 2026 possible.
+              Their partnership helps us create an exceptional experience for all participants.
+            </p>
+          </div>
+
+          {/* Diamond Sponsors */}
+          <div className="mb-8 sm:mb-12">
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-4">
+                <span className="text-cyan-300 font-bold text-sm sm:text-base">💎 DIAMOND SPONSORS</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
+              {/* Diamond Sponsor 1 */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
+                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
+                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              {/* Diamond Sponsor 2 */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
+                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
+                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              {/* Diamond Sponsor 3 */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
+                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
+                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* View All Sponsors CTA */}
+          <div className="text-center">
+            <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-purple-500/30 max-w-2xl mx-auto">
+              <h3 className="text-xl sm:text-2xl font-bold text-blue-300 mb-3 sm:mb-4">All Our Sponsors</h3>
+              <p className="text-purple-200 text-sm sm:text-base mb-4 sm:mb-6">
+                Meet all the amazing companies and organizations supporting Techverse 2026.
+                From Platinum to Bronze sponsors, see who's making this event possible.
+              </p>
+              <Link
+                href="/sponsors"
+                className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 inline-block"
+              >
+                View All Sponsors
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Highlights */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-purple-900/5 to-transparent"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
-              Techverse Executives
+              Event Highlights
             </h2>
             <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+              Experience the excitement and energy of Techverse through our highlight reels.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {/* Reel 1 */}
+            <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
+              <div className="aspect-9/16 bg-black/50 relative">
+                <iframe
+                  src="https://www.youtube.com/embed/Vvljq7LDW6c"
+                  title="Techverse Chapter 02"
+                  className="w-full h-full rounded-t-xl"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                  LIVE
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-blue-300 mb-2">Techverse Chapter 02</h3>
+                <p className="text-purple-200 text-sm">Watch the most exciting moments from our competitions and events.</p>
+              </div>
+            </div>
+
+            {/* Reel 2 */}
+            <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
+              <div className="aspect-9/16 bg-black/50 relative">
+                <iframe
+                  src="https://www.youtube.com/embed/KT-3yPu1D44"
+                  title="Champion Stories"
+                  className="w-full h-full rounded-t-xl"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <div className="absolute top-2 right-2 bg-yellow-500 text-black text-xs px-2 py-1 rounded-full font-bold">
+                  FEATURED
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-blue-300 mb-2">Techverse Is Back</h3>
+                <p className="text-purple-200 text-sm">Celebrating our winners and their incredible journeys to victory.</p>
+              </div>
+            </div>
+
+            {/* Reel 3 */}
+            <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
+              <div className="aspect-9/16 bg-black/50 relative">
+                <iframe
+                  src="https://www.youtube.com/embed/i-mDriHWHkY"
+                  title="Event Preparation"
+                  className="w-full h-full rounded-t-xl"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                  BTS
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-blue-300 mb-2">Previous Techverse Highlights</h3>
+                <p className="text-purple-200 text-sm">Get a glimpse of how we prepare for the biggest tech event in Pakistan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <p className="text-purple-400 text-sm">
+              More highlight reels coming soon! Stay tuned for exciting content from Techverse 2026
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Organizers */}
+      <section id="organizers" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-blue-900/5 via-transparent to-purple-900/5"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
+              Techverse Executives
+            </h2>
+            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               Meet the visionary leadership team behind Techverse 2026, dedicated to bringing you Pakistan's premier technology competition event.
             </p>
           </div>
 
           {/* Executive Leadership */}
-          <div className="mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center text-blue-300 mb-8">Executive Leadership</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-24 h-24 bg-linear-to-br from-yellow-500 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">
-                  👑
+          <div className="mb-12 sm:mb-16">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-blue-300 mb-6 sm:mb-8">Executive Leadership</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'President',
+                  name: 'M Shehryar Rana',
+                  description: 'Visionary leader guiding Techverse Ch 02 - 2026',
+                  image: 'https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763679600&v=beta&t=398M4PvGCkea48b-QLpoiaHJk5DcNXmK2kEuBRaj1So',
+                  linkedin: 'https://www.linkedin.com/in/muhammad-sheharyar-shahzad-rana/'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763679600&v=beta&t=398M4PvGCkea48b-QLpoiaHJk5DcNXmK2kEuBRaj1So"
+                    alt="President"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-blue-300 mb-2">President</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Visionary leader guiding Techverse 2026</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-300 mb-2">President</h3>
+                <p className="text-purple-200 font-medium mb-1 text-sm sm:text-base">M Shehryar Rana</p>
+                <p className="text-purple-300 text-xs sm:text-sm">Visionary leader guiding Techverse Ch 02 - 2026</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="https://www.linkedin.com/in/muhammad-sheharyar-shahzad-rana/" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-24 h-24 bg-linear-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">
-                  🏆
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'Vice President',
+                  name: 'M Hussnain Mahmood',
+                  description: 'Strategic Marketing Supervisor and Operations',
+                  image: 'https://media.licdn.com/dms/image/v2/D4D03AQFrVRhVwcmvAA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710865419519?e=1764806400&v=beta&t=bKkuuumUItNggpxMk1hqmeQAWTz0EcAl4XcN_KvTzqc',
+                  linkedin: 'https://www.linkedin.com/in/husnain-mehmood-b977362bb/'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQFrVRhVwcmvAA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710865419519?e=1764806400&v=beta&t=bKkuuumUItNggpxMk1hqmeQAWTz0EcAl4XcN_KvTzqc"
+                    alt="Vice President"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-blue-300 mb-2">Vice President</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Strategic operations and event management</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-300 mb-2">Vice President</h3>
+                <p className="text-purple-200 font-medium mb-1 text-sm sm:text-base">M Hussnain Mahmood</p>
+                <p className="text-purple-300 text-xs sm:text-sm">Strategic Marketing Supervisor and Operations</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="https://www.linkedin.com/in/husnain-mehmood-b977362bb/" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-24 h-24 bg-linear-to-br from-pink-500 to-rose-500 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl">
-                  💎
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'Female Vice President',
+                  name: 'Syeda Khadija Sultan',
+                  description: 'Supervisor Module Leads & Creatives',
+                  image: 'https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo',
+                  linkedin: '#'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo"
+                    alt="Female Vice President"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-blue-300 mb-2">Female Vice President</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Empowering diversity and inclusion</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-300 mb-2">Female Vice President</h3>
+                <p className="text-purple-200 font-medium mb-1 text-sm sm:text-base">Syeda Khadija Sultan</p>
+                <p className="text-purple-300 text-xs sm:text-sm">Supervisor Module Leads & Creatives</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="#" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Executive Council */}
-          <div className="mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-center text-blue-300 mb-8">Executive Council</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-20 h-20 bg-linear-to-br from-green-500 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-                  📋
+          <div className="mb-12 sm:mb-16">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-blue-300 mb-6 sm:mb-8">Executive Council</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'Secretary General',
+                  name: 'Muhammad Ali Haider',
+                  description: 'Administrative leadership, Supervisor External Affairs, Marketing, and Delegations.',
+                  image: 'https://media.licdn.com/dms/image/v2/D4D03AQH43chbjV5ocA/profile-displayphoto-shrink_200_200/B4DZTaWUsJG8Ag-/0/1738830076288?e=1764806400&v=beta&t=meGZU8WcE-TMc76SRgHgAfBRdMd9p0Hl5M1THuPWt9A',
+                  linkedin: 'https://linkedin.com/in/memalihaider'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQH43chbjV5ocA/profile-displayphoto-shrink_200_200/B4DZTaWUsJG8Ag-/0/1738830076288?e=1764806400&v=beta&t=meGZU8WcE-TMc76SRgHgAfBRdMd9p0Hl5M1THuPWt9A"
+                    alt="Secretary General"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-lg font-semibold text-blue-300 mb-2">Secretary General</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Administrative leadership</p>
+                <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Secretary General</h3>
+                <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">Muhammad Ali Haider</p>
+                <p className="text-purple-300 text-xs">Administrative leadership, Supervisor External Affairs, Marketing, and Delegations. </p>
+                <div className="mt-3 flex justify-center">
+                  <a href="https://linkedin.com/in/memalihaider" target="_blank" rel="noopener noreferrer" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-20 h-20 bg-linear-to-br from-cyan-500 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-                  �
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'General Secretary',
+                  name: 'Abdul Wahab',
+                  description: 'Supervisor Registeraion and Industrial Panel',
+                  image: 'https://res.cloudinary.com/dggbhgqib/image/upload/v1763073103/Abdul_Wahab_General_Secretary_-_ABDUL_WAHAB_q1ilad.png',
+                  linkedin: '#'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073103/Abdul_Wahab_General_Secretary_-_ABDUL_WAHAB_q1ilad.png"
+                    alt="General Secretary"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-lg font-semibold text-blue-300 mb-2">General Secretary</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Documentation and records</p>
+                <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">General Secretary</h3>
+                <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">Abdul Wahab</p>
+                <p className="text-purple-300 text-xs">Supervisor Registeraion and Industrial Panel</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="#" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-20 h-20 bg-linear-to-br from-indigo-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-                  🎯
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'Director General',
+                  name: 'Rehan',
+                  description: 'Supervior IT and Rooms Operations',
+                  image: 'https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW',
+                  linkedin: '#'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
+                    alt="Director General"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-lg font-semibold text-blue-300 mb-2">Director General</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Strategic direction and execution</p>
+                <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Director General</h3>
+                <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">Rehan</p>
+                <p className="text-purple-300 text-xs">Supervior IT and Rooms Operations</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="#" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
 
-              <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
-                <div className="w-20 h-20 bg-linear-to-br from-red-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">
-                  📸
+              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 cursor-pointer" onClick={() => {
+                setSelectedExecutive({
+                  title: 'Media Secretary',
+                  name: 'M Saad Ahmad',
+                  description: 'Media relations and publicity',
+                  image: 'https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png',
+                  linkedin: '#'
+                })
+                setIsModalOpen(true)
+              }}>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <Image
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
+                    alt="Media Secretary"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-lg font-semibold text-blue-300 mb-2">Media Secretary</h3>
-                <p className="text-purple-200 font-medium mb-1">[Name to be announced]</p>
-                <p className="text-purple-300 text-sm">Media relations and publicity</p>
+                <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Media Secretary</h3>
+                <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">M Saad Ahmad</p>
+                <p className="text-purple-300 text-xs">Media relations and publicity</p>
+                <div className="mt-3 flex justify-center">
+                  <a href="#" className="inline-block text-blue-400 hover:text-blue-300 transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -562,7 +1199,7 @@ export default function LandingPage() {
           <div className="text-center">
             <Link
               href="/team"
-              className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 inline-block"
+              className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 inline-block"
             >
               Meet Our Full Team
             </Link>
@@ -571,9 +1208,10 @@ export default function LandingPage() {
       </section>
 
       {/* Registration CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-linear-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-2xl p-12 border border-purple-500/30">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="absolute inset-0 bg-linear-to-b from-blue-900/10 via-transparent to-purple-900/10"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="bg-linear-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-2xl p-12 border border-purple-500/30 animate-scale-in">
             <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
               Ready to Compete?
             </h2>
@@ -592,36 +1230,39 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black/80 backdrop-blur-sm border-t border-purple-500/20 py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-black/80 backdrop-blur-sm border-t border-purple-500/20 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-3 sm:mb-4">
                 Techverse 2026
               </h3>
-              <p className="text-purple-200 mb-4">
+              <p className="text-purple-200 mb-3 sm:mb-4 text-sm sm:text-base">
                 Pakistan's Premier Technology Competition Event. Where innovation meets competition,
                 and the future of technology is shaped by today's brightest minds.
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-purple-400 hover:text-blue-400 transition-colors">
-                  <span className="text-xl">📘</span>
+              <div className="flex space-x-3 sm:space-x-4">
+                <a href="https://www.youtube.com/@UMTTechverse" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-red-400 transition-colors">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
                 </a>
-                <a href="#" className="text-purple-400 hover:text-blue-400 transition-colors">
-                  <span className="text-xl">📷</span>
+                <a href="https://www.linkedin.com/company/umttechverse" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-blue-400 transition-colors">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
                 </a>
-                <a href="#" className="text-purple-400 hover:text-blue-400 transition-colors">
-                  <span className="text-xl">🐦</span>
-                </a>
-                <a href="#" className="text-purple-400 hover:text-blue-400 transition-colors">
-                  <span className="text-xl">💼</span>
+                <a href="https://www.instagram.com/techverse.chapter2/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-pink-400 transition-colors">
+                  <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
                 </a>
               </div>
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold text-blue-300 mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-purple-200">
+              <h4 className="text-base sm:text-lg font-semibold text-blue-300 mb-3 sm:mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-purple-200 text-sm sm:text-base">
                 <li><Link href="#about" className="hover:text-blue-300 transition-colors">About Event</Link></li>
                 <li><Link href="#modules" className="hover:text-blue-300 transition-colors">Competition Modules</Link></li>
                 <li><Link href="#organizers" className="hover:text-blue-300 transition-colors">Executives</Link></li>
@@ -631,23 +1272,76 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <h4 className="text-lg font-semibold text-blue-300 mb-4">Contact Info</h4>
-              <div className="space-y-2 text-purple-200">
+              <h4 className="text-base sm:text-lg font-semibold text-blue-300 mb-3 sm:mb-4">Contact Info</h4>
+              <div className="space-y-2 text-purple-200 text-sm sm:text-base">
                 <p>📧 techverse@umt.edu.pk</p>
-                <p>📱 +92 42 35212801-10</p>
                 <p>🏛️ UMT Lahore, Pakistan</p>
-                <p>📅 Nov 13-14, 2025</p>
+                <p>📅 Jan 5-11, 2026</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-purple-500/20 mt-8 pt-8 text-center">
-            <p className="text-purple-400">
-              © 2025 Techverse 2026. Organized by University of Management and Technology. All rights reserved.
+          <div className="border-t border-purple-500/20 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
+            <p className="text-purple-400 text-sm sm:text-base">
+              © 2026 Techverse Ch02. Organized by University of Management and Technology. All rights reserved.
             </p>
           </div>
         </div>
       </footer>
+
+      {/* Executive Modal */}
+      {isModalOpen && selectedExecutive && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-purple-900/90 rounded-2xl max-w-md w-full border border-purple-500/30 shadow-2xl">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-blue-300">Executive Profile</h3>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="text-purple-400 hover:text-white transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="text-center">
+                <div className="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-400/50">
+                  <Image
+                    src={selectedExecutive.image}
+                    alt={selectedExecutive.title}
+                    width={128}
+                    height={128}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <h4 className="text-xl font-semibold text-blue-300 mb-2">{selectedExecutive.title}</h4>
+                <p className="text-purple-200 font-medium text-lg mb-4">{selectedExecutive.name}</p>
+                <p className="text-purple-300 text-sm mb-6 leading-relaxed">{selectedExecutive.description}</p>
+
+                {selectedExecutive.linkedin && selectedExecutive.linkedin !== '#' && (
+                  <div className="flex justify-center">
+                    <a
+                      href={selectedExecutive.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                      <span>View LinkedIn</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

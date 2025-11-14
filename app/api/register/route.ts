@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase'
 import { sendEmail } from '@/lib/email'
 import { modules } from '@/lib/modules'
 import { validateEmail } from '@/lib/email-validation'
+import { generatePendingRegistrationEmail } from '@/lib/email-templates'
+import type { RegistrationData } from '@/lib/email-templates'
 
 function generateAccessCode(): string {
   // Generate a random 8-character alphanumeric code
@@ -31,9 +33,15 @@ export async function POST(request: NextRequest) {
     const email = formData.get('email') as string
     const cnic = formData.get('cnic') as string
 
-    // Validate email
+    console.log('Registration attempt for:', { name, email, cnic })
+
+    // Validate email (temporarily relaxed - only check format and disposable)
     const emailValidation = await validateEmail(email)
-    if (!emailValidation.isValid) {
+    console.log('Email validation result:', emailValidation)
+
+    // For now, only reject if format is invalid or it's disposable
+    // Skip MX record check to avoid false positives
+    if (!emailValidation.isValid && (emailValidation.errors.includes('Invalid email format') || emailValidation.errors.includes('Disposable email addresses are not allowed'))) {
       return NextResponse.json({
         error: 'Invalid email address',
         details: emailValidation.errors
@@ -49,11 +57,15 @@ export async function POST(request: NextRequest) {
     const teamMembers = JSON.parse(formData.get('teamMembers') as string)
     const paymentReceipt = formData.get('paymentReceipt') as File | null
 
-    // Validate team member emails if provided
+    // Validate team member emails if provided (temporarily relaxed)
     for (const member of teamMembers) {
       if (member.email && member.email !== email) { // Skip validation for main registrant
+        console.log('Validating team member email:', member.email)
         const memberEmailValidation = await validateEmail(member.email)
-        if (!memberEmailValidation.isValid) {
+        console.log('Team member email validation result:', memberEmailValidation)
+
+        // For now, only reject if format is invalid or it's disposable
+        if (!memberEmailValidation.isValid && (memberEmailValidation.errors.includes('Invalid email format') || memberEmailValidation.errors.includes('Disposable email addresses are not allowed'))) {
           return NextResponse.json({
             error: `Invalid email for team member: ${member.name}`,
             details: memberEmailValidation.errors
@@ -64,19 +76,26 @@ export async function POST(request: NextRequest) {
 
     let receiptUrl = ''
     if (paymentReceipt) {
+      console.log('Uploading payment receipt...')
       const fileExt = paymentReceipt.name.split('.').pop()
       const fileName = `${Date.now()}.${fileExt}`
       const { data, error } = await supabase.storage
         .from('receipts')
         .upload(fileName, paymentReceipt)
-      if (error) throw error
+      if (error) {
+        console.error('File upload error:', error)
+        throw error
+      }
       receiptUrl = data.path
+      console.log('File uploaded successfully:', receiptUrl)
     }
 
     // Generate access code and unique certificate ID
     const accessCode = generateAccessCode()
     const uniqueCertificateId = generateUniqueCertificateId()
+    console.log('Generated codes:', { accessCode, uniqueCertificateId })
 
+    console.log('Inserting registration into database...')
     const { error } = await supabase
       .from('registrations')
       .insert({
@@ -96,57 +115,64 @@ export async function POST(request: NextRequest) {
         status: 'pending',
       })
 
-    if (error) throw error
+    if (error) {
+      console.error('Database insertion error:', error)
+
+      // Handle specific database errors
+      if (error.code === '23505') {
+        if (error.message.includes('cnic')) {
+          return NextResponse.json({
+            error: 'CNIC already registered',
+            message: 'This CNIC has already been used for registration. Each CNIC can only be registered once.'
+          }, { status: 400 })
+        } else if (error.message.includes('email')) {
+          return NextResponse.json({
+            error: 'Email already registered',
+            message: 'This email address has already been used for registration. Each email can only be registered once.'
+          }, { status: 400 })
+        }
+      }
+
+      throw error
+    }
+    console.log('Registration inserted successfully')
 
     // Send booking email
+    console.log('Sending confirmation email...')
     const selectedModule = modules.find(m => m.name === module)
-    const teamMembersText = teamMembers.length > 1 ? 
-      `\n\n<strong>Team Members:</strong>\n${teamMembers.slice(1).map((member: {name: string, email: string, university: string, rollNo: string}, idx: number) => `${idx + 1}. ${member.name} (${member.email}) - ${member.university} (${member.rollNo})`).join('\n')}` : ''
-    
+
     const hostelFee = hostel === 'one_day' ? 2000 : hostel === 'three_days' ? 5000 : 0
     const originalModuleFee = selectedModule?.fee || 0
     const isValidAmbassadorCode = ambassadorCode && ['TECHVERSE2025', 'UMTAMBASSADOR', 'TECHVERSE10', 'UMTSTUDENT', 'TECHVERSEVIP', 'UMT2025', 'TECHVERSEPRO', 'UMTAMB10', 'TECHVERSEPLUS', 'UMTTECH'].includes(ambassadorCode.toUpperCase())
     const discountedModuleFee = isValidAmbassadorCode ? Math.floor(originalModuleFee * 0.9) : originalModuleFee
-    const discountAmount = isValidAmbassadorCode ? originalModuleFee - discountedModuleFee : 0
     const totalAmount = discountedModuleFee + hostelFee
-    
-    const hostelText = hostel !== 'none' ? 
-      `\n\n<strong>Accommodation:</strong>\n${hostel === 'one_day' ? 'Hostel for 1 day - PKR 2,000' : 'Hostel for 3 days - PKR 5,000'}\nPayment for accommodation will be collected separately at the venue.` : 
-      '\n\n<strong>Accommodation:</strong>\nSelf-arranged accommodation'
-    
-    const paymentText = `\n\n<strong>Payment Details:</strong>\n${isValidAmbassadorCode ? `Original Module Fee: PKR ${originalModuleFee.toLocaleString()}\nDiscounted Module Fee: PKR ${discountedModuleFee.toLocaleString()} (10% ambassador discount applied)` : `Module Fee: PKR ${discountedModuleFee.toLocaleString()}`}${hostel !== 'none' ? `\nHostel Fee: PKR ${hostelFee.toLocaleString()}` : ''}${discountAmount > 0 ? `\nDiscount Amount: -PKR ${discountAmount.toLocaleString()}` : ''}\n<strong>Total Amount: PKR ${totalAmount.toLocaleString()}</strong>`
-    
-    const portalAccessText = module === 'Business Innovation' ? 
-      `\n\n<strong>Business Innovation Portal Access:</strong>\nYour unique access code: <strong>${accessCode}</strong>\nUse this code along with your email (${email}) to access the Business Innovation portal.` : ''
-    
-    const certificateText = `\n\n<strong>Certificate Information:</strong>\nYour unique certificate ID: <strong>${uniqueCertificateId}</strong>\nKeep this ID safe! You will need it along with your CNIC to generate your participation certificate after the event.`
-    
-    // Send booking email (temporarily disabled for testing)
-    // const bookingEmailHtml = `
-    //   <h1>Module Booked Successfully</h1>
-    //   <p>Dear ${name},</p>
-    //   <p>Your registration for ${module} has been received and is pending approval.</p>
-    //   <p><strong>Personal Details:</strong></p>
-    //   <ul>
-    //     <li>Name: ${name}</li>
-    //     <li>Email: ${email}</li>
-    //     <li>University: ${university}</li>
-    //     <li>Roll Number: ${rollNo}</li>
-    //     <li>CNIC: ${cnic}</li>
-    //     <li>Phone: ${phone}</li>
-    //   </ul>
-    //   <p><strong>Module Details:</strong></p>
-    //   <ul>
-    //     <li>Module: ${module}</li>
-    //     <li>Team Size: ${selectedModule?.teamSize}</li>
-    //     <li>Entry Fee: ${isValidAmbassadorCode ? `PKR ${originalModuleFee.toLocaleString()} (discounted to PKR ${discountedModuleFee.toLocaleString()})` : `PKR ${discountedModuleFee.toLocaleString()}`}</li>
-    //     <li>Contact: ${selectedModule?.contact}</li>
-    //     ${ambassadorCode ? `<li>Ambassador Code: ${ambassadorCode} ${isValidAmbassadorCode ? '(Valid - 10% discount applied)' : '(Invalid - no discount applied)'}</li>` : ''}
-    //   </ul>${teamMembersText}${hostelText}${paymentText}${portalAccessText}${certificateText}
-    //   <p>You will receive another email once your registration is approved.</p>
-    //   <p>Best regards,<br>Techverse 2026 Team</p>
-    // `
-    // await sendEmail(email, 'Techverse 2026 - Module Booked', bookingEmailHtml)
+
+    // Prepare registration data for email template
+    const registrationData: RegistrationData = {
+      name,
+      email,
+      cnic,
+      phone,
+      university,
+      roll_no: rollNo,
+      module,
+      hostel,
+      ambassador_code: ambassadorCode || undefined,
+      team_members: teamMembers,
+      access_code: accessCode,
+      unique_id: uniqueCertificateId,
+      status: 'pending' as const,
+    }
+
+    const bookingEmailHtml = generatePendingRegistrationEmail(registrationData)
+
+    try {
+      await sendEmail(email, 'Techverse 2026 - Registration Confirmed', bookingEmailHtml)
+      console.log('Confirmation email sent successfully')
+    } catch (emailError) {
+      console.error('Failed to send confirmation email:', emailError)
+      // Don't fail the registration if email fails, just log it
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -460,7 +460,7 @@ export default function ModulePage() {
                 <p><span className="font-medium">Coordinator:</span> {module.contact}</p>
                 <p><span className="font-medium">Event:</span> Techverse 2026</p>
                 <p><span className="font-medium">Venue:</span> UMT Lahore</p>
-                <p><span className="font-medium">Date:</span> Nov 13-14, 2025</p>
+                <p><span className="font-medium">Date:</span> Jan 5-11, 2026</p>
               </div>
             </div>
 
