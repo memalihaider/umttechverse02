@@ -25,8 +25,10 @@ const SUSPICIOUS_PATTERNS = [
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://techverse-umt.vercel.app',
   'https://umttechverse.com',
+  'https://umttechverse.com/',
+  'https://www.umttechverse.com',
+  'https://www.umttechverse.com/',
   // Add your production domain here
 ]
 
@@ -59,6 +61,12 @@ function containsSuspiciousContent(url: string, body?: string): boolean {
 
 function isValidOrigin(origin: string | null): boolean {
   if (!origin) return true // Allow requests without Origin header
+
+  // Allow localhost for development
+  if (origin.startsWith('http://localhost:')) return true
+
+  // Allow any umttechverse.com domain for production
+  if (origin.includes('umttechverse.com')) return true
 
   return ALLOWED_ORIGINS.some(allowedOrigin =>
     origin === allowedOrigin || origin.startsWith(allowedOrigin)
@@ -115,7 +123,8 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') && (
       pathname.includes('/certificate/verify') ||
-      pathname.includes('/business-innovation/auth')
+      pathname.includes('/business-innovation/auth') ||
+      pathname.includes('/admin/')
     ) ||
     pathname.includes('.')
   ) {
