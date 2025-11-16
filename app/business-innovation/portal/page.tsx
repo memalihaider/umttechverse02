@@ -191,7 +191,7 @@ export default function BusinessInnovationPortal() {
               <div>
                 <h4 className="font-semibold text-purple-100 mb-2">🏆 Prizes</h4>
                 <ul className="list-disc list-inside space-y-1 text-sm">
-                  <li>1st Place: PKR 50,000 + Internship Opportunities</li>
+                  <li>1st Place: PKR 40,000 + Internship Opportunities</li>
                   <li>2nd Place: PKR 30,000 + Mentorship Program</li>
                   <li>3rd Place: PKR 20,000 + Certificate of Excellence</li>
                   <li>Special Mentions: Certificate + Techverse Swag</li>

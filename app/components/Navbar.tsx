@@ -6,11 +6,12 @@ import { Menu, X } from 'lucide-react'
 
 const navigationLinks = [
   { href: '/#about', label: 'About' },
-  { href: '/#modules', label: 'Modules' },
+  { href: '/modules', label: 'Modules' },
   { href: '/#organizers', label: 'Executives' },
   { href: '/team', label: 'Team' },
   { href: '/business-innovation', label: 'Business Innovation' },
   { href: '/certificate', label: 'Certificate' },
+  { href: '/rules', label: 'Rules' },
 ]
 
 export default function Navbar() {
@@ -63,7 +64,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Navigation Links */}
+            {/* Desktop Navigation Links and Registration Button */}
             <div className="hidden md:flex items-center space-x-4 lg:space-x-6 xl:space-x-8">
               {navigationLinks.map((link) => (
                 <Link
@@ -75,6 +76,14 @@ export default function Navbar() {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
                 </Link>
               ))}
+              
+              {/* Registration Button */}
+              <Link
+                href="/register"
+                className="bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 lg:px-6 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-purple-500/25 border border-purple-400/30 hover:border-purple-300/50 whitespace-nowrap"
+              >
+                Register Now
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -117,6 +126,18 @@ export default function Navbar() {
                   </div>
                 </Link>
               ))}
+              
+              {/* Mobile Registration Button */}
+              <div className="pt-2 border-t border-purple-500/20">
+                <Link
+                  href="/register"
+                  onClick={closeMobileMenu}
+                  className="block bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 text-center shadow-lg hover:shadow-purple-500/25 border border-purple-400/30 hover:border-purple-300/50 active:scale-95 transform"
+                  style={{ animationDelay: `${navigationLinks.length * 50}ms` }}
+                >
+                  Register Now
+                </Link>
+              </div>
             </div>
           </div>
         </div>

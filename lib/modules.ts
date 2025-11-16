@@ -2,7 +2,7 @@ export const modules = [
   { name: 'AI Hackathon', fee: 2500, teamSize: '2-4 members', contact: 'Umair Khan - +92 308 6707770' },
   { name: 'Cyber Hackathon', fee: 1500, teamSize: '1-3 members', contact: 'Nabaha Umar - +92 349 4709369' },
   { name: 'FIFA 26', fee: 1000, teamSize: 'Individual/Team', contact: 'Asad - +92 324 8443622' },
-  { name: 'Line Following Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
+  { name: 'Line Following Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248; Muhammad Itayab - +92 333 4204421' },
   { name: 'Obstacle Avoidance Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248' },
   { name: 'PUBG Mobile', fee: 2000, teamSize: '2-4 members', contact: 'Mueez - +92 307 8630935' },
   { name: 'Scavenger Hunt', fee: 2000, teamSize: '3-5 members', contact: 'Zunaira Maalik - +92 342 5486444' },

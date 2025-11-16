@@ -35,7 +35,8 @@ const VALID_AMBASSADOR_CODES = [
   'TECHVERSEPRO',
   'UMTAMB10',
   'TECHVERSEPLUS',
-  'UMTTECH'
+  'UMTTECH',
+  'UMT.TECHVERSE'
 ]
 
 // Helper function to check if ambassador code is valid
