@@ -91,39 +91,30 @@ section {
   transition: all 0.3s ease-in-out;
 }
 
-/* Gradient overlays for smooth transitions between sections */
+/* Subtle section transitions for unified page */
 .section-transition {
   position: relative;
+  margin-bottom: 2rem;
 }
 
 .section-transition::before {
   content: '';
   position: absolute;
-  top: -2px;
+  top: -1px;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.section-transition:hover::before {
-  opacity: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+  opacity: 0.5;
 }
 
 .section-transition::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: -1px;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.section-transition:hover::after {
-  opacity: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+  opacity: 0.5;
 }

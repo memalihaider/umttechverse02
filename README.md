@@ -5,7 +5,7 @@ A comprehensive registration and management platform for Techverse 2026, Pakista
 ## 🌟 Features
 
 - **Futuristic Landing Page**: Modern UI with hero section, event stats, modules showcase, and video highlights
-- **Individual Module Pages**: Detailed pages for each competition module with rules, requirements, and prizes
+- **Module GuideBooks**: Each module on the Modules page has a "View GuideBook" button which links to the official module guidebook (to be provided). Individual dynamic module pages are not used in this build.
 - **Techverse Executives**: Complete executive leadership team including President, Vice Presidents, Secretaries, and Directors
 - **Team Registration**: Support for team-based modules with dynamic team member addition
 - **User Registration Form**: Complete form with validation, CNIC/phone formatting, and file uploads
@@ -121,8 +121,7 @@ reg/
 │   │   ├── LandingPage.tsx       # Main landing page
 │   │   └── RegistrationForm.tsx  # Registration form component
 │   ├── modules/
-│   │   └── [moduleName]/
-│   │       └── page.tsx          # Dynamic module pages
+│   │   └── page.tsx              # Modules overview page with View GuideBook buttons
 │   ├── register/
 │   │   └── page.tsx              # Registration page wrapper
 │   ├── team/

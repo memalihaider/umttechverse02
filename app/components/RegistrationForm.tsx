@@ -179,9 +179,9 @@ const modules = [
     runnerUpPrize: 15000
   },
   {
-    name: 'CyberQuest',
+    name: 'Operation CyferQuest',
     fee: 2500,
-    contactPerson: 'Information Pending',
+    contactPerson: 'Ali Iftikhar - +92 309 5420081',
     teamSize: '1 member',
     winnerPrize: 25000,
     runnerUpPrize: 15000
@@ -189,7 +189,7 @@ const modules = [
   {
     name: 'Business Innovation',
     fee: 3999,
-    contactPerson: 'Information Pending',
+    contactPerson: 'Largify Solutions - +966 59 736 9443 & +92 309 699 3535',
     teamSize: '1-5 members',
     winnerPrize: 40000,
     runnerUpPrize: 30000

@@ -86,6 +86,26 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'largifysolutions.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gamesandgeeks.pk',
+      },
+      {
+        protocol: 'https',
+        hostname: 'rancherscafe.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.githubassets.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'res.cloudinary.com',
       },
       {

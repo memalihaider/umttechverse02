@@ -252,7 +252,7 @@ export default function AdminPortal() {
 
   // Filter and sort registrations
   useEffect(() => {
-    let filtered = registrations.filter(reg => {
+  const filtered = registrations.filter(reg => {
       const matchesSearch = searchTerm === '' ||
         reg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.email.toLowerCase().includes(searchTerm.toLowerCase()) ||

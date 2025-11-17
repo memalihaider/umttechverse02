@@ -50,33 +50,16 @@ export default function LandingPage() {
         <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-cyan-400 rounded-full animate-pulse opacity-10"></div>
         <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-25 delay-500"></div>
 
-        {/* Enhanced floating geometric shapes */}
+        {/* Simple floating geometric shapes */}
         <div className="absolute top-1/6 left-1/6 w-4 h-4 border-2 border-blue-400/30 rotate-45 animate-bounce opacity-20 delay-300"></div>
         <div className="absolute top-2/3 right-1/6 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse delay-700"></div>
         <div className="absolute bottom-1/3 left-1/2 w-2 h-6 bg-cyan-400/15 rounded-full animate-ping delay-1200"></div>
-        <div className="absolute top-1/3 right-1/3 w-5 h-5 border border-pink-400/25 rotate-12 animate-spin opacity-15 delay-500" style={{animationDuration: '8s'}}></div>
-        <div className="absolute bottom-1/6 right-1/4 w-3 h-3 bg-green-400/20 rounded-lg animate-bounce delay-900"></div>
-
-        {/* Gradient wave effects */}
-        <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-b from-blue-500/5 via-transparent to-transparent animate-pulse delay-200"></div>
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-linear-to-t from-purple-500/5 via-transparent to-transparent animate-pulse delay-1000"></div>
-
-        {/* Floating particles with different animations */}
-        <div className="absolute top-1/5 right-1/5 w-1 h-1 bg-yellow-400 rounded-full animate-ping opacity-40 delay-800"></div>
-        <div className="absolute top-4/5 left-1/5 w-2 h-2 bg-orange-400/30 rounded-full animate-pulse delay-1500"></div>
-        <div className="absolute top-2/5 right-2/5 w-1.5 h-1.5 bg-indigo-400/25 rounded-full animate-bounce delay-600"></div>
-        <div className="absolute bottom-2/5 right-1/2 w-2.5 h-2.5 bg-teal-400/20 rounded-full animate-pulse delay-1100"></div>
-
-        {/* Rotating geometric elements */}
-        <div className="absolute top-3/5 left-1/4 w-6 h-6 border border-blue-400/20 rotate-45 animate-spin opacity-10 delay-400" style={{animationDuration: '12s'}}></div>
-        <div className="absolute bottom-1/5 right-1/3 w-4 h-4 bg-purple-400/15 rounded-full animate-spin delay-800" style={{animationDuration: '10s'}}></div>
       </div>
       {/* Navigation */}
       <Navbar />
 
       {/* Hero Section */}
       <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-purple-900/5 to-transparent"></div>
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="bg-black/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/20 shadow-2xl">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight animate-fade-in-up">
@@ -109,7 +92,7 @@ export default function LandingPage() {
       </section>
 
       {/* Event Stats */}
-      <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
@@ -134,14 +117,13 @@ export default function LandingPage() {
 
       {/* About Event */}
       <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-purple-900/10 via-transparent to-blue-900/10"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
               About Techverse 2026
             </h2>
             <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
-              Techverse 2026 is Pakistan's premier technology competition event, bringing together the brightest minds in technology,
+              Techverse 2026 is Pakistan's premier technology event, bringing together the brightest minds in technology,
               innovation, and creativity. From AI and cybersecurity to gaming and robotics, experience the future of technology today.
             </p>
           </div>
@@ -189,7 +171,19 @@ export default function LandingPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
-                  <div>48 Hours of Continuous Innovation</div>
+                  <div>7 Days of Continuous Innovation</div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
+                  <div>National Level Career Fair</div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
+                  <div>Exciting Workshops & Seminars</div>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
+                  <div>Exclusive Social Nights</div>
                 </li>
               </ul>
             </div>
@@ -198,8 +192,7 @@ export default function LandingPage() {
       </section>
 
       {/* Business Innovation Signature Module */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-blue-900/20 via-purple-900/20 to-blue-900/20 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-yellow-500/5 via-transparent to-orange-500/5"></div>
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <div className="inline-flex items-center bg-yellow-500/20 border border-yellow-500/50 rounded-full px-3 sm:px-4 py-1 sm:py-2 mb-4 sm:mb-6">
@@ -214,7 +207,7 @@ export default function LandingPage() {
             </p>
             <div className="text-center mb-4">
               <p className="text-yellow-300 text-sm sm:text-base font-medium">
-                🗓️ Starts: 18 December 2025 • Duration: 18+ Days
+                🗓️ Starts: 15 December 2025 • Duration: 15+ Days • 31st December Submission
               </p>
             </div>
           </div>
@@ -402,80 +395,50 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Modules Section */}
-      <section id="modules" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-blue-900/5 to-transparent"></div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
+      {/* Explore Modules Section */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="bg-linear-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-2xl p-8 sm:p-12 border border-purple-500/30 animate-scale-in">
+            <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 backdrop-blur-sm">
+              <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">🎯 COMPETITION MODULES</span>
+            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Competition Modules
+              Discover All Modules
             </h2>
-            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
-              Choose from our diverse range of technology competitions. Each module offers unique challenges
-              and opportunities to showcase your skills.
+            <p className="text-lg sm:text-xl text-purple-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
+              Explore our comprehensive collection of 16+ exciting technology competitions.
+              From AI and cybersecurity to gaming and robotics - find your perfect challenge.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
-            {modules.map((module, index) => (
-              <Link
-                key={index}
-                href={`/modules/${encodeURIComponent(module.name)}`}
-                className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block group"
-              >
-                <div className="h-32 sm:h-36 md:h-40 bg-linear-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
-                  <img
-                    src={
-                      module.name === 'AI Hackathon' ? 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Cyber Hackathon' ? 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'FIFA 26' ? 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Line Following Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Obstacle Avoidance Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'PUBG Mobile' ? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Scavenger Hunt' ? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Speed Programming' ? 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Speed Wiring' ? 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Sumo War Robot' ? 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Tekken 8' ? 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'UI/UX Competition' ? 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Valorant' ? 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Web Hackathon' ? 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'CyberQuest' ? 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop&crop=center' :
-                      module.name === 'Business Innovation' ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center' :
-                      'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center'
-                    }
-                    alt={module.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-3 sm:p-4 md:p-5">
-                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">{module.name}</h3>
-                  <div className="space-y-1 text-sm text-purple-200">
-                    <p><span className="font-medium">Fee:</span> PKR {module.fee}</p>
-                    <p><span className="font-medium">Team Size:</span> {module.teamSize}</p>
-                    <p><span className="font-medium">Contact:</span> {module.contact}</p>
-                  </div>
-                  <div className="mt-2 sm:mt-3 text-center">
-                    <span className="text-xs sm:text-sm text-blue-400 group-hover:text-blue-300 transition-colors">
-                      Learn More →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
+                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">16+</div>
+                <div className="text-xs sm:text-sm text-purple-300">Modules</div>
+              </div>
+              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
+                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">PKR 480K+</div>
+                <div className="text-xs sm:text-sm text-purple-300">Prize Pool</div>
+              </div>
+              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
+                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">2000+</div>
+                <div className="text-xs sm:text-sm text-purple-300">Participants</div>
+              </div>
+              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
+                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">6 Days</div>
+                <div className="text-xs sm:text-sm text-purple-300">Competition</div>
+              </div>
+            </div>
+            <Link
+              href="/modules"
+              className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all duration-300 transform hover:scale-105 shadow-lg inline-block"
+            >
+              Explore All Modules →
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Collaborating Clubs Section */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden section-transition">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-2xl animate-pulse delay-500"></div>
-        </div>
-
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6 backdrop-blur-sm">
@@ -496,18 +459,18 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-blue-400/50 bg-linear-to-br from-blue-600/20 to-cyan-600/20 p-2 group-hover:border-blue-300/80 transition-all duration-300">
-                  <Image
+                  {/* <Image
                     src="https://www.acm.org/binaries/content/gallery/acm/logos/logo_footer_acm.png"
                     alt="ACM Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  />
+                  /> */}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">ACM</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Association for Computing Machinery</p>
                 <a
-                  href="https://www.instagram.com/acm.umt/"
+                  href="https://www.instagram.com/umt.acm/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
@@ -525,13 +488,13 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-green-500/30 hover:border-green-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-green-400/50 bg-linear-to-br from-green-600/20 to-emerald-600/20 p-2 group-hover:border-green-300/80 transition-all duration-300">
-                  <Image
+                  {/* <Image
                     src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center"
                     alt="UMT Cybersecurity Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+                  /> */}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-green-300 mb-2 group-hover:text-emerald-300 transition-colors duration-300">Cybersecurity</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Cybersecurity Society at UMT</p>
@@ -554,18 +517,18 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-red-600 via-pink-600 to-red-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-red-500/30 hover:border-red-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-red-400/50 bg-linear-to-br from-red-600/20 to-pink-600/20 p-2 group-hover:border-red-300/80 transition-all duration-300">
-                  <Image
+                  {/* <Image
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/IEEE_logo.svg/1200px-IEEE_logo.svg.png"
                     alt="IEEE Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  />
+                  /> */}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-red-300 mb-2 group-hover:text-pink-300 transition-colors duration-300">IEEE UMT</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Institute of Electrical and Electronics Engineers</p>
                 <a
-                  href="https://www.instagram.com/ieeeumt/"
+                  href="https://www.instagram.com/ieee.umt.branch/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
@@ -583,18 +546,18 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-purple-600 via-violet-600 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 hover:border-purple-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-purple-400/50 bg-linear-to-br from-purple-600/20 to-violet-600/20 p-2 group-hover:border-purple-300/80 transition-all duration-300">
-                  <Image
+                  {/* <Image
                     src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop&crop=center"
                     alt="Gamer Lounge Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+                  /> */}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-purple-300 mb-2 group-hover:text-violet-300 transition-colors duration-300">Gamer Lounge</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Gaming Community at UMT</p>
                 <a
-                  href="https://www.instagram.com/gamerlounge.umt/"
+                  href="https://www.instagram.com/umtgamerslounge_official/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
@@ -612,18 +575,18 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-600 via-blue-600 to-cyan-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-cyan-400/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 p-2 group-hover:border-cyan-300/80 transition-all duration-300">
-                  <Image
+                  {/* <Image
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png"
                     alt="Intel AI Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  />
+                  /> */}
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2 group-hover:text-blue-300 transition-colors duration-300">Intel AI</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Artificial Intelligence Club at UMT</p>
                 <a
-                  href="https://www.instagram.com/intelai.umt/"
+                  href="https://www.instagram.com/aiclubumt/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
@@ -641,7 +604,6 @@ export default function LandingPage() {
 
       {/* Sponsors Section */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-br from-black via-purple-900/20 to-blue-900/20 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-cyan-500/5 via-transparent to-purple-500/5"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
@@ -657,23 +619,18 @@ export default function LandingPage() {
           <div className="mb-8 sm:mb-12">
             <div className="text-center mb-6 sm:mb-8">
               <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-4">
-                <span className="text-cyan-300 font-bold text-sm sm:text-base">💎 DIAMOND SPONSORS</span>
+                <span className="text-cyan-300 font-bold text-sm sm:text-base">Platinum & Gold Sponsors</span>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
-              {/* Diamond Sponsor 1 */}
+              {/* Sponsor: Largify Solutions */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2">
+                  <Image src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
-                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
-                >
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Largify Solutions</h3>
+                <p className="text-purple-200 text-sm mb-3">Platinum Sponsor</p>
+                <a href="https://www.largifysolutions.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -681,19 +638,14 @@ export default function LandingPage() {
                 </a>
               </div>
 
-              {/* Diamond Sponsor 2 */}
+              {/* Sponsor: Game & Geeks */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://gamesandgeeks.pk/wp-content/uploads/2024/12/GNG-Header-Logo-White-1024x241.png" alt="Intel" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Game & Geeks</h3>
                 <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
-                >
+                <a href="https://gamesandgeeks.pk" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -701,19 +653,44 @@ export default function LandingPage() {
                 </a>
               </div>
 
-              {/* Diamond Sponsor 3 */}
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+              {/* Sponsor: Microsoft */}
+              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-3xl sm:text-4xl font-bold text-cyan-300">🏢</span>
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width={80} height={80} className="w-full h-full object-contain" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Coming Soon</h3>
-                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
-                >
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Microsoft</h3>
+                <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
+                <a href="https://www.microsoft.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div> */}
+
+              {/* Sponsor: Ranchers */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://rancherscafe.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.9137e136.png&w=256&q=75" alt="Google Cloud" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Ranchers</h3>
+                <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
+                <a href="https://cloud.google.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              {/* Sponsor: Devsinc */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA1ElEQVR4AWNwL/ChK0bhKO3aIKe0a6MZMRiklnILd2+sBxr2nyS8e9MDkD7ZBXP5QGZwWQWvBeJnQFxFAwsRWPng9iXsmp7TgRb9h2EWcSs/mlkI0suh53MMbBkC19HQwk0PQD5CthAUzDSyEBGsDAy6ahhBSbmFhH0LoulgIWa80slChE/pYyECgxMOfSxEYC96W5hLVwtBZg5XCxFBOlwTDSJb0DXjD+eijf6Fdyo9LdxGz/pwKw1bbZjBSJdmIrJFJFkIyqSQxjBhDFJLbkOYrhgAy9fniDHgfSgAAAAASUVORK5CYII=" alt="GitHub" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Devsinc</h3>
+                <p className="text-purple-200 text-sm mb-3">Premium Collaborator</p>
+                <a href="https://devsinc.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -743,8 +720,7 @@ export default function LandingPage() {
       </section>
 
       {/* Video Highlights */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-transparent via-purple-900/5 to-transparent"></div>
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
@@ -753,6 +729,25 @@ export default function LandingPage() {
             <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Experience the excitement and energy of Techverse through our highlight reels.
             </p>
+          </div>
+
+          {/* Featured Video: full-width above reels */}
+          <div className="mb-8 sm:mb-12">
+            <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 shadow-2xl">
+              <div className="aspect-video bg-black">
+                <iframe
+                  src="https://www.youtube.com/embed/kBS2VhewWrw?rel=0&modestbranding=2"
+                  title="Techverse Featured Video"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-4 sm:p-6 text-center">
+                <h3 className="text-lg sm:text-xl font-semibold text-blue-300 mb-2">Techverse Ch 01</h3>
+                <p className="text-purple-200 text-sm">Watch the official highlight video for Techverse 2025.</p>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -827,7 +822,6 @@ export default function LandingPage() {
 
       {/* Organizers */}
       <section id="organizers" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-blue-900/5 via-transparent to-purple-900/5"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
@@ -1080,8 +1074,7 @@ export default function LandingPage() {
       </section>
 
       {/* Registration CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="absolute inset-0 bg-linear-to-b from-blue-900/10 via-transparent to-purple-900/10"></div>
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="bg-linear-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-2xl p-12 border border-purple-500/30 animate-scale-in">
             <h2 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">

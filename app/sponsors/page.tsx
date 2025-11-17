@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -40,26 +41,21 @@ export default function SponsorsPage() {
           <section>
             <div className="text-center mb-12 sm:mb-16">
               <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/50 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6">
-                <span className="text-cyan-300 font-bold text-base sm:text-lg">💎 DIAMOND SPONSORS</span>
+                <span className="text-cyan-300 font-bold text-base sm:text-lg">Platinum SPONSORS</span>
               </div>
               <p className="text-purple-200 text-base sm:text-lg max-w-2xl mx-auto">
                 Our premier sponsors providing exceptional support and partnership opportunities.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-              {/* Diamond Sponsor 1 */}
+              {/* Diamond Sponsor: Largify Solutions */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-4xl sm:text-5xl font-bold text-cyan-300">🏢</span>
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Coming Soon</h3>
-                <p className="text-purple-200 text-base mb-4">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base"
-                >
+                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Largify Solutions</h3>
+                <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
+                <a href="https://www.largifysolutions.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -67,45 +63,65 @@ export default function SponsorsPage() {
                 </a>
               </div>
 
-              {/* Diamond Sponsor 2 */}
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-4xl sm:text-5xl font-bold text-cyan-300">🏢</span>
+              {/* Diamond Sponsor: Intel */}
+              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png" alt="Intel" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Coming Soon</h3>
-                <p className="text-purple-200 text-base mb-4">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base"
-                >
+                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Intel</h3>
+                <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
+                <a href="https://www.intel.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                   <span>Visit Website</span>
                 </a>
-              </div>
+              </div> */}
 
-              {/* Diamond Sponsor 3 */}
-              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <span className="text-4xl sm:text-5xl font-bold text-cyan-300">🏢</span>
+              {/* Diamond Sponsor: Microsoft */}
+              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Coming Soon</h3>
-                <p className="text-purple-200 text-base mb-4">Diamond Sponsor</p>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base"
-                >
+                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Microsoft</h3>
+                <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
+                <a href="https://www.microsoft.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                   <span>Visit Website</span>
                 </a>
-              </div>
+              </div> */}
+
+              {/* Diamond Sponsor: Google Cloud */}
+              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Google_Cloud_Logo.svg" alt="Google Cloud" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Google Cloud</h3>
+                <p className="text-purple-200 text-base mb-4">Gold Sponsor</p>
+                <a href="https://cloud.google.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div> */}
+
+              {/* Diamond Sponsor: GitHub */}
+              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <Image src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">GitHub</h3>
+                <p className="text-purple-200 text-base mb-4">Gold Sponsor</p>
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-base">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div> */}
             </div>
           </section>
 
