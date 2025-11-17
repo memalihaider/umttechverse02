@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+// Image import intentionally removed to avoid server-side prefetch of fragile remote assets; use TeamImage wrapper instead.
+import TeamImage from './TeamImage'
 import { useState, useEffect } from 'react'
 import { modules } from '@/lib/modules'
 import Navbar from './Navbar'
@@ -108,7 +109,7 @@ export default function LandingPage() {
               <div className="text-purple-200 text-sm sm:text-base">Total Prize Pool</div>
             </div>
             <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
-              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">6 Days</div>
+              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">7 Days</div>
               <div className="text-purple-200 text-sm sm:text-base">Non-Stop Innovation</div>
             </div>
           </div>
@@ -387,7 +388,7 @@ export default function LandingPage() {
                 <div className="text-purple-200 text-sm sm:text-base">Total Rewards</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">18+ Days</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">20+ Days</div>
                 <div className="text-purple-200 text-sm sm:text-base">Innovation Time</div>
               </div>
             </div>
@@ -423,7 +424,7 @@ export default function LandingPage() {
                 <div className="text-xs sm:text-sm text-purple-300">Participants</div>
               </div>
               <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
-                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">6 Days</div>
+                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">7 Days</div>
                 <div className="text-xs sm:text-sm text-purple-300">Competition</div>
               </div>
             </div>
@@ -453,21 +454,53 @@ export default function LandingPage() {
             </p>
           </div>
 
+          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8">
+           
+            {/* UMT */}
+            <div className="group relative">
+              <div className="absolute -inset-0.5 bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-blue-400/50 bg-linear-to-br from-blue-600/20 to-cyan-600/20 p-2 group-hover:border-blue-300/80 transition-all duration-300">
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408952/WhatsApp_Image_2025-10-30_at_10.20.29_3_u4iysd.jpg"
+                    alt="ACM Logo"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain duration-300"
+                  />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">UMT</h3>
+                <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">University of Management and Technology</p>
+                <a
+                  href="https://www.umt.edu.pk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-2 text-pink-400 hover:text-pink-300 transition-all duration-300 group-hover:scale-110"
+                >
+                  <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.017 0C8.396 0 7.949.013 6.76.072 5.575.131 4.829.28 4.194.512c-.663.234-1.225.546-1.787.973-.562.427-1.05.99-1.412 1.651-.362.661-.587 1.377-.722 2.107-.135.73-.18 1.496-.135 2.265v7.986c-.045.769 0 1.535.135 2.265.135.73.36 1.446.722 2.107.362.661.85 1.224 1.412 1.651.562.427 1.124.739 1.787.973.765.234 1.511.381 2.696.44 1.189.059 1.636.072 5.257.072s4.068-.013 5.257-.072c1.185-.059 1.931-.206 2.696-.44.663-.234 1.225-.546 1.787-.973.562-.427 1.05-.99 1.412-1.651.362-.661.587-1.377.722-2.107.135-.73.18-1.496.135-2.265V6.986c.045-.769 0-1.535-.135-2.265-.135-.73-.36-1.446-.722-2.107-.362-.661-.85-1.224-1.412-1.651-.562-.427-1.124-.739-1.787-.973C17.171.28 16.425.131 15.24.072 14.051.013 13.604 0 12.017 0zm0 2.163c3.584 0 4.01.014 5.417.08.981.046 1.523.208 1.879.346.493.191.847.419 1.217.79.37.37.599.724.79 1.217.138.356.3.898.346 1.879.066 1.407.08 1.833.08 5.417s-.014 4.01-.08 5.417c-.046.981-.208 1.523-.346 1.879-.191.493-.419.847-.79 1.217-.37.37-.724.599-1.217.79-.356.138-.898.3-1.879.346-1.407.066-1.833.08-5.417.08s-4.01-.014-5.417-.08c-.981-.046-1.523-.208-1.879-.346-.493-.191-.847-.419-1.217-.79-.37-.37-.599-.724-.79-1.217-.138-.356-.3-.898-.346-1.879-.066-1.407-.08-1.833-.08-5.417s.014-4.01.08-5.417c.046-.981.208-1.523.346-1.879.191-.493.419-.847.79-1.217.37-.37.724-.599 1.217-.79.356-.138.898-.3 1.879-.346 1.407-.066 1.833-.08 5.417-.08zM12.017 5.838a6.179 6.179 0 1 0 0 12.358 6.179 6.179 0 0 0 0-12.358zm0 10.18a4.001 4.001 0 1 1 0-8.002 4.001 4.001 0 0 1 0 8.002zm6.406-11.845a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/>
+                  </svg>
+                  <span className="text-sm">@umt</span>
+                </a>
+              </div>
+            </div>
+
             {/* ACM */}
             <div className="group relative">
               <div className="absolute -inset-0.5 bg-linear-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-blue-400/50 bg-linear-to-br from-blue-600/20 to-cyan-600/20 p-2 group-hover:border-blue-300/80 transition-all duration-300">
-                  {/* <Image
-                    src="https://www.acm.org/binaries/content/gallery/acm/logos/logo_footer_acm.png"
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408946/WhatsApp_Image_2025-10-30_at_10.20.30_3_sn4bqt.jpg"
                     alt="ACM Logo"
                     width={80}
                     height={80}
-                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  /> */}
+                    className="w-full h-full "
+                  />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">ACM</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300"> ACM</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Association for Computing Machinery</p>
                 <a
                   href="https://www.instagram.com/umt.acm/"
@@ -488,13 +521,13 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-green-600 via-emerald-600 to-green-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-green-500/30 hover:border-green-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-green-400/50 bg-linear-to-br from-green-600/20 to-emerald-600/20 p-2 group-hover:border-green-300/80 transition-all duration-300">
-                  {/* <Image
-                    src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&h=200&fit=crop&crop=center"
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408946/WhatsApp_Image_2025-10-30_at_10.20.31_6_iykpxo.jpg"
                     alt="UMT Cybersecurity Logo"
                     width={80}
                     height={80}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  /> */}
+                    className="w-full h-full object-cover "
+                  />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-green-300 mb-2 group-hover:text-emerald-300 transition-colors duration-300">Cybersecurity</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Cybersecurity Society at UMT</p>
@@ -517,13 +550,13 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-red-600 via-pink-600 to-red-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-red-500/30 hover:border-red-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-red-400/50 bg-linear-to-br from-red-600/20 to-pink-600/20 p-2 group-hover:border-red-300/80 transition-all duration-300">
-                  {/* <Image
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/IEEE_logo.svg/1200px-IEEE_logo.svg.png"
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408940/WhatsApp_Image_2025-10-30_at_10.20.32_6_prx5pd.jpg"
                     alt="IEEE Logo"
                     width={80}
                     height={80}
-                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  /> */}
+                    className="w-full h-full object-contain "
+                  />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-red-300 mb-2 group-hover:text-pink-300 transition-colors duration-300">IEEE UMT</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Institute of Electrical and Electronics Engineers</p>
@@ -546,13 +579,13 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-purple-600 via-violet-600 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 hover:border-purple-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-purple-400/50 bg-linear-to-br from-purple-600/20 to-violet-600/20 p-2 group-hover:border-purple-300/80 transition-all duration-300">
-                  {/* <Image
-                    src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop&crop=center"
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408952/WhatsApp_Image_2025-10-30_at_10.20.29_2_q1ksqr.jpg"
                     alt="Gamer Lounge Logo"
                     width={80}
                     height={80}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  /> */}
+                    className="w-full h-full object-cover transition-transform duration-300"
+                  />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-purple-300 mb-2 group-hover:text-violet-300 transition-colors duration-300">Gamer Lounge</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Gaming Community at UMT</p>
@@ -575,15 +608,15 @@ export default function LandingPage() {
               <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-600 via-blue-600 to-cyan-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-cyan-400/50 bg-linear-to-br from-cyan-600/20 to-blue-600/20 p-2 group-hover:border-cyan-300/80 transition-all duration-300">
-                  {/* <Image
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png"
+                  <TeamImage
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408946/WhatsApp_Image_2025-10-30_at_10.20.31_5_rmshhh.jpg"
                     alt="Intel AI Logo"
                     width={80}
                     height={80}
-                    className="w-full h-full object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                  /> */}
+                    className="w-full h-full object-cover "
+                  />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2 group-hover:text-blue-300 transition-colors duration-300">Intel AI</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2 group-hover:text-blue-300 transition-colors duration-300">UMT Intel AI</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">Artificial Intelligence Club at UMT</p>
                 <a
                   href="https://www.instagram.com/aiclubumt/"
@@ -626,7 +659,7 @@ export default function LandingPage() {
               {/* Sponsor: Largify Solutions */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2">
-                  <Image src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Largify Solutions</h3>
                 <p className="text-purple-200 text-sm mb-3">Platinum Sponsor</p>
@@ -641,7 +674,7 @@ export default function LandingPage() {
               {/* Sponsor: Game & Geeks */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://gamesandgeeks.pk/wp-content/uploads/2024/12/GNG-Header-Logo-White-1024x241.png" alt="Intel" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408952/WhatsApp_Image_2025-11-17_at_23.13.40_cojsvg.jpg" alt="Intel" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Game & Geeks</h3>
                 <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
@@ -654,24 +687,24 @@ export default function LandingPage() {
               </div>
 
               {/* Sponsor: Microsoft */}
-              {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width={80} height={80} className="w-full h-full object-contain" />
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408823/WhatsApp_Image_2025-11-17_at_23.13.36_2_jh60j4.jpg" alt="Microsoft" width={80} height={80} className="w-full h-full object-contain" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Microsoft</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Al Khidmat Foundation</h3>
                 <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
-                <a href="https://www.microsoft.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                <a href="https://alkhidmat.org/president-message" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                   <span>Visit Website</span>
                 </a>
-              </div> */}
+              </div>
 
               {/* Sponsor: Ranchers */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://rancherscafe.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.9137e136.png&w=256&q=75" alt="Google Cloud" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://rancherscafe.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.9137e136.png&w=256&q=75" alt="Google Cloud" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Ranchers</h3>
                 <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
@@ -686,7 +719,7 @@ export default function LandingPage() {
               {/* Sponsor: Devsinc */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA1ElEQVR4AWNwL/ChK0bhKO3aIKe0a6MZMRiklnILd2+sBxr2nyS8e9MDkD7ZBXP5QGZwWQWvBeJnQFxFAwsRWPng9iXsmp7TgRb9h2EWcSs/mlkI0suh53MMbBkC19HQwk0PQD5CthAUzDSyEBGsDAy6ahhBSbmFhH0LoulgIWa80slChE/pYyECgxMOfSxEYC96W5hLVwtBZg5XCxFBOlwTDSJb0DXjD+eijf6Fdyo9LdxGz/pwKw1bbZjBSJdmIrJFJFkIyqSQxjBhDFJLbkOYrhgAy9fniDHgfSgAAAAASUVORK5CYII=" alt="GitHub" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408954/WhatsApp_Image_2025-11-17_at_23.13.39_1_l7oyvb.jpg" alt="GitHub" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Devsinc</h3>
                 <p className="text-purple-200 text-sm mb-3">Premium Collaborator</p>
@@ -736,7 +769,7 @@ export default function LandingPage() {
             <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 shadow-2xl">
               <div className="aspect-video bg-black">
                 <iframe
-                  src="https://www.youtube.com/embed/kBS2VhewWrw?rel=0&modestbranding=2"
+                  src="https://www.youtube.com/embed/kBS2VhewWrw?rel=0&modestbranding=5&autoplay=1&mute=1 &controls=1"
                   title="Techverse Featured Video"
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -761,9 +794,7 @@ export default function LandingPage() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                  LIVE
-                </div>
+                
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-blue-300 mb-2">Techverse Chapter 02</h3>
@@ -781,9 +812,7 @@ export default function LandingPage() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                <div className="absolute top-2 right-2 bg-yellow-500 text-black text-xs px-2 py-1 rounded-full font-bold">
-                  FEATURED
-                </div>
+                
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-blue-300 mb-2">Techverse Is Back</h3>
@@ -801,9 +830,7 @@ export default function LandingPage() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                  BTS
-                </div>
+                
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-blue-300 mb-2">Previous Techverse Highlights</h3>
@@ -847,8 +874,8 @@ export default function LandingPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
-                    src="https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763679600&v=beta&t=398M4PvGCkea48b-QLpoiaHJk5DcNXmK2kEuBRaj1So"
+                  <TeamImage
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQF5wOLnSr9mBg/profile-displayphoto-scale_200_200/B4DZkYmQ79HYAo-/0/1757054309182?e=1764806400&v=beta&t=1v5LFJj2adtOAXAwvKxjOIZaNZcLRr2yz0VTCQY03Gw"
                     alt="President"
                     width={96}
                     height={96}
@@ -878,7 +905,7 @@ export default function LandingPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQFrVRhVwcmvAA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710865419519?e=1764806400&v=beta&t=bKkuuumUItNggpxMk1hqmeQAWTz0EcAl4XcN_KvTzqc"
                     alt="Vice President"
                     width={96}
@@ -909,7 +936,7 @@ export default function LandingPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo"
                     alt="Female Vice President"
                     width={96}
@@ -946,7 +973,7 @@ export default function LandingPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQH43chbjV5ocA/profile-displayphoto-shrink_200_200/B4DZTaWUsJG8Ag-/0/1738830076288?e=1764806400&v=beta&t=meGZU8WcE-TMc76SRgHgAfBRdMd9p0Hl5M1THuPWt9A"
                     alt="Secretary General"
                     width={80}
@@ -977,7 +1004,7 @@ export default function LandingPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073103/Abdul_Wahab_General_Secretary_-_ABDUL_WAHAB_q1ilad.png"
                     alt="General Secretary"
                     width={80}
@@ -1007,15 +1034,15 @@ export default function LandingPage() {
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
-                    src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
-                    alt="Director General"
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                    <TeamImage
+                      src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
+                      alt="Director General"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Director General</h3>
                 <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">Rehan</p>
                 <p className="text-purple-300 text-xs">Supervior IT and Rooms Operations</p>
@@ -1038,15 +1065,15 @@ export default function LandingPage() {
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
-                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
-                    alt="Media Secretary"
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                    <TeamImage
+                      src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
+                      alt="Media Secretary"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Media Secretary</h3>
                 <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">M Saad Ahmad</p>
                 <p className="text-purple-300 text-xs">Media relations and publicity</p>
@@ -1116,7 +1143,7 @@ export default function LandingPage() {
 
               <div className="text-center">
                 <div className="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src={selectedExecutive.image}
                     alt={selectedExecutive.title}
                     width={128}

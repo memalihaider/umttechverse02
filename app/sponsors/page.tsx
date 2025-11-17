@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import TeamImage from '../components/TeamImage';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -51,7 +51,7 @@ export default function SponsorsPage() {
               {/* Diamond Sponsor: Largify Solutions */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM" alt="Largify Solutions" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Largify Solutions</h3>
                 <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
@@ -66,7 +66,7 @@ export default function SponsorsPage() {
               {/* Diamond Sponsor: Intel */}
               {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png" alt="Intel" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/1200px-Intel-logo.svg.png" alt="Intel" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Intel</h3>
                 <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
@@ -81,7 +81,7 @@ export default function SponsorsPage() {
               {/* Diamond Sponsor: Microsoft */}
               {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Microsoft</h3>
                 <p className="text-purple-200 text-base mb-4">Platinum Sponsor</p>
@@ -96,7 +96,7 @@ export default function SponsorsPage() {
               {/* Diamond Sponsor: Google Cloud */}
               {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Google_Cloud_Logo.svg" alt="Google Cloud" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Google_Cloud_Logo.svg" alt="Google Cloud" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">Google Cloud</h3>
                 <p className="text-purple-200 text-base mb-4">Gold Sponsor</p>
@@ -111,7 +111,7 @@ export default function SponsorsPage() {
               {/* Diamond Sponsor: GitHub */}
               {/* <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-8 sm:p-10 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6 sm:mb-8 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <Image src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width={112} height={112} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width={112} height={112} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-cyan-300 mb-3">GitHub</h3>
                 <p className="text-purple-200 text-base mb-4">Gold Sponsor</p>

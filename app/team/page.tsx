@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import TeamImage from '../components/TeamImage'
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
 
@@ -62,14 +62,14 @@ export default function TeamPage() {
                   title: 'President',
                   name: 'M Shehryar Rana',
                   description: 'Visionary leader guiding Techverse Ch 02 - 2026',
-                  image: 'https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763679600&v=beta&t=398M4PvGCkea48b-QLpoiaHJk5DcNXmK2kEuBRaj1So',
+                  image: 'https://media.licdn.com/dms/image/v2/D4D03AQF5wOLnSr9mBg/profile-displayphoto-scale_200_200/B4DZkYmQ79HYAo-/0/1757054309182?e=1764806400&v=beta&t=1v5LFJj2adtOAXAwvKxjOIZaNZcLRr2yz0VTCQY03Gw',
                   linkedin: 'https://www.linkedin.com/in/muhammad-sheharyar-shahzad-rana/'
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
-                    src="https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763679600&v=beta&t=398M4PvGCkea48b-QLpoiaHJk5DcNXmK2kEuBRaj1So"
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <TeamImage
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQF5wOLnSr9mBg/profile-displayphoto-scale_200_200/B4DZkYmQ79HYAo-/0/1757054309182?e=1764806400&v=beta&t=1v5LFJj2adtOAXAwvKxjOIZaNZcLRr2yz0VTCQY03Gw"
                     alt="President"
                     width={96}
                     height={96}
@@ -98,8 +98,8 @@ export default function TeamPage() {
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQFrVRhVwcmvAA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710865419519?e=1764806400&v=beta&t=bKkuuumUItNggpxMk1hqmeQAWTz0EcAl4XcN_KvTzqc"
                     alt="Vice President"
                     width={96}
@@ -129,8 +129,8 @@ export default function TeamPage() {
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo"
                     alt="Female Vice President"
                     width={96}
@@ -166,8 +166,8 @@ export default function TeamPage() {
                 })
                 setIsModalOpen(true)
               }}>
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
+                  <TeamImage
                     src="https://media.licdn.com/dms/image/v2/D4D03AQH43chbjV5ocA/profile-displayphoto-shrink_200_200/B4DZTaWUsJG8Ag-/0/1738830076288?e=1764806400&v=beta&t=meGZU8WcE-TMc76SRgHgAfBRdMd9p0Hl5M1THuPWt9A"
                     alt="Secretary General"
                     width={80}
@@ -198,7 +198,7 @@ export default function TeamPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073103/Abdul_Wahab_General_Secretary_-_ABDUL_WAHAB_q1ilad.png"
                     alt="General Secretary"
                     width={80}
@@ -229,7 +229,7 @@ export default function TeamPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
+                  <TeamImage
                     src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
                     alt="Director General"
                     width={80}
@@ -260,13 +260,13 @@ export default function TeamPage() {
                 setIsModalOpen(true)
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                  <Image
-                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
-                    alt="Media Secretary"
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover"
-                  />
+                          <TeamImage
+                            src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
+                            alt="Media Secretary"
+                            width={80}
+                            height={80}
+                            className="w-full h-full object-cover"
+                          />
                 </div>
                 <h3 className="text-base sm:text-lg font-semibold text-blue-300 mb-2">Media Secretary</h3>
                 <p className="text-purple-200 font-medium mb-1 text-xs sm:text-sm">M Saad Ahmad</p>
@@ -342,12 +342,12 @@ export default function TeamPage() {
                   
                   
                   {/* Supervisors */}
-                  <div className="mb-16">
+                  {/* <div className="mb-16">
                     <h3 className="text-3xl font-bold text-center text-blue-300 mb-12">Supervisors</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                       <div className="bg-purple-900/30 rounded-xl p-8 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 bg-linear-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-6 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073098/Sectary_General_-_MUHAMMAD_ALI_HAIDER_h6eulc.png"
                             alt="Techverse 2026 Supervisors"
                             width={80}
@@ -369,7 +369,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-8 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 bg-linear-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-6 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073098/Screenshot_20250825-233311_-_HUSNAIN_MEHMOOD_wndtpx.png"
                             alt="Techverse 2026 Supervisors"
                             width={80}
@@ -391,7 +391,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-8 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 bg-linear-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-6 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo"
                             alt="Creative Supervisors"
                             width={80}
@@ -413,7 +413,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-8 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 bg-linear-to-br from-green-500 to-teal-500 rounded-full mx-auto mb-6 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763083805/Screenshot_2025-11-14_at_6.29.34_AM_npyfvw.png"
                             alt="Operations Supervisors"
                             width={80}
@@ -433,15 +433,15 @@ export default function TeamPage() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Module Leads */}
-                  <div className="mb-16">
+                  {/* <div className="mb-16">
                     <h3 className="text-3xl font-bold text-center text-blue-300 mb-12">Module Leads</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face"
                             alt="Programming"
                             width={64}
@@ -455,7 +455,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200&h=200&fit=crop&crop=face"
                             alt="Gaming"
                             width={64}
@@ -469,7 +469,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-green-500 to-teal-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
                             alt="Robotics"
                             width={64}
@@ -483,7 +483,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-orange-500 to-red-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face"
                             alt="Design"
                             width={64}
@@ -497,7 +497,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-cyan-500 to-blue-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
                             alt="Innovation"
                             width={64}
@@ -509,15 +509,15 @@ export default function TeamPage() {
                         <p className="text-purple-300 text-sm">Innovation and startup challenges</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Co Leads */}
-                  <div className="mb-16">
+                  {/* <div className="mb-16">
                     <h3 className="text-3xl font-bold text-center text-blue-300 mb-12">Co Leads</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face"
                             alt="Technical Co-Lead"
                             width={64}
@@ -531,7 +531,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-pink-500 to-rose-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face"
                             alt="Operations Co-Lead"
                             width={64}
@@ -545,7 +545,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-emerald-500 to-teal-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face"
                             alt="Marketing Co-Lead"
                             width={64}
@@ -559,7 +559,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-amber-500 to-orange-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face"
                             alt="Creative Co-Lead"
                             width={64}
@@ -571,15 +571,15 @@ export default function TeamPage() {
                         <p className="text-purple-300 text-sm">Assisting with design and visual content</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Most Active Participants */}
-                  <div className="mb-16">
+                  {/* <div className="mb-16">
                     <h3 className="text-3xl font-bold text-center text-blue-300 mb-12">Most Active Participants</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-yellow-400 to-orange-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
                             alt="Top Contributors"
                             width={64}
@@ -594,7 +594,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
                             alt="Innovation Leaders"
                             width={64}
@@ -609,7 +609,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-green-400 to-teal-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face"
                             alt="Rising Stars"
                             width={64}
@@ -622,15 +622,15 @@ export default function TeamPage() {
                         <p className="text-purple-300 text-xs">Emerging talents showing remarkable potential and dedication</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Additional Support Teams */}
-                  <div className="mb-16">
+                  {/* <div className="mb-16">
                     <h3 className="text-3xl font-bold text-center text-blue-300 mb-12">Additional Support Teams</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-orange-500 to-red-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face"
                             alt="Public Relations"
                             width={64}
@@ -644,7 +644,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-cyan-500 to-blue-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face"
                             alt="Event Management"
                             width={64}
@@ -658,7 +658,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-yellow-500 to-orange-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
                             alt="Finance Team"
                             width={64}
@@ -672,7 +672,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 bg-linear-to-br from-pink-500 to-rose-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face"
                             alt="Volunteer Team"
                             width={64}
@@ -684,10 +684,10 @@ export default function TeamPage() {
                         <p className="text-purple-300 text-sm">Dedicated volunteers supporting the event</p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Participants Section */}
-                  <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-500/20">
+                  {/* <div className="bg-purple-900/30 rounded-xl p-8 border border-purple-500/20">
                     <div className="text-center mb-8">
                       <h3 className="text-3xl font-bold text-blue-300 mb-4">Our Participants</h3>
                       <p className="text-purple-200 text-lg">
@@ -698,7 +698,7 @@ export default function TeamPage() {
                     <div className="grid md:grid-cols-3 gap-8">
                       <div className="text-center">
                         <div className="w-20 h-20 bg-linear-to-br from-blue-500 to-purple-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face"
                             alt="University Students"
                             width={80}
@@ -714,7 +714,7 @@ export default function TeamPage() {
 
                       <div className="text-center">
                         <div className="w-20 h-20 bg-linear-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
                             alt="Tech Innovators"
                             width={80}
@@ -730,7 +730,7 @@ export default function TeamPage() {
 
                       <div className="text-center">
                         <div className="w-20 h-20 bg-linear-to-br from-green-500 to-teal-500 rounded-full mx-auto mb-4 overflow-hidden">
-                          <Image
+                          <TeamImage
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
                             alt="Competition Enthusiasts"
                             width={80}
@@ -744,7 +744,7 @@ export default function TeamPage() {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </section>
             </>
@@ -770,7 +770,7 @@ export default function TeamPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073124/Muhammad_Ahmad_Bhatti_President_-_Muhammad_Ahmad_nciu4a.jpg"
                             alt="President"
                             width={96}
@@ -785,7 +785,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073132/1000077627_-_Muhammad_Zeeshan_Ali_q72ztw.jpg"
                             alt="Vice President"
                             width={96}
@@ -800,7 +800,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073129/AHS00670_-_azam_ali_fzdwjt.jpg"
                             alt="General Secretary"
                             width={96}
@@ -815,7 +815,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073098/MaryamNaveed_GeneralSecretary_-_maryam_naveed_hlo5pf.jpg"
                             alt="General Secretary"
                             width={96}
@@ -836,7 +836,7 @@ export default function TeamPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://media.licdn.com/dms/image/v2/D4D35AQGBUeHxd7ft2g/profile-framedphoto-shrink_200_200/B4DZkYmRg3H0AY-/0/1757054310726?e=1763690400&v=beta&t=U-EcScm6XS4ZEqltM65jh048FGAJ1R3XzyzC_HUBA5U"
                             alt="Director Operations"
                             width={80}
@@ -851,7 +851,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png"
                             alt="Director Media"
                             width={80}
@@ -866,7 +866,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073098/Sectary_General_-_MUHAMMAD_ALI_HAIDER_h6eulc.png"
                             alt="Director Finance"
                             width={80}
@@ -881,7 +881,7 @@ export default function TeamPage() {
 
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073098/Ajwa_Rasheed_Media_Secretary_-_Ajwa_Rasheed_o6mi3j.jpg"
                             alt="Director Media"
                             width={80}
@@ -895,7 +895,7 @@ export default function TeamPage() {
                       </div>
                       <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073111/Areeba_Khurram_-_Director_Creatives_-_Areeba_Khurram_mo16mw.jpg"
                             alt="Director Media"
                             width={80}
@@ -910,7 +910,7 @@ export default function TeamPage() {
 
                        <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300">
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
-                          <Image
+                          <TeamImage
                             src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763073160/HashirIrfan_DirectorManagement_-_Hashir_Qaisar_iofgmk.jpg"
                             alt="Director Management"
                             width={80}
@@ -944,6 +944,7 @@ export default function TeamPage() {
               <div>
                 <p className="font-medium mb-2">📧 Email</p>
                 <p>techverse@umt.edu.pk</p>
+                <a href="https://chat.whatsapp.com/KGwfI7p8H9OKx8oT089zuJ?mode=hqrc">Join Participant Group</a>
               </div>
               <div>
                 <p className="font-medium mb-2">📍 Address</p>
@@ -1004,7 +1005,7 @@ export default function TeamPage() {
               <h4 className="text-lg font-semibold text-blue-300 mb-4">Contact Info</h4>
               <div className="space-y-2 text-purple-200">
                 <p>📧 techverse@umt.edu.pk</p>
-                <p>📱 +92 42 35212801-10</p>
+          
                 <p>🏛️ UMT Lahore, Pakistan</p>
                 <p>📅 Jan 5-11, 2026</p>
               </div>
@@ -1013,7 +1014,7 @@ export default function TeamPage() {
 
           <div className="border-t border-purple-500/20 mt-8 pt-8 text-center">
             <p className="text-purple-400">
-              © 2025 Techverse 2026. Organized by University of Management and Technology. All rights reserved.
+              © 2026 Techverse 2026. Organized by University of Management and Technology. All rights reserved.
             </p>
           </div>
         </div>
@@ -1024,8 +1025,8 @@ export default function TeamPage() {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setIsModalOpen(false)}>
           <div className="bg-purple-900/90 rounded-2xl p-8 border border-purple-500/20 max-w-md w-full" onClick={(e) => e.stopPropagation()}>
             <div className="text-center">
-              <div className="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-400/50">
-                <Image
+                <div className="w-32 h-32 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-400/50">
+                <TeamImage
                   src={selectedExecutive.image}
                   alt={selectedExecutive.name}
                   width={128}

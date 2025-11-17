@@ -13,6 +13,6 @@ export const modules = [
   { name: 'UI/UX Competition', fee: 2000, teamSize: '2-4 members', contact: 'Zainab Salman - +92 302 1402652', guidebook: 'https://drive.google.com/file/d/1b2M4oYyXzmxhYOP0XkOx3cIV7RRifDQb/view?usp=sharing' },
   { name: 'Valorant', fee: 2500, teamSize: '5 members + 1 sub', contact: 'Muhammad Moeed - +92 324 4932912', guidebook: 'https://drive.google.com/file/d/16sBOqVyhO8IdO6rz01nge1-w77zNF7FE/view?usp=sharing' },
   { name: 'Web Hackathon', fee: 2500, teamSize: '1-3 members', contact: 'Muhammad Faizan - +92 341 4123652', guidebook: 'https://drive.google.com/file/d/1LUg2N7rd-BNhhQbFGWHLglKYH7g_q7Jq/view?usp=sharing' },
-  { name: 'CyferQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081', guidebook: '' },
+  { name: 'Operation CyberQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081', guidebook: '' },
   { name: 'Business Innovation', fee: 3999, teamSize: '1-5 members', contact: 'Largify Solutions - +966 59 736 9443 & +92 310 6207245', guidebook: 'https://docs.google.com/document/d/18-E-SxqLW_csh4Ie6AKZuLMib-l7pGASs-_nz9ScCfQ/edit?usp=sharing' },
 ]
