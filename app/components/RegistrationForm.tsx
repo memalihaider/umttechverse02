@@ -567,7 +567,7 @@ export default function RegistrationForm() {
                     }`}
                     placeholder="12345-1234567-1"
                   />
-                  <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your CNIC in any format</p>
+                  <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your CNIC</p>
                   {cnicError && (
                     <p className="mt-2 text-xs sm:text-sm text-red-400 flex items-center">
                       <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -767,7 +767,7 @@ export default function RegistrationForm() {
           </div>
 
           {/* Accommodation Section */}
-          <div className="bg-linear-to-br from-orange-900/40 to-purple-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-orange-500/30 shadow-xl backdrop-blur-sm">
+          {/* <div className="bg-linear-to-br from-orange-900/40 to-purple-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-orange-500/30 shadow-xl backdrop-blur-sm">
             <div className="flex items-center mb-4 sm:mb-6 lg:mb-8">
               <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-orange-500 to-red-500 rounded-lg sm:rounded-xl flex items-center justify-center mr-3 sm:mr-4">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -859,7 +859,7 @@ export default function RegistrationForm() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Total Amount Display */}
           {formData.module && (
