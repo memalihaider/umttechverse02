@@ -464,8 +464,8 @@ export default function LandingPage() {
               <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-blue-500/30 hover:border-blue-400/60 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 shadow-2xl flex flex-col justify-between min-h-[280px]">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden border-2 border-blue-400/50 bg-linear-to-br from-blue-600/20 to-cyan-600/20 p-2 group-hover:border-blue-300/80 transition-all duration-300">
                   <TeamImage
-                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408952/WhatsApp_Image_2025-10-30_at_10.20.29_3_u4iysd.jpg"
-                    alt="ACM Logo"
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408937/WhatsApp_Image_2025-10-30_at_10.20.33_7_nvfcno.jpg"
+                    alt="Umt Logo"
                     width={80}
                     height={80}
                     className="w-full h-full object-contain duration-300"
