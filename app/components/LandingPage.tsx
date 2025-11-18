@@ -61,10 +61,14 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 section-transition relative">
+  <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 section-transition relative overflow-hidden">
         <div className="max-w-7xl mx-auto text-center relative z-10">
+          {/* Decorative gradient orb behind hero */}
+          <div className="absolute -translate-y-12 -left-10 blur-3xl opacity-20 pointer-events-none" aria-hidden>
+            <div className="w-72 h-72 bg-linear-to-br from-blue-400/40 via-purple-500/30 to-cyan-400/30 rounded-full" />
+          </div>
           <div className="bg-black/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/20 shadow-2xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold bg-linear-to-r from-blue-400 via-purple-400 to-cyan-300 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight animate-fade-in-up">
               TECHVERSE 2026
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-purple-200 mb-6 sm:mb-8 px-2 animate-slide-in-left delay-200">
@@ -74,9 +78,10 @@ export default function LandingPage() {
               <p className="mb-1 sm:mb-2">📅 Date: 5-11 January 2026</p>
               <p className="mb-1 sm:mb-2">📍 Venue: University of Management and Technology (UMT), Lahore</p>
               <p>🎯 Join Pakistan's Premier Tech Competition Event</p>
-              <div className="mt-2">
-                <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" />
-                <div className="mt-2 text-xs text-purple-300">Starts: 5 January 2026 • 09:00 AM (PKT)</div>
+              <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="large" />
+                
+                {/* <div className="mt-1 sm:mt-0 text-xs text-purple-300">Starts: 5 January 2026 • 09:00 AM (PKT)</div> */}
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-scale-in delay-500">
@@ -92,6 +97,17 @@ export default function LandingPage() {
               >
                 View Modules
               </a>
+              <div className="flex items-center gap-2">
+                  
+                  <a
+                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Techverse+2026&dates=20260105T040000Z/20260112T040000Z&details=Join+Techverse+2026%21&location=UMT+Lahore"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-purple-800/50 hover:bg-purple-700 text-white px-3 py-2 rounded-lg font-medium transition"
+                  >
+                    Add to Calendar
+                  </a>
+                </div>
             </div>
           </div>
         </div>

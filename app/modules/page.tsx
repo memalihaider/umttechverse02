@@ -1,9 +1,18 @@
-import React from 'react'
+"use client"
+
+import React, { useMemo, useState } from 'react'
 import { modules } from '@/lib/modules'
 import Navbar from '@/app/components/Navbar'
 import Footer from '@/app/components/Footer'
+import Countdown from '@/app/components/Countdown'
 
 export default function ModulesPage() {
+  const [query, setQuery] = useState('')
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return modules
+    return modules.filter((m) => m.name.toLowerCase().includes(q))
+  }, [query])
   return (
     <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden" style={{ scrollBehavior: 'smooth' }}>
       {/* Animated background particles */}
@@ -38,10 +47,26 @@ export default function ModulesPage() {
             <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               Choose from our comprehensive range of technology competitions. Each module offers unique challenges and opportunities to showcase your skills.
             </p>
+            <div className="mt-4">
+              <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="compact" />
+            </div>
           </div>
 
+          <div className="mt-6 max-w-xl mx-auto">
+            <div className="bg-purple-900/20 rounded-full p-3 sm:p-4 inline-flex items-center gap-3 border border-purple-500/20 mx-auto">
+              <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/></svg>
+              <input
+                aria-label="Search modules"
+                placeholder="Search modules (AI, Robot, FIFA...)"
+                className="bg-transparent outline-none text-sm sm:text-base text-purple-200 placeholder-purple-400 w-64"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <button onClick={() => setQuery('')} className="text-xs text-purple-400 hover:text-white">Clear</button>
+            </div>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {modules.map((module, index) => (
+            {filtered.map((module, index) => (
               <div
                 key={index}
                 className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block group shadow-lg hover:shadow-purple-500/10"
