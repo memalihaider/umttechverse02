@@ -797,7 +797,7 @@ export default function LandingPage() {
               {/* Sponsor: Devsinc */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408954/WhatsApp_Image_2025-11-17_at_23.13.39_1_l7oyvb.jpg" alt="GitHub" width={80} height={80} className="w-full h-full object-cover rounded-full" />
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763504217/WhatsApp_Image_2025-11-18_at_23.19.37_e4uutg.jpg" alt="GitHub" width={80} height={80} className="w-full h-full object-cover rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Devsinc</h3>
                 <p className="text-purple-200 text-sm mb-3">Our Collaborator</p>
