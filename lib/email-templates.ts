@@ -89,6 +89,16 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
           <p style="margin-top: 10px; font-size: 14px;">Keep this code safe! You'll need it to access the event portal.</p>
         </div>
 
+  ${data.module && data.module.trim().toLowerCase() === 'business innovation' ? `
+          <div class="highlight">
+            <h3>💼 Business Innovation Portal Access</h3>
+            <div class="access-code">
+              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
+            </div>
+          </div>
+        ` : ''}
+
         <div class="highlight">
           <h3>📅 Event Details</h3>
           <ul>
@@ -110,9 +120,9 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
 
         <p>If you have any questions or need assistance, please don't hesitate to contact us:</p>
         <ul>
-          <li><strong>Email:</strong> techverse2026@umt.edu.pk</li>
-          <li><strong>Website:</strong> <a href="https://techverse2026.com">techverse2026.com</a></li>
-        </ul>
+            <li><strong>Email:</strong> techverse@umt.edu.pk</li>
+            <li><strong>Website:</strong> <a href="https://umttechverse.com">umttechverse.com</a></li>
+          </ul>
 
         <p>We look forward to seeing you at Techverse 2026!</p>
 
@@ -209,6 +219,16 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
           <p style="margin-top: 10px; font-size: 14px;">Use this code to access the event portal and all exclusive content.</p>
         </div>
 
+  ${data.module && data.module.trim().toLowerCase() === 'business innovation' ? `
+          <div class="highlight">
+            <h3>💼 Business Innovation Portal Access</h3>
+            <div class="access-code">
+              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
+            </div>
+          </div>
+        ` : ''}
+
         <div class="highlight">
           <h3>🚀 What's Next?</h3>
           <ol>
@@ -230,13 +250,13 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
         </div>
 
         <div style="text-align: center; margin: 30px 0;">
-          <a href="https://techverse2026.com" class="portal-link">🌐 Visit Event Portal</a>
+          <a href="https://umttechverse.com" class="portal-link">🌐 Visit Event Portal</a>
         </div>
 
         <p>If you have any questions or need assistance, our support team is here to help:</p>
         <ul>
-          <li><strong>Email:</strong> techverse2026@umt.edu.pk</li>
-          <li><strong>Website:</strong> <a href="https://techverse2026.com">techverse2026.com</a></li>
+          <li><strong>Email:</strong> techverse@umt.edu.pk</li>
+          <li><strong>Website:</strong> <a href="https://umttechverse.com">umttechverse.com</a></li>
           <li><strong>Portal:</strong> Access through the event website</li>
         </ul>
 

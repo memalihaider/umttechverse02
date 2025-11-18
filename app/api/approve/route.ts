@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { sendEmail } from '@/lib/email'
-import { modules } from '@/lib/modules'
+// modules import removed: not required in approve route as templates handle module conditional logic
 import { quickValidateEmail } from '@/lib/email-validation'
 import { generateApprovedRegistrationEmail } from '@/lib/email-templates'
 import type { RegistrationData } from '@/lib/email-templates'
@@ -68,12 +68,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email
-    const selectedModule = modules.find(m => m.name === registration.module)
-    const teamMembersText = registration.team_members && registration.team_members.length > 1 ? 
-      `\n\n<strong>Team Members:</strong>\n${registration.team_members.slice(1).map((member: {name: string, email: string}, idx: number) => `${idx + 1}. ${member.name} (${member.email})`).join('\n')}` : ''
-    
-    const portalAccessText = registration.module === 'Business Innovation' ? 
-      `\n\n<strong>Business Innovation Portal Access:</strong>\nYour unique access code: <strong>${registration.access_code}</strong>\nUse this code along with your email (${registration.email}) to access the Business Innovation portal at: https://techverse2026.com/business-innovation` : ''
     
     const subject = status === 'approved' ? 'Techverse 2026 - Registration Approved' : 'Techverse 2026 - Registration Rejected'
 
