@@ -52,21 +52,48 @@ export default function ModulesPage() {
             </div>
           </div>
 
-          <div className="mt-6 max-w-xl mx-auto">
-            <div className="bg-purple-900/20 rounded-full p-3 sm:p-4 inline-flex items-center gap-3 border border-purple-500/20 mx-auto">
-              <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/></svg>
+          <div className="mt-6 max-w-3xl mx-auto px-4">
+            <div className="w-full bg-purple-900/20 rounded-full p-2 sm:p-3 flex items-center gap-3 border border-purple-500/20 shadow-sm mx-auto">
+              <svg className="w-5 h-5 text-purple-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/>
+              </svg>
+              <label htmlFor="module-search" className="sr-only">Search modules</label>
               <input
+                id="module-search"
                 aria-label="Search modules"
-                placeholder="Search modules (AI, Robot, FIFA...)"
-                className="bg-transparent outline-none text-sm sm:text-base text-purple-200 placeholder-purple-400 w-64"
+                placeholder="Search modules (AI, Cyber, FIFA, Robot, etc.)"
+                className="bg-transparent outline-none text-sm sm:text-base text-purple-200 placeholder-purple-400 grow pl-1 pr-2"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <button onClick={() => setQuery('')} className="text-xs text-purple-400 hover:text-white">Clear</button>
+              <button
+                onClick={() => setQuery('')}
+                className="ml-2 p-1 rounded-md text-purple-300 hover:text-white hover:bg-purple-700/40 transition-colors"
+                aria-label="Clear search"
+                title="Clear search"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* Result count and organic helpers */}
+            <div className="mt-2 text-center">
+              <p className="text-sm text-purple-300" aria-live="polite">
+                {filtered.length} of {modules.length} modules shown
+              </p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {filtered.map((module, index) => (
+            {filtered.length === 0 ? (
+              <div className="col-span-full">
+                <div className="p-8 text-center">
+                  <p className="text-lg text-purple-300 mb-2">No modules match your search.</p>
+                  <p className="text-sm text-purple-400">Try different keywords (e.g., "AI", "Cyber", "Robot") or clear the search to show all modules.</p>
+                </div>
+              </div>
+            ) : (
+              filtered.map((module, index) => (
               <div
                 key={index}
                 className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block group shadow-lg hover:shadow-purple-500/10"
@@ -115,7 +142,7 @@ export default function ModulesPage() {
                   </div>
                 </div>
               </div>
-            ))}
+            ))) }
           </div>
         </div>
       </section>

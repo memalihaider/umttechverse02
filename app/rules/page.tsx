@@ -120,11 +120,11 @@ export default function RulesPage() {
           <section className="mt-10">
             <h2 className="text-2xl sm:text-3xl font-semibold text-blue-300 mb-3">For Queries</h2>
             <p className="text-purple-200">Email: <a href="mailto:techverse@umt.edu.pk" className="text-blue-300 hover:text-blue-400 underline">techverse@umt.edu.pk</a></p>
-            <p className="text-purple-200">Phone: <a href="tel:+924235212801" className="text-blue-300 hover:text-blue-400 underline">+92 42 35212801-10</a></p>
+            {/* <p className="text-purple-200">Phone: <a href="tel:+924235212801" className="text-blue-300 hover:text-blue-400 underline">+92 42 35212801-10</a></p> */}
           </section>
 
           <div className="mt-10 text-sm text-purple-400">
-            <p>© 2025 Techverse 2026. Organized by University of Management and Technology. All rights reserved.</p>
+            <p>© 2026 Techverse CH 02. Organized by University of Management and Technology. All rights reserved.</p>
           </div>
         </div>
       </main>

@@ -164,7 +164,7 @@ export default function LandingPage() {
                 <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-3 sm:mb-4">🏆 What to Expect</h3>
                 <p className="text-purple-200 text-sm sm:text-base">
                   Intense competitions, networking opportunities, workshops, and prizes worth over PKR 480,000.
-                  Join us for 6 days of non-stop technological excellence.
+                  Join us for 7 days of non-stop technological excellence.
                 </p>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function LandingPage() {
             </p>
             <div className="text-center mb-4">
               <p className="text-yellow-300 text-sm sm:text-base font-medium">
-                🗓️ Starts: 15 December 2025 • Duration: 15+ Days • 31st December Submission
+                🗓️ Starts: 15 December 2025 • Duration: 20+ Days • 31st December Phase 01 Submission
               </p>
             </div>
           </div>
@@ -250,11 +250,11 @@ export default function LandingPage() {
                   </p>
                   <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
                     <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center">
-                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 40K</div>
+                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 40K + Rewards</div>
                       <div className="text-xs sm:text-sm text-purple-300">1st Prize</div>
                     </div>
                     <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center">
-                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 30K</div>
+                      <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 30K + Rewards</div>
                       <div className="text-xs sm:text-sm text-purple-300">2nd Prize</div>
                     </div>
                     
@@ -344,6 +344,12 @@ export default function LandingPage() {
                       <strong className="text-blue-300">Comprehensive Support:</strong> Templates, workshops, and resources
                     </div>
                   </li>
+                  <li className="flex items-start">
+                    <span className="text-green-400 mr-2 sm:mr-3 mt-1">✓</span>
+                    <div>
+                      <strong className="text-blue-300">Executions:</strong> Make startup from idea to execution.
+                    </div>
+                  </li>
                 </ul>
               </div>
 
@@ -398,7 +404,7 @@ export default function LandingPage() {
           <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">30+</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">50+</div>
                 <div className="text-purple-200 text-sm sm:text-base">Teams Expected</div>
               </div>
               <div>
@@ -406,7 +412,7 @@ export default function LandingPage() {
                 <div className="text-purple-200 text-sm sm:text-base">Competition Phases</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">PKR 80K+</div>
+                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">PKR 80K+ + Rewards</div>
                 <div className="text-purple-200 text-sm sm:text-base">Total Rewards</div>
               </div>
               <div>
@@ -465,7 +471,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6 backdrop-blur-sm">
-              <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">🚀 COLLABORATING CLUBS</span>
+              <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">COLLABORATING CLUBS & Platform</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-4 sm:mb-6">
               Our Partner Communities
@@ -493,7 +499,7 @@ export default function LandingPage() {
                     className="w-full h-full object-contain duration-300"
                   />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">UMT</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">UMT Platform</h3>
                 <p className="text-purple-200 text-sm mb-4 group-hover:text-purple-100 transition-colors duration-300 grow">University of Management and Technology</p>
                 <a
                   href="https://www.umt.edu.pk"
