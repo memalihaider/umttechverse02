@@ -3,6 +3,7 @@
 import Link from 'next/link'
 // Image import intentionally removed to avoid server-side prefetch of fragile remote assets; use TeamImage wrapper instead.
 import TeamImage from './TeamImage'
+import LazyYoutube from './LazyYoutube'
 import Countdown from './Countdown'
 import { useState, useEffect } from 'react'
 import { modules } from '@/lib/modules'
@@ -836,16 +837,10 @@ export default function LandingPage() {
           </div>
 
           {/* Featured Video: full-width above reels */}
-          <div className="mb-8 sm:mb-12">
+            <div className="mb-8 sm:mb-12">
             <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 shadow-2xl">
               <div className="aspect-video bg-black">
-                <iframe
-                  src="https://www.youtube.com/embed/kBS2VhewWrw?rel=0&modestbranding=5&autoplay=1&mute=1 &controls=1"
-                  title="Techverse Featured Video"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
+                <LazyYoutube videoId="kBS2VhewWrw" title="Techverse Featured Video" />
               </div>
               <div className="p-4 sm:p-6 text-center">
                 <h3 className="text-lg sm:text-xl font-semibold text-blue-300 mb-2">Techverse Ch 01</h3>
@@ -858,13 +853,7 @@ export default function LandingPage() {
             {/* Reel 1 */}
             <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
               <div className="aspect-9/16 bg-black/50 relative">
-                <iframe
-                  src="https://www.youtube.com/embed/Vvljq7LDW6c"
-                  title="Techverse Chapter 02"
-                  className="w-full h-full rounded-t-xl"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <LazyYoutube videoId="Vvljq7LDW6c" title="Techverse Chapter 02" aspectClass="aspect-9/16" />
                 
               </div>
               <div className="p-4">
@@ -876,13 +865,7 @@ export default function LandingPage() {
             {/* Reel 2 */}
             <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
               <div className="aspect-9/16 bg-black/50 relative">
-                <iframe
-                  src="https://www.youtube.com/embed/KT-3yPu1D44"
-                  title="Champion Stories"
-                  className="w-full h-full rounded-t-xl"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <LazyYoutube videoId="KT-3yPu1D44" title="Champion Stories" aspectClass="aspect-9/16" />
                 
               </div>
               <div className="p-4">
@@ -894,13 +877,7 @@ export default function LandingPage() {
             {/* Reel 3 */}
             <div className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105">
               <div className="aspect-9/16 bg-black/50 relative">
-                <iframe
-                  src="https://www.youtube.com/embed/i-mDriHWHkY"
-                  title="Event Preparation"
-                  className="w-full h-full rounded-t-xl"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                <LazyYoutube videoId="i-mDriHWHkY" title="Event Preparation" aspectClass="aspect-9/16" />
                 
               </div>
               <div className="p-4">

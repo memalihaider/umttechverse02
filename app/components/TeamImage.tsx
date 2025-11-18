@@ -7,7 +7,7 @@ type TeamImageProps = React.ComponentProps<typeof Image> & {
   fallback?: string
 }
 
-export default function TeamImage({ src, alt, fallback = '/images/avatar-placeholder.svg', ...props }: TeamImageProps) {
+export default function TeamImage({ src, alt, fallback = '/images/avatar-placeholder.svg', loading = 'lazy', ...props }: TeamImageProps) {
   const [imgSrc, setImgSrc] = useState<string | undefined>((typeof src === 'string' ? src : undefined) as string | undefined)
 
   return (
@@ -15,7 +15,7 @@ export default function TeamImage({ src, alt, fallback = '/images/avatar-placeho
       src={imgSrc || fallback}
       alt={typeof alt === 'string' ? alt : 'Member image'}
       onError={() => setImgSrc(fallback)}
-      unoptimized
+      loading={loading}
       {...props}
     />
   )

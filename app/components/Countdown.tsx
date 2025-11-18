@@ -28,10 +28,13 @@ function getTimeLeft(targetDate: string | undefined) {
 }
 
 export default function Countdown({ targetDate = '2026-01-05T09:00:00+05:00', label = 'Event starts in', variant = 'large' }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetDate))
+  // Prevent hydration mismatch: initialize null on server render and populate on client
+  const [timeLeft, setTimeLeft] = useState<any | null>(null)
 
   useEffect(() => {
-    const timer = setInterval(() => setTimeLeft(getTimeLeft(targetDate)), 500)
+    // set initial value on mount (client-only)
+    setTimeLeft(getTimeLeft(targetDate))
+    const timer = setInterval(() => setTimeLeft(getTimeLeft(targetDate)), 1000)
     return () => clearInterval(timer)
   }, [targetDate])
 
