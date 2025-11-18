@@ -14,17 +14,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid phase' }, { status: 400 })
     }
 
-    // Verify user authentication
-    const { data: user, error: authError } = await supabase
+    // Normalize and verify by access code (allow team members)
+    const normalizedEmail = String(email).trim().toLowerCase()
+    const normalizedAccessCode = String(accessCode).trim().toUpperCase()
+
+    const { data, error: authError } = await supabase
       .from('registrations')
       .select('*')
-      .eq('email', email)
-      .eq('access_code', accessCode.toUpperCase())
-      .eq('module', 'Business Innovation')
-      .eq('status', 'approved')
+      .eq('access_code', normalizedAccessCode)
+      .ilike('module', '%business innovation%')
+      .ilike('status', 'approved')
       .single()
 
+    const user = data
     if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
+    const isTeamMember = teamMembers.some((m: any) => {
+      if (!m) return false
+      if (typeof m === 'string') return m.trim().toLowerCase() === normalizedEmail
+      if (typeof m === 'object' && m.email) return String(m.email).trim().toLowerCase() === normalizedEmail
+      return false
+    })
+    if (!isLeader && !isTeamMember) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
@@ -174,17 +189,32 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Email and access code are required' }, { status: 400 })
     }
 
-    // Verify user authentication
-    const { data: user, error: authError } = await supabase
+    // Normalize and verify by access code (allow team members)
+    const normalizedEmail = String(email).trim().toLowerCase()
+    const normalizedAccessCode = String(accessCode).trim().toUpperCase()
+
+    const { data, error: authError } = await supabase
       .from('registrations')
-      .select('current_phase, submission_status, github_repo')
-      .eq('email', email)
-      .eq('access_code', accessCode.toUpperCase())
-      .eq('module', 'Business Innovation')
-      .eq('status', 'approved')
+      .select('current_phase, submission_status, github_repo, email, team_members')
+      .eq('access_code', normalizedAccessCode)
+      .ilike('module', '%business innovation%')
+      .ilike('status', 'approved')
       .single()
 
+    const user = data
     if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
+    const isTeamMember = teamMembers.some((m: any) => {
+      if (!m) return false
+      if (typeof m === 'string') return m.trim().toLowerCase() === normalizedEmail
+      if (typeof m === 'object' && m.email) return String(m.email).trim().toLowerCase() === normalizedEmail
+      return false
+    })
+    if (!isLeader && !isTeamMember) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 

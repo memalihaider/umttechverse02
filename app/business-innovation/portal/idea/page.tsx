@@ -171,7 +171,7 @@ export default function BusinessIdeaSubmission() {
 
             <div>
               <label className="block text-sm font-medium text-purple-200 mb-2">
-                Problem Statement *
+                Problem Statement & Impact *
               </label>
               <textarea
                 required
@@ -185,7 +185,7 @@ export default function BusinessIdeaSubmission() {
 
             <div>
               <label className="block text-sm font-medium text-purple-200 mb-2">
-                Solution Description *
+                Solution Description with reference - Links or URLS *
               </label>
               <textarea
                 required
@@ -213,7 +213,7 @@ export default function BusinessIdeaSubmission() {
 
             <div>
               <label className="block text-sm font-medium text-purple-200 mb-2">
-                Target Audience *
+                Target Audience for your product*
               </label>
               <textarea
                 required
@@ -241,7 +241,7 @@ export default function BusinessIdeaSubmission() {
 
             <div>
               <label className="block text-sm font-medium text-purple-200 mb-2">
-                Revenue Model *
+                Revenue Model Or Business Model *
               </label>
               <textarea
                 required
@@ -255,7 +255,7 @@ export default function BusinessIdeaSubmission() {
 
             <div>
               <label className="block text-sm font-medium text-purple-200 mb-2">
-                Overall Description
+                Overall Description & Project Link *
               </label>
               <textarea
                 rows={4}

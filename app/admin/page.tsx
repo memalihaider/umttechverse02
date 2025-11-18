@@ -33,6 +33,11 @@ interface Registration {
   current_phase?: string
   submission_status?: string
   github_repo?: string
+  // computed fields for admin UI
+  _evalCount?: number
+  _avgTotal?: number | null
+  _avgByCategory?: { [key: string]: number } | null
+  _lastEval?: Evaluation | null
 }
 
 interface BusinessInnovationStats {
@@ -132,6 +137,8 @@ export default function AdminPortal() {
   const [currentPage, setCurrentPage] = useState(1)
   const [currentTab, setCurrentTab] = useState<'registrations' | 'business-innovation'>('registrations')
   const [businessInnovationParticipants, setBusinessInnovationParticipants] = useState<Registration[]>([])
+  const [biSearch, setBiSearch] = useState<string>('')
+  const [biStatusFilter, setBiStatusFilter] = useState<'all' | 'approved' | 'pending' | 'rejected'>('all')
   const [businessInnovationStats, setBusinessInnovationStats] = useState<BusinessInnovationStats>({
     totalParticipants: 0,
     ideaSubmissions: 0,
@@ -188,17 +195,16 @@ export default function AdminPortal() {
   const fetchBusinessInnovationData = async () => {
     try {
       // Fetch business innovation participants
+      // Fetch all Business Innovation participants of any status so admins can view progress
       const { data: participants, error: participantsError } = await supabase
         .from('registrations')
         .select('*')
-        .eq('module', 'Business Innovation')
-        .eq('status', 'approved')
+        .ilike('module', '%Business Innovation%')
         .order('created_at', { ascending: false })
 
       if (participantsError) throw participantsError
 
-      const biParticipants = participants || []
-      setBusinessInnovationParticipants(biParticipants)
+  const biParticipants = participants || []
 
       // Fetch evaluations for all participants to calculate average scores
       const participantIds = biParticipants.map(p => p.id)
@@ -215,7 +221,7 @@ export default function AdminPortal() {
         }
       }
 
-      // Calculate stats
+  // Calculate stats
       const totalParticipants = biParticipants.length
       const ideaSubmissions = biParticipants.filter(p => p.business_idea && p.business_idea.title).length
       const designPhase = biParticipants.filter(p => p.current_phase === 'design').length
@@ -228,7 +234,7 @@ export default function AdminPortal() {
         ? allEvaluations.reduce((sum, e) => sum + (e.total_score || 0), 0) / totalEvaluations 
         : 0
 
-      setBusinessInnovationStats({
+  setBusinessInnovationStats({
         totalParticipants,
         ideaSubmissions,
         designPhase,
@@ -240,6 +246,36 @@ export default function AdminPortal() {
 
       // Store evaluations for average score calculation
       setAllParticipantEvaluations(allEvaluations)
+
+      // Precompute per-participant stats to make rendering efficient
+      const computed = biParticipants.map(p => {
+        const evals = allEvaluations.filter(e => e.registration_id === p.id)
+        const evalCount = evals.length
+        const lastEval = evalCount > 0 ? evals.sort((a,b) => new Date(b.evaluated_at).getTime() - new Date(a.evaluated_at).getTime())[0] : null
+        const avgTotal = evalCount > 0 ? Math.round(evals.reduce((s,e)=>s + (e.total_score||0),0)/evalCount) : null
+        const avgByCategory = evalCount > 0 ? {
+          innovation: Math.round(evals.reduce((s,e)=>s + (e.innovation_score||0),0)/evalCount * 10)/10,
+          feasibility: Math.round(evals.reduce((s,e)=>s + (e.feasibility_score||0),0)/evalCount * 10)/10,
+          market: Math.round(evals.reduce((s,e)=>s + (e.market_potential_score||0),0)/evalCount * 10)/10,
+          presentation: Math.round(evals.reduce((s,e)=>s + (e.presentation_score||0),0)/evalCount * 10)/10,
+          technical: Math.round(evals.reduce((s,e)=>s + (e.technical_score||0),0)/evalCount * 10)/10,
+          business_model: Math.round(evals.reduce((s,e)=>s + (e.business_model_score||0),0)/evalCount * 10)/10,
+        } : null
+
+        return {
+          id: p.id,
+          avgTotal,
+          avgByCategory,
+          evalCount,
+          lastEval
+        }
+      })
+      // attach to each participant object for quick access
+      const enrichedParticipants = biParticipants.map(p => {
+        const c = computed.find(c => c.id === p.id)
+        return { ...p, _evalCount: c?.evalCount ?? 0, _avgTotal: c?.avgTotal ?? null, _avgByCategory: c?.avgByCategory ?? null, _lastEval: c?.lastEval ?? null }
+      })
+      setBusinessInnovationParticipants(enrichedParticipants)
     } catch (error) {
       console.error('Error fetching business innovation data:', error)
     }
@@ -450,6 +486,49 @@ export default function AdminPortal() {
     const a = document.createElement('a')
     a.href = url
     a.download = `techverse-registrations-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    window.URL.revokeObjectURL(url)
+  }
+
+  const exportBiCSV = () => {
+    const filtered = businessInnovationParticipants
+      .filter(p => biStatusFilter === 'all' ? true : p.status === biStatusFilter)
+      .filter(p => biSearch === '' ? true : (
+        p.name?.toLowerCase().includes(biSearch.toLowerCase()) ||
+        p.email?.toLowerCase().includes(biSearch.toLowerCase()) ||
+        p.business_idea?.title?.toLowerCase()?.includes(biSearch.toLowerCase()) ||
+        p.access_code?.toLowerCase().includes(biSearch.toLowerCase())
+      ))
+
+    const headers = ['Name', 'Email', 'Access Code', 'Team Size', 'University', 'Phase', 'Submission Status', 'Avg Total', 'Eval Count', 'Last Eval', 'Innovation', 'Feasibility', 'Market', 'Presentation', 'Technical', 'Business Model']
+    const csvData = filtered.map(p => [
+      p.name,
+      p.email,
+      p.access_code,
+      p.team_members ? p.team_members.length : 1,
+      p.university,
+      p.current_phase || '',
+      p.submission_status || '',
+      p._avgTotal ?? '',
+      p._evalCount ?? 0,
+      p._lastEval ? new Date(p._lastEval.evaluated_at).toLocaleString() : '',
+      p._avgByCategory?.innovation ?? '',
+      p._avgByCategory?.feasibility ?? '',
+      p._avgByCategory?.market ?? '',
+      p._avgByCategory?.presentation ?? '',
+      p._avgByCategory?.technical ?? '',
+      p._avgByCategory?.business_model ?? ''
+    ])
+
+    const csvContent = [headers, ...csvData]
+      .map(row => row.map(field => `"${field}"`).join(','))
+      .join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `techverse-bi-participants-${new Date().toISOString().split('T')[0]}.csv`
     a.click()
     window.URL.revokeObjectURL(url)
   }
@@ -903,25 +982,65 @@ export default function AdminPortal() {
                 <p className="text-purple-300 text-sm">All approved participants with their ideas and evaluation status</p>
               </div>
 
+              <div className="px-6 py-4 border-b border-purple-500/20 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <input
+                    value={biSearch}
+                    onChange={(e) => setBiSearch(e.target.value)}
+                    placeholder="Search participants..."
+                    className="bg-black/50 border-purple-500/50 rounded-lg px-3 py-2 text-white placeholder-purple-400 focus:ring-purple-400 focus:border-purple-400"
+                  />
+                  <select
+                    value={biStatusFilter}
+                    onChange={(e) => setBiStatusFilter(e.target.value as any)}
+                    className="bg-black/50 border-purple-500/50 rounded-lg px-3 py-2 text-white focus:ring-purple-400 focus:border-purple-400"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                  <button onClick={() => exportBiCSV()} className="inline-flex items-center px-3 py-2 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-purple-900/30 hover:bg-purple-800/30 transition-colors">Export CSV</button>
+                </div>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-purple-900/20">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Participant</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Access</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Team</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">University</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Business Idea</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Phase</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Status</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Avg Score</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">#Evals</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Last Eval</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider hidden md:table-cell">Breakdown</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-purple-500/10">
-                    {businessInnovationParticipants.map((participant) => (
+                    {businessInnovationParticipants
+                      .filter(p => biStatusFilter === 'all' ? true : p.status === biStatusFilter)
+                      .filter(p => biSearch === '' ? true : (
+                        p.name?.toLowerCase().includes(biSearch.toLowerCase()) ||
+                        p.email?.toLowerCase().includes(biSearch.toLowerCase()) ||
+                        p.business_idea?.title?.toLowerCase()?.includes(biSearch.toLowerCase()) ||
+                        p.access_code?.toLowerCase().includes(biSearch.toLowerCase())
+                      ))
+                      .map((participant) => (
                       <tr key={participant.id} className="hover:bg-purple-900/10 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-blue-300">{participant.name}</div>
                           <div className="text-sm text-purple-400">{participant.email}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-mono text-purple-200">{participant.access_code}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-purple-200">{participant.team_members ? participant.team_members.length : 1}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-purple-200">{participant.university}</div>
@@ -959,15 +1078,28 @@ export default function AdminPortal() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-purple-200">
-                            {(() => {
-                              // Calculate average score for this participant
-                              const participantEvals = allParticipantEvaluations.filter(e => e.registration_id === participant.id)
-                              if (participantEvals.length === 0) return '-'
-                              
-                              const avgScore = participantEvals.reduce((sum, e) => sum + (e.total_score || 0), 0) / participantEvals.length
-                              return Math.round(avgScore)
-                            })()}/60
+                            {(typeof participant._avgTotal === 'number' && participant._avgTotal !== null) ? `${participant._avgTotal}/60` : '-'}
                           </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-purple-200">{participant._evalCount ?? 0}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-purple-200">{participant._lastEval ? new Date(participant._lastEval.evaluated_at).toLocaleString() : '-'}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+                          {participant._avgByCategory ? (
+                            <div className="text-sm text-purple-200 grid grid-cols-3 gap-2">
+                              <div>Innov: {participant._avgByCategory.innovation}</div>
+                              <div>Feas: {participant._avgByCategory.feasibility}</div>
+                              <div>Mkt: {participant._avgByCategory.market}</div>
+                              <div>Pres: {participant._avgByCategory.presentation}</div>
+                              <div>Tech: {participant._avgByCategory.technical}</div>
+                              <div>BM: {participant._avgByCategory.business_model}</div>
+                            </div>
+                          ) : (
+                            <div className="text-sm text-yellow-300">No Evals</div>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <button
@@ -1316,7 +1448,7 @@ export default function AdminPortal() {
                           {evaluation.comments && (
                             <div className="border-t border-purple-500/20 pt-3">
                               <div className="text-sm text-purple-300 mb-1">Comments:</div>
-                              <div className="text-sm text-purple-200 italic">"{evaluation.comments}"</div>
+                              <div className="text-sm text-purple-200 italic">{evaluation.comments}</div>
                             </div>
                           )}
                         </div>

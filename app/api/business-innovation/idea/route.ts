@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
+type Registration = {
+  id?: string
+  email?: string
+  team_members?: Array<{ email?: string } | string>
+  business_idea?: unknown
+  current_phase?: string
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { email, accessCode, businessIdea } = await request.json()
@@ -8,18 +16,35 @@ export async function POST(request: NextRequest) {
     if (!email || !accessCode || !businessIdea) {
       return NextResponse.json({ error: 'Email, access code, and business idea are required' }, { status: 400 })
     }
+    // Normalize inputs and verify user authentication by access code (allow team members)
+    const normalizedEmail = String(email).trim().toLowerCase()
+    const normalizedAccessCode = String(accessCode).trim().toUpperCase()
 
-    // Verify user authentication
-    const { data: user, error: authError } = await supabase
+    // registration shape already defined above; reuse Registration type
+
+    const { data, error: authError } = await supabase
       .from('registrations')
       .select('*')
-      .eq('email', email)
-      .eq('access_code', accessCode.toUpperCase())
-      .eq('module', 'Business Innovation')
-      .eq('status', 'approved')
+      .eq('access_code', normalizedAccessCode)
+      .ilike('module', '%business innovation%')
+      .ilike('status', 'approved')
       .single()
 
+    const user = data as Registration | null
     if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    // Allow team members to submit by checking if provided email matches registration leader or any team member
+    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+  const teamMembers: Array<{ email?: string } | string> = Array.isArray(user.team_members) ? user.team_members : []
+  const isTeamMember = teamMembers.some((m: { email?: string } | string) => {
+      if (!m) return false
+      if (typeof m === 'string') return m.trim().toLowerCase() === normalizedEmail
+      if (typeof m === 'object' && m.email) return String(m.email).trim().toLowerCase() === normalizedEmail
+      return false
+    })
+    if (!isLeader && !isTeamMember) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
@@ -51,24 +76,39 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const email = searchParams.get('email')
-    const accessCode = searchParams.get('accessCode')
+  const email = searchParams.get('email')
+  const accessCode = searchParams.get('accessCode')
 
     if (!email || !accessCode) {
       return NextResponse.json({ error: 'Email and access code are required' }, { status: 400 })
     }
 
-    // Verify user authentication
-    const { data: user, error: authError } = await supabase
+    // Normalize inputs and verify user authentication by access code (allow team members)
+    const normalizedEmail = String(email).trim().toLowerCase()
+    const normalizedAccessCode = String(accessCode).trim().toUpperCase()
+
+  const { data, error: authError } = await supabase
       .from('registrations')
-      .select('business_idea, current_phase')
-      .eq('email', email)
-      .eq('access_code', accessCode.toUpperCase())
-      .eq('module', 'Business Innovation')
-      .eq('status', 'approved')
+      .select('business_idea, current_phase, email, team_members')
+      .eq('access_code', normalizedAccessCode)
+      .ilike('module', '%business innovation%')
+      .ilike('status', 'approved')
       .single()
 
+    const user = data as Registration | null
     if (authError || !user) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+  const teamMembers: Array<{ email?: string } | string> = Array.isArray(user.team_members) ? user.team_members : []
+  const isTeamMember = teamMembers.some((m: { email?: string } | string) => {
+      if (!m) return false
+      if (typeof m === 'string') return m.trim().toLowerCase() === normalizedEmail
+      if (typeof m === 'object' && m.email) return String(m.email).trim().toLowerCase() === normalizedEmail
+      return false
+    })
+    if (!isLeader && !isTeamMember) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 

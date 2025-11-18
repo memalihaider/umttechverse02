@@ -33,6 +33,7 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true)
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
   const [selectedEntry, setSelectedEntry] = useState<LeaderboardEntry | null>(null)
+  const [leaderboardLastUpdated, setLeaderboardLastUpdated] = useState<number | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -51,8 +52,11 @@ export default function Leaderboard() {
       }
       setUserData(parsed)
 
-      // Fetch leaderboard
-      fetchLeaderboard(parsed.email, parsed.accessCode)
+  // Fetch leaderboard
+  fetchLeaderboard(parsed.email, parsed.accessCode)
+  // Poll leaderboard every 10 seconds
+  const interval = setInterval(() => fetchLeaderboard(parsed.email, parsed.accessCode), 10_000)
+  return () => clearInterval(interval)
     } catch (error) {
       console.error('Auth data parsing error:', error)
       router.push('/business-innovation')
@@ -66,10 +70,16 @@ export default function Leaderboard() {
       if (response.ok) {
         const data = await response.json()
         setLeaderboard(data.leaderboard || [])
+        setLeaderboardLastUpdated(Date.now())
+        // keep the selected entry in sync with refreshed data
+        if (selectedEntry) {
+          const updated = (data.leaderboard || []).find((e: LeaderboardEntry) => e.id === selectedEntry.id)
+          if (updated) setSelectedEntry(updated)
+        }
       } else {
         console.error('Failed to fetch leaderboard')
       }
-    } catch (error) {
+      } catch (error) {
       console.error('Error fetching leaderboard:', error)
     } finally {
       setLoading(false)
@@ -91,6 +101,26 @@ export default function Leaderboard() {
     if (score >= 35) return 'text-yellow-400'
     if (score >= 25) return 'text-orange-400'
     return 'text-red-400'
+  }
+
+  const computeCategoryAverages = (evaluations: LeaderboardEntry['evaluations']) => {
+    if (!evaluations || evaluations.length === 0) return null
+    const sums = evaluations.reduce((acc, ev) => {
+      acc.innovation += (ev?.innovation_score || 0)
+      acc.feasibility += (ev?.feasibility_score || 0)
+      acc.market += (ev?.market_potential_score || 0)
+      acc.presentation += (ev?.presentation_score || 0)
+      acc.technical += (ev?.technical_score || 0)
+      return acc
+    }, { innovation: 0, feasibility: 0, market: 0, presentation: 0, technical: 0 })
+    const count = evaluations.length
+    return {
+      innovation: sums.innovation / count,
+      feasibility: sums.feasibility / count,
+      market: sums.market / count,
+      presentation: sums.presentation / count,
+      technical: sums.technical / count
+    }
   }
 
   if (loading) {
@@ -157,6 +187,9 @@ export default function Leaderboard() {
         <div className="bg-black/80 backdrop-blur-sm rounded-2xl border border-purple-500/20 overflow-hidden">
           <div className="px-6 py-4 border-b border-purple-500/20">
             <h3 className="text-xl font-semibold text-blue-300">Current Rankings</h3>
+            {leaderboardLastUpdated && (
+              <div className="text-sm text-purple-400">Last updated: {new Date(leaderboardLastUpdated).toLocaleTimeString()}</div>
+            )}
           </div>
 
           <div className="overflow-x-auto">
@@ -169,53 +202,95 @@ export default function Leaderboard() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Phase</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Avg Score</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Evaluations</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Innovation</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Feasibility</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Market</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Presentation</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Technical</th>
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Last Eval</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-purple-500/10">
-                {leaderboard.map((entry) => (
-                  <tr key={entry.id} className="hover:bg-purple-900/10 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                          entry.rank === 1 ? 'bg-yellow-500 text-black' :
-                          entry.rank === 2 ? 'bg-gray-400 text-black' :
-                          entry.rank === 3 ? 'bg-orange-600 text-white' :
-                          'bg-purple-600 text-white'
-                        }`}>
-                          {entry.rank}
+                {leaderboard.map((entry) => {
+                  const isYou = userData && userData.id === entry.id
+                  return (
+                    <tr key={entry.id} className="hover:bg-purple-900/10 transition-colors">
+                      <td className={`px-6 py-4 whitespace-nowrap ${isYou ? 'bg-yellow-900/10' : ''}`}>
+                        <div className="flex items-center">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                            entry.rank === 1 ? 'bg-yellow-500 text-black' :
+                            entry.rank === 2 ? 'bg-gray-400 text-black' :
+                            entry.rank === 3 ? 'bg-orange-600 text-white' :
+                            'bg-purple-600 text-white'
+                          }`}>
+                            {entry.rank}
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-blue-300">{entry.name}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-purple-200">{entry.university}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPhaseColor(entry.current_phase)}`}>
-                        {entry.current_phase.replace('_', ' ')}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className={`text-sm font-medium ${getScoreColor(entry.average_score)}`}>
-                        {entry.average_score.toFixed(1)}/60
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-purple-200">{entry.evaluation_count}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => setSelectedEntry(entry)}
-                        className="text-blue-400 hover:text-blue-300 transition-colors text-sm"
-                      >
-                        View Details
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className={`px-6 py-4 whitespace-nowrap ${isYou ? 'bg-yellow-900/10' : ''}`}>
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm font-medium text-blue-300">{entry.name}</div>
+                          {isYou && (
+                            <span className="text-xs inline-block bg-yellow-500 text-black px-2 py-0.5 rounded">You</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-purple-200">{entry.university}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPhaseColor(entry.current_phase)}`}>
+                          {entry.current_phase.replace('_', ' ')}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className={`text-sm font-medium ${getScoreColor(entry.average_score)}`}>
+                          {entry.average_score.toFixed(1)}/60
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-purple-200">{entry.evaluation_count}</div>
+                      </td>
+                      {/* per category averages, hidden on small screens */}
+                      {(() => {
+                        const avgs = computeCategoryAverages(entry.evaluations)
+                        return (
+                          <>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">{avgs ? avgs.innovation.toFixed(1) : '-'}</div>
+                            </td>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">{avgs ? avgs.feasibility.toFixed(1) : '-'}</div>
+                            </td>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">{avgs ? avgs.market.toFixed(1) : '-'}</div>
+                            </td>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">{avgs ? avgs.presentation.toFixed(1) : '-'}</div>
+                            </td>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">{avgs ? avgs.technical.toFixed(1) : '-'}</div>
+                            </td>
+                            <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-purple-200">
+                                {entry.evaluations && entry.evaluations.length > 0 ? new Date(entry.evaluations.reduce((acc, cur) => acc > new Date(cur.evaluated_at).getTime() ? acc : new Date(cur.evaluated_at).getTime(), 0)).toLocaleString() : '-'}
+                              </div>
+                            </td>
+                          </>
+                        )
+                      })()}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => setSelectedEntry(entry)}
+                          className="text-blue-400 hover:text-blue-300 transition-colors text-sm"
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

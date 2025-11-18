@@ -12,7 +12,7 @@ export const modules = [
   { name: 'Tekken 8', fee: 1000, teamSize: 'Individual', contact: 'Zain - +92 331 5758888', guidebook: 'https://drive.google.com/file/d/1v_GqvOGUuWVktg3FQzgjCZuOkYtb7l3v/view?usp=sharing' },
   { name: 'UI/UX Competition', fee: 2000, teamSize: '2-4 members', contact: 'Zainab Salman - +92 302 1402652', guidebook: 'https://drive.google.com/file/d/1b2M4oYyXzmxhYOP0XkOx3cIV7RRifDQb/view?usp=sharing' },
   { name: 'Valorant', fee: 2500, teamSize: '5 members + 1 sub', contact: 'Muhammad Moeed - +92 324 4932912', guidebook: 'https://drive.google.com/file/d/16sBOqVyhO8IdO6rz01nge1-w77zNF7FE/view?usp=sharing' },
-  { name: 'Web Hackathon', fee: 2500, teamSize: '1-3 members', contact: 'Muhammad Faizan - +92 341 4123652', guidebook: 'https://drive.google.com/file/d/1LUg2N7rd-BNhhQbFGWHLglKYH7g_q7Jq/view?usp=sharing' },
+  { name: 'Web Hackathon', fee: 2500, teamSize: '1-3 members', contact: 'Muhammad Faizan - +92 341 4123652', guidebook: 'https://drive.google.com/file/d/18Ezgtci1Pzt68StKqHGelJ3GOJguFl2E/view?usp=sharing' },
   { name: 'Operation CyberQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081', guidebook: 'https://drive.google.com/file/d/1JDZUgXvB4mfJXageUZw68akKFlFstltk/view?usp=sharing' },
   { name: 'Business Innovation', fee: 3999, teamSize: '1-5 members', contact: 'Largify Solutions - +966 59 736 9443 & +92 310 6207245', guidebook: 'https://drive.google.com/file/d/1n-hwkq_qweLuBal1K3_dTmRXv6uGWNHv/view?usp=sharing' },
 ]

@@ -23,7 +23,7 @@ export default function BusinessInnovationSignIn() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, accessCode }),
+        body: JSON.stringify({ email: email.trim(), accessCode: accessCode.trim() }),
       })
 
       if (!response.ok) {
@@ -33,12 +33,9 @@ export default function BusinessInnovationSignIn() {
 
       const data = await response.json()
 
-      // Store authentication data in localStorage
+      // Store full authentication data in localStorage (include authenticated flag)
       localStorage.setItem('businessInnovationAuth', JSON.stringify({
-        email: data.email,
-        accessCode: data.accessCode,
-        name: data.name,
-        module: data.module,
+        ...data,
         authenticated: true
       }))
 

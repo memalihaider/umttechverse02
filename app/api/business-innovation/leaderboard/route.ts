@@ -9,16 +9,30 @@ export async function GET(request: NextRequest) {
 
     // Verify user authentication (optional for leaderboard viewing)
     if (email && accessCode) {
-      const { data: user, error: authError } = await supabase
+      const normalizedEmail = String(email).trim().toLowerCase()
+      const normalizedAccessCode = String(accessCode).trim().toUpperCase()
+      const { data, error: authError } = await supabase
         .from('registrations')
-        .select('id')
-        .eq('email', email)
-        .eq('access_code', accessCode.toUpperCase())
-        .eq('module', 'Business Innovation')
-        .eq('status', 'approved')
+        .select('id, email, team_members')
+        .eq('access_code', normalizedAccessCode)
+        .ilike('module', '%business innovation%')
+        .ilike('status', 'approved')
         .single()
 
+      const user = data
       if (authError || !user) {
+        return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      }
+
+      const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+      const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
+      const isTeamMember = teamMembers.some((m: any) => {
+        if (!m) return false
+        if (typeof m === 'string') return m.trim().toLowerCase() === normalizedEmail
+        if (typeof m === 'object' && m.email) return String(m.email).trim().toLowerCase() === normalizedEmail
+        return false
+      })
+      if (!isLeader && !isTeamMember) {
         return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
       }
     }

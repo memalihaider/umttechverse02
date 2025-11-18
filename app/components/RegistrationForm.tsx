@@ -67,6 +67,14 @@ interface FormData {
 
 const modules = [
   {
+    name: 'Business Innovation - Idea to Startup',
+    fee: 3999,
+    contactPerson: 'Largify Solutions - +966 59 736 9443 & +92 309 699 3535',
+    teamSize: '1-5 members',
+    winnerPrize: 40000,
+    runnerUpPrize: 30000
+  },
+  {
     name: 'AI Hackathon',
     fee: 2500,
     contactPerson: 'Umair Khan - +92 308 6707770',
@@ -185,14 +193,6 @@ const modules = [
     teamSize: '1 member',
     winnerPrize: 25000,
     runnerUpPrize: 15000
-  },
-  {
-    name: 'Business Innovation - Idea to Startup',
-    fee: 3999,
-    contactPerson: 'Largify Solutions - +966 59 736 9443 & +92 309 699 3535',
-    teamSize: '1-5 members',
-    winnerPrize: 40000,
-    runnerUpPrize: 30000
   }
 ]
 
