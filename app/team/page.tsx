@@ -230,7 +230,7 @@ export default function TeamPage() {
               }}>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
                   <TeamImage
-                    src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
+                    src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763463589/WhatsApp_Image_2025-11-18_at_11.22.15_nn2bel.jpg"
                     alt="Director General"
                     width={80}
                     height={80}

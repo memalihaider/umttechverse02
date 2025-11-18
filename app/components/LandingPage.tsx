@@ -3,6 +3,7 @@
 import Link from 'next/link'
 // Image import intentionally removed to avoid server-side prefetch of fragile remote assets; use TeamImage wrapper instead.
 import TeamImage from './TeamImage'
+import Countdown from './Countdown'
 import { useState, useEffect } from 'react'
 import { modules } from '@/lib/modules'
 import Navbar from './Navbar'
@@ -73,6 +74,10 @@ export default function LandingPage() {
               <p className="mb-1 sm:mb-2">📅 Date: 5-11 January 2026</p>
               <p className="mb-1 sm:mb-2">📍 Venue: University of Management and Technology (UMT), Lahore</p>
               <p>🎯 Join Pakistan's Premier Tech Competition Event</p>
+              <div className="mt-2">
+                <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" />
+                <div className="mt-2 text-xs text-purple-300">Starts: 5 January 2026 • 09:00 AM (PKT)</div>
+              </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-scale-in delay-500">
               <Link
@@ -1086,7 +1091,7 @@ export default function LandingPage() {
               }}>
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 overflow-hidden border-2 border-purple-400/50">
                     <TeamImage
-                      src="https://drive.google.com/uc?export=view&id=1vFZoMqSEHKuatul4s6bDG5GLxW-OaFkW"
+                      src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763463589/WhatsApp_Image_2025-11-18_at_11.22.15_nn2bel.jpg"
                       alt="Director General"
                       width={80}
                       height={80}
