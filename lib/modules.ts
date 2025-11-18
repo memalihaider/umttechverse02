@@ -1,6 +1,6 @@
 export const modules = [
   { name: 'AI Hackathon', fee: 2500, teamSize: '2-4 members', contact: 'Umair Khan - +92 308 6707770', guidebook: 'https://drive.google.com/file/d/1tbTAK88uvjWV2CfpMY8sJNMoOWjFPi_d/view?usp=sharing' },
-  { name: 'Cyber Hackathon', fee: 1500, teamSize: '1-3 members', contact: 'Nabaha Umar - +92 349 4709369', guidebook: 'https://drive.google.com/file/d/1H4cjFKfsrFUt5nbk5XNJKF-biOIUmRmq/view?usp=sharing' },
+  { name: 'Cyber Hackathon', fee: 1500, teamSize: '1-3 members', contact: 'Nabaha Umar - +92 349 4709369', guidebook: 'https://drive.google.com/file/d/1xGi_VkOxqL_niSGThaF7lF3g9aHiSly7/view?usp=sharing' },
   { name: 'FIFA 26', fee: 1000, teamSize: 'Individual/Team', contact: 'Asad - +92 324 8443622', guidebook: 'https://drive.google.com/file/d/1KP5mVfeiiTS-MXJNH9uSv1WHfa61m5bk/view?usp=sharing' },
   { name: 'Line Following Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248; Muhammad Itayab - +92 333 4204421', guidebook: 'https://drive.google.com/file/d/1fZhDB3fVNMQZfyF0ZUQlxoGO-225nf8c/view?usp=sharing' },
   { name: 'Obstacle Avoidance Robot', fee: 1500, teamSize: '1-3 members', contact: 'Junaid - +92 324 4768248', guidebook: 'https://drive.google.com/file/d/1IFm-lA-7YxWl1yUK895FeswfTxhie_3H/view?usp=sharing' },
@@ -13,6 +13,6 @@ export const modules = [
   { name: 'UI/UX Competition', fee: 2000, teamSize: '2-4 members', contact: 'Zainab Salman - +92 302 1402652', guidebook: 'https://drive.google.com/file/d/1b2M4oYyXzmxhYOP0XkOx3cIV7RRifDQb/view?usp=sharing' },
   { name: 'Valorant', fee: 2500, teamSize: '5 members + 1 sub', contact: 'Muhammad Moeed - +92 324 4932912', guidebook: 'https://drive.google.com/file/d/16sBOqVyhO8IdO6rz01nge1-w77zNF7FE/view?usp=sharing' },
   { name: 'Web Hackathon', fee: 2500, teamSize: '1-3 members', contact: 'Muhammad Faizan - +92 341 4123652', guidebook: 'https://drive.google.com/file/d/1LUg2N7rd-BNhhQbFGWHLglKYH7g_q7Jq/view?usp=sharing' },
-  { name: 'Operation CyberQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081', guidebook: '' },
-  { name: 'Business Innovation', fee: 3999, teamSize: '1-5 members', contact: 'Largify Solutions - +966 59 736 9443 & +92 310 6207245', guidebook: 'https://docs.google.com/document/d/18-E-SxqLW_csh4Ie6AKZuLMib-l7pGASs-_nz9ScCfQ/edit?usp=sharing' },
+  { name: 'Operation CyberQuest', fee: 2500, teamSize: '1 member', contact: 'Ali Iftikhar - +92 309 5420081', guidebook: 'https://drive.google.com/file/d/1JDZUgXvB4mfJXageUZw68akKFlFstltk/view?usp=sharing' },
+  { name: 'Business Innovation', fee: 3999, teamSize: '1-5 members', contact: 'Largify Solutions - +966 59 736 9443 & +92 310 6207245', guidebook: 'https://drive.google.com/file/d/1n-hwkq_qweLuBal1K3_dTmRXv6uGWNHv/view?usp=sharing' },
 ]
