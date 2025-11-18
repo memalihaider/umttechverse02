@@ -640,7 +640,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Our Sponsors
+              Our Sponsors & Partners
             </h2>
             <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               We are grateful to our sponsors for their generous support in making Techverse 2026 possible.
@@ -677,7 +677,7 @@ export default function LandingPage() {
                   <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408952/WhatsApp_Image_2025-11-17_at_23.13.40_cojsvg.jpg" alt="Intel" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Game & Geeks</h3>
-                <p className="text-purple-200 text-sm mb-3">Diamond Sponsor</p>
+                <p className="text-purple-200 text-sm mb-3">Platinum Sponsor</p>
                 <a href="https://gamesandgeeks.pk" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -686,14 +686,14 @@ export default function LandingPage() {
                 </a>
               </div>
 
-              {/* Sponsor: Microsoft */}
+              {/* Sponsor: Al Khidmat */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full flex items-center justify-center border-2 border-cyan-400/50">
-                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408823/WhatsApp_Image_2025-11-17_at_23.13.36_2_jh60j4.jpg" alt="Microsoft" width={80} height={80} className="w-full h-full object-contain" />
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408823/WhatsApp_Image_2025-11-17_at_23.13.36_2_jh60j4.jpg" alt="Intel" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Al Khidmat Foundation</h3>
-                <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
-                <a href="https://alkhidmat.org/president-message" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Al Khidmat</h3>
+                <p className="text-purple-200 text-sm mb-3">Our Partners</p>
+                <a href="https://alkhidmat.org" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -701,14 +701,64 @@ export default function LandingPage() {
                 </a>
               </div>
 
+              {/* Sponsor: Rapter Wallet */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408962/WhatsApp_Image_2025-11-17_at_23.13.37_1_naxnum.jpg" alt="Intel" width={80} height={80} className="w-full h-full object-cover rounded-full" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Rapter Wallet</h3>
+                <p className="text-purple-200 text-sm mb-3">Our Partners</p>
+                <a href="https://www.raptrgames.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              {/* Sponsor: Intel Reach */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408958/WhatsApp_Image_2025-11-17_at_23.13.38_1_qmbykg.jpg" alt="Intel" width={80} height={80} className="w-full h-full object-cover rounded-full" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Intel Reach</h3>
+                <p className="text-purple-200 text-sm mb-3">Our Partners</p>
+                <a href="https://intellireach.social/en/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              
+
+              
               {/* Sponsor: Ranchers */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
                   <TeamImage src="https://rancherscafe.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.9137e136.png&w=256&q=75" alt="Google Cloud" width={80} height={80} className="w-full h-full object-contain rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Ranchers</h3>
-                <p className="text-purple-200 text-sm mb-3">Gold Sponsor</p>
+                <p className="text-purple-200 text-sm mb-3">Platinum Sponsor</p>
                 <a href="https://cloud.google.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  <span>Visit Website</span>
+                </a>
+              </div>
+
+              
+
+              {/* Sponsor: Data Seekho */}
+              <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408957/WhatsApp_Image_2025-11-17_at_23.13.38_2_bke4ke.jpg" alt="Google Cloud" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Data Seekho</h3>
+                <p className="text-purple-200 text-sm mb-3">Our Partners</p>
+                <a href="https://dataseekho.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -719,10 +769,10 @@ export default function LandingPage() {
               {/* Sponsor: Devsinc */}
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-cyan-500/30 text-center hover:border-cyan-400/50 transition-all duration-300">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 bg-cyan-500/20 rounded-full overflow-hidden flex items-center justify-center border-2 border-cyan-400/50">
-                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408954/WhatsApp_Image_2025-11-17_at_23.13.39_1_l7oyvb.jpg" alt="GitHub" width={80} height={80} className="w-full h-full object-contain rounded-full" />
+                  <TeamImage src="https://res.cloudinary.com/dggbhgqib/image/upload/v1763408954/WhatsApp_Image_2025-11-17_at_23.13.39_1_l7oyvb.jpg" alt="GitHub" width={80} height={80} className="w-full h-full object-cover rounded-full" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-cyan-300 mb-2">Devsinc</h3>
-                <p className="text-purple-200 text-sm mb-3">Premium Collaborator</p>
+                <p className="text-purple-200 text-sm mb-3">Our Collaborator</p>
                 <a href="https://devsinc.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
