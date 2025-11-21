@@ -14,7 +14,10 @@
     "security:headers": "npx check-my-headers https://localhost:3000",
     "security:scan": "npx npm-check-updates --target minor",
     "security:lockfile": "npm audit --audit-level=high --json | npx jq '.vulnerabilities | keys[]'",
-    "precommit": "npm run lint && npm run security:audit"
+    "precommit": "npm run lint && npm run security:audit",
+    "migrate:add-team-member-cnic": "node scripts/add_team_member_cnic.js",
+    "migrate:add-team-member-cnic:apply": "node scripts/add_team_member_cnic.js --apply",
+    "verify:team-member-cnic": "node scripts/verify_team_member_cnic.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",

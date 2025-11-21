@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { getAdditionalTeamMembers, normalizeTeamMember, formatCnicDisplay } from '@/lib/team-members'
 
 interface Registration {
   id: string
@@ -14,7 +15,7 @@ interface Registration {
   roll_no: string
   module: string
   hostel: string
-  team_members: { name: string; email: string; university: string; rollNo: string }[]
+  team_members: { name: string; email: string; university: string; rollNo: string; cnic?: string }[]
   payment_receipt_url: string
   access_code: string
   status: 'pending' | 'approved' | 'rejected'
@@ -29,6 +30,11 @@ interface Registration {
     targetAudience: string
     competitiveAdvantage: string
     revenueModel: string
+    final_submission?: {
+      docsLink?: string
+      videoLink?: string
+      description?: string
+    }
   }
   current_phase?: string
   submission_status?: string
@@ -38,6 +44,27 @@ interface Registration {
   _avgTotal?: number | null
   _avgByCategory?: { [key: string]: number } | null
   _lastEval?: Evaluation | null
+}
+
+type AdminTeamMember = {
+  name?: string
+  email?: string
+  university?: string
+  uni?: string
+  university_name?: string
+  rollNo?: string
+  roll?: string
+  cnic?: string
+  full_name?: string
+  member_email?: string
+  email_address?: string
+  member_name?: string
+  roll_no?: string
+  CNIC?: string
+  CNIC_NO?: string
+  cnic_no?: string
+  cnic_digits?: string
+  members?: any
 }
 
 interface BusinessInnovationStats {
@@ -124,6 +151,8 @@ export default function AdminPortal() {
     router.push('/admin/signin')
   }
 
+  // Using shared helpers from lib/team-members
+
   const [registrations, setRegistrations] = useState<Registration[]>([])
   const [filteredRegistrations, setFilteredRegistrations] = useState<Registration[]>([])
   const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, approved: 0, rejected: 0, uniqueUniversities: 0, uniqueModules: 0, totalAmount: 0, totalTeams: 0 })
@@ -155,7 +184,10 @@ export default function AdminPortal() {
   const [selectedRegistrations, setSelectedRegistrations] = useState<string[]>([])
   const [showViewModal, setShowViewModal] = useState(false)
   const [viewRegistration, setViewRegistration] = useState<Registration | null>(null)
+  const [showRawTeamMembers, setShowRawTeamMembers] = useState(false)
   const itemsPerPage = 10
+  const additionalMembersForView = viewRegistration ? getAdditionalTeamMembers(viewRegistration) : []
+  const additionalMembersForSelected = selectedParticipant ? getAdditionalTeamMembers(selectedParticipant) : []
 
   const fetchRegistrations = async () => {
     try {
@@ -182,7 +214,7 @@ export default function AdminPortal() {
         if (r.hostel === 'three_days') return sum + 5000
         return sum
       }, 0)
-      const totalTeams = regs.filter(r => r.team_members && r.team_members.length > 1).length
+      const totalTeams = regs.filter(r => getAdditionalTeamMembers(r).length > 0).length
 
       setStats({ total, pending, approved, rejected, uniqueUniversities, uniqueModules, totalAmount, totalTeams })
     } catch (error) {
@@ -204,7 +236,7 @@ export default function AdminPortal() {
 
       if (participantsError) throw participantsError
 
-  const biParticipants = participants || []
+    const biParticipants = participants || []
 
       // Fetch evaluations for all participants to calculate average scores
       const participantIds = biParticipants.map(p => p.id)
@@ -221,7 +253,7 @@ export default function AdminPortal() {
         }
       }
 
-  // Calculate stats
+    // Calculate stats
       const totalParticipants = biParticipants.length
       const ideaSubmissions = biParticipants.filter(p => p.business_idea && p.business_idea.title).length
       const designPhase = biParticipants.filter(p => p.current_phase === 'design').length
@@ -425,7 +457,7 @@ export default function AdminPortal() {
       const deletedReg = registrations.find(r => r.id === id)
       if (deletedReg) {
         const amountToSubtract = deletedReg.hostel === 'one_day' ? 2000 : deletedReg.hostel === 'three_days' ? 5000 : 0
-        const isTeam = deletedReg.team_members && deletedReg.team_members.length > 1 ? 1 : 0
+        const isTeam = getAdditionalTeamMembers(deletedReg).length > 0 ? 1 : 0
         setStats(prev => ({
           ...prev,
           total: prev.total - 1,
@@ -472,7 +504,7 @@ export default function AdminPortal() {
       reg.roll_no,
       reg.module,
       reg.hostel === 'none' ? 'Self-arranged' : reg.hostel === 'one_day' ? '1 Day (PKR 2,000)' : '3 Days (PKR 5,000)',
-      reg.team_members?.length || 1,
+      1 + getAdditionalTeamMembers(reg).length,
       reg.status,
       new Date(reg.created_at).toLocaleDateString()
     ])
@@ -505,7 +537,7 @@ export default function AdminPortal() {
       p.name,
       p.email,
       p.access_code,
-      p.team_members ? p.team_members.length : 1,
+      1 + getAdditionalTeamMembers(p).length,
       p.university,
       p.current_phase || '',
       p.submission_status || '',
@@ -793,8 +825,10 @@ export default function AdminPortal() {
               </div>
 
               <ul className="divide-y divide-purple-500/20">
-                {paginatedRegistrations.map((reg) => (
-                  <li key={reg.id} className="px-6 py-6">
+                {paginatedRegistrations.map((reg) => {
+                  const additionalMembers = getAdditionalTeamMembers(reg)
+                  return (
+                    <li key={reg.id} className="px-6 py-6">
                     <div className="flex items-start">
                       {/* Checkbox */}
                       <div className="shrink-0 mr-4">
@@ -826,7 +860,7 @@ export default function AdminPortal() {
                           <p>🏛️ {reg.university}</p>
                           <p>📱 {reg.phone}</p>
                           <p>🎓 Roll: {reg.roll_no}</p>
-                          <p>🆔 CNIC: {reg.cnic}</p>
+                          <p>🆔 CNIC: {formatCnicDisplay(reg.cnic)}</p>
                           <p>🔑 Access Code: <span className="font-mono font-medium">{reg.access_code}</span></p>
                           <p>📅 {new Date(reg.created_at).toLocaleDateString()}</p>
                         </div>
@@ -844,16 +878,19 @@ export default function AdminPortal() {
                              'Hostel - 3 Days (PKR 5,000)'}
                           </span>
                         </div>
-
-                        {reg.team_members && reg.team_members.length > 1 && (
+                        {additionalMembers.length > 0 && (
                           <div className="mb-3">
-                            <p className="text-sm font-medium text-purple-300 mb-1">Team Members ({reg.team_members.length - 1}):</p>
+                            <p className="text-sm font-medium text-purple-300 mb-1">Team Members ({additionalMembers.length}):</p>
                             <div className="text-sm text-purple-200 max-h-20 overflow-y-auto">
-                              {reg.team_members.slice(1).map((member, idx) => (
-                                <div key={idx} className="mb-1">
-                                  {member.name} ({member.email}) - {member.university}
-                                </div>
-                              ))}
+                              {additionalMembers.map((member: any, idx: number) => {
+                                const m = normalizeTeamMember(member as any)
+                                return (
+                                  <div key={idx} className="mb-1">
+                                    {m.name} ({m.email}) - {m.university}
+                                    <div className="text-xs text-purple-400">CNIC: {formatCnicDisplay(m.cnic)}</div>
+                                  </div>
+                                )
+                              })}
                             </div>
                           </div>
                         )}
@@ -912,8 +949,9 @@ export default function AdminPortal() {
                         )}
                       </div>
                     </div>
-                  </li>
-                ))}
+                    </li>
+                  )
+                })}
               </ul>
 
               {/* Pagination */}
@@ -1040,7 +1078,7 @@ export default function AdminPortal() {
                           <div className="text-sm font-mono text-purple-200">{participant.access_code}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-purple-200">{participant.team_members ? participant.team_members.length : 1}</div>
+                          <div className="text-sm text-purple-200">{1 + getAdditionalTeamMembers(participant).length}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-purple-200">{participant.university}</div>
@@ -1143,7 +1181,7 @@ export default function AdminPortal() {
                 </div>
               </div>
 
-              <div className="p-6 space-y-6">
+                  <div className="p-6 space-y-6">
                 {/* Basic Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
@@ -1157,7 +1195,7 @@ export default function AdminPortal() {
                     </div>
                     <div>
                       <span className="text-purple-400 font-medium">CNIC:</span>
-                      <span className="text-purple-200 ml-2">{viewRegistration.cnic}</span>
+                      <span className="text-purple-200 ml-2">{formatCnicDisplay(viewRegistration.cnic)}</span>
                     </div>
                     <div>
                       <span className="text-purple-400 font-medium">Phone:</span>
@@ -1216,18 +1254,22 @@ export default function AdminPortal() {
                 </div>
 
                 {/* Team Members */}
-                {viewRegistration.team_members && viewRegistration.team_members.length > 1 && (
+                {additionalMembersForView.length > 0 && (
                   <div className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10">
-                    <h4 className="text-lg font-semibold text-purple-200 mb-4">Team Members ({viewRegistration.team_members.length - 1})</h4>
+                    <h4 className="text-lg font-semibold text-purple-200 mb-4">Team Members ({additionalMembersForView.length})</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {viewRegistration.team_members.slice(1).map((member, index) => (
-                        <div key={index} className="bg-black/30 rounded-lg p-4 border border-purple-500/10">
-                          <div className="font-medium text-purple-200 text-lg">{member.name}</div>
-                          <div className="text-sm text-purple-400 mt-1">📧 {member.email}</div>
-                          <div className="text-sm text-purple-400">🏛️ {member.university}</div>
-                          <div className="text-sm text-purple-400">🎓 Roll: {member.rollNo}</div>
-                        </div>
-                      ))}
+                      {additionalMembersForView.map((member, index) => {
+                        const m = normalizeTeamMember(member as any)
+                        return (
+                          <div key={index} className="bg-black/30 rounded-lg p-4 border border-purple-500/10">
+                            <div className="font-medium text-purple-200 text-lg">{m.name}</div>
+                            <div className="text-sm text-purple-400 mt-1">📧 {m.email}</div>
+                            <div className="text-sm text-purple-400">🏛️ {m.university}</div>
+                            <div className="text-sm text-purple-400">🎓 Roll: {m.rollNo}</div>
+                            <div className="text-sm text-purple-400">🆔 CNIC: {formatCnicDisplay(m.cnic)}</div>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 )}
@@ -1260,6 +1302,26 @@ export default function AdminPortal() {
                           </a>
                         </div>
                       )}
+                        {viewRegistration.business_idea?.final_submission && (
+                          <div className="space-y-2">
+                            {viewRegistration.business_idea.final_submission.docsLink && (
+                              <div>
+                                <span className="text-purple-400 font-medium">Documents:</span>
+                                <a href={viewRegistration.business_idea.final_submission.docsLink} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 ml-2 transition-colors">View Documents</a>
+                              </div>
+                            )}
+                            {viewRegistration.business_idea.final_submission.videoLink && (
+                              <div>
+                                <span className="text-purple-400 font-medium">Demo Video:</span>
+                                <a href={viewRegistration.business_idea.final_submission.videoLink} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 ml-2 transition-colors">Watch Video</a>
+                              </div>
+                            )}
+                            <div>
+                              <span className="text-purple-400 font-medium">Final Submission Description:</span>
+                              <p className="text-purple-200 ml-2 mt-1">{viewRegistration.business_idea.final_submission.description}</p>
+                            </div>
+                          </div>
+                        )}
                       <div className="space-y-3">
                         <div>
                           <span className="text-purple-400 font-medium">Business Idea Title:</span>
@@ -1382,19 +1444,39 @@ export default function AdminPortal() {
                 )}
 
                 {/* Team Members */}
-                {selectedParticipant.team_members && selectedParticipant.team_members.length > 1 && (
+                {additionalMembersForSelected.length > 0 && (
                   <div className="bg-purple-900/20 rounded-lg p-4 border border-purple-500/10">
                     <h4 className="text-lg font-semibold text-purple-200 mb-4">Team Members</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {selectedParticipant.team_members.slice(1).map((member, index) => (
-                        <div key={index} className="bg-black/30 rounded-lg p-3 border border-purple-500/10">
-                          <div className="font-medium text-purple-200">{member.name}</div>
-                          <div className="text-sm text-purple-400">{member.email}</div>
-                          <div className="text-sm text-purple-400">{member.university}</div>
-                          <div className="text-sm text-purple-400">Roll: {member.rollNo}</div>
-                        </div>
-                      ))}
+                    <div className="mb-3 flex items-center justify-between">
+                      <p className="text-sm text-purple-400">Showing team members data below</p>
+                      <button
+                        type="button"
+                        onClick={() => setShowRawTeamMembers(v => !v)}
+                        className="ml-2 inline-flex items-center px-3 py-1.5 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-purple-900/20 hover:bg-purple-800/30 transition-all duration-300"
+                      >
+                        {showRawTeamMembers ? 'Hide Raw' : 'Show Raw JSON'}
+                      </button>
                     </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {additionalMembersForSelected.map((member: any, index: number) => {
+                        const m = normalizeTeamMember(member as any)
+                        return (
+                          <div key={index} className="bg-black/30 rounded-lg p-3 border border-purple-500/10">
+                            <div className="font-medium text-purple-200">{m.name}</div>
+                            <div className="text-sm text-purple-400">{m.email}</div>
+                            <div className="text-sm text-purple-400">{m.university}</div>
+                            <div className="text-sm text-purple-400">Roll: {m.rollNo}</div>
+                            <div className="text-sm text-purple-400">CNIC: {formatCnicDisplay(m.cnic)}</div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                    {showRawTeamMembers && (
+                      <div className="mt-4 p-3 bg-black/30 rounded-lg border border-purple-500/10">
+                        <h5 className="text-sm font-medium text-purple-200 mb-2">Raw team_members JSON</h5>
+                        <pre className="text-xs text-purple-300 max-h-60 overflow-y-auto whitespace-pre-wrap">{JSON.stringify(selectedParticipant.team_members, null, 2)}</pre>
+                      </div>
+                    )}
                   </div>
                 )}
 

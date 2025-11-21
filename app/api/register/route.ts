@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     const name = formData.get('name') as string
     const email = formData.get('email') as string
-    const cnic = formData.get('cnic') as string
+  const cnic = (formData.get('cnic') as string) || ''
 
     console.log('Registration attempt for:', { name, email, cnic })
 
@@ -72,6 +72,13 @@ export async function POST(request: NextRequest) {
           }, { status: 400 })
         }
       }
+      // Validate team member CNIC format if present
+      if (member.cnic) {
+        const cleaned = (member.cnic || '').replace(/\D/g, '')
+        if (cleaned.length < 13) {
+          return NextResponse.json({ error: `Invalid CNIC for team member: ${member.name}` }, { status: 400 })
+        }
+      }
     }
 
     let receiptUrl = ''
@@ -96,19 +103,22 @@ export async function POST(request: NextRequest) {
     console.log('Generated codes:', { accessCode, uniqueCertificateId })
 
     console.log('Inserting registration into database...')
+  // Ensure team members contain CNIC field (default empty string) and normalize CNICs to digits-only
+  const normalizedTeamMembers = Array.isArray(teamMembers) ? teamMembers.map((m: any) => ({ ...m, cnic: ((m.cnic || '') as string).replace(/\D/g, '') })) : []
+
     const { error } = await supabase
       .from('registrations')
       .insert({
         name,
         email,
-        cnic,
+  cnic: (cnic || '').replace(/\D/g, ''),
         phone,
         university,
         roll_no: rollNo,
         module,
         hostel,
         ambassador_code: ambassadorCode || null,
-        team_members: teamMembers,
+  team_members: normalizedTeamMembers,
         payment_receipt_url: receiptUrl,
         access_code: accessCode,
         unique_id: uniqueCertificateId,
@@ -143,7 +153,7 @@ export async function POST(request: NextRequest) {
 
     const hostelFee = hostel === 'one_day' ? 2000 : hostel === 'three_days' ? 5000 : 0
     const originalModuleFee = selectedModule?.fee || 0
-    const isValidAmbassadorCode = ambassadorCode && ['TECHVERSE2025', 'UMTAMBASSADOR', 'TECHVERSE10', 'UMTSTUDENT', 'TECHVERSEVIP', 'UMT2025', 'TECHVERSEPRO', 'UMTAMB10', 'TECHVERSEPLUS', 'UMTTECH'].includes(ambassadorCode.toUpperCase())
+  const isValidAmbassadorCode = ambassadorCode && ['TECHVERSE2025', 'UMTAMBASSADOR', 'TECHVERSE10', 'UMTSTUDENT', 'TECHVERSEVIP', 'UMT2025', 'TECHVERSEPRO', 'UMTAMB10', 'TECHVERSEPLUS', 'UMTTECH', 'SUPERIOR.IEEE'].includes(ambassadorCode.toUpperCase())
     const discountedModuleFee = isValidAmbassadorCode ? Math.floor(originalModuleFee * 0.9) : originalModuleFee
     const totalAmount = discountedModuleFee + hostelFee
 

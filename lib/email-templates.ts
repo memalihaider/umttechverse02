@@ -13,16 +13,19 @@ export interface RegistrationData {
   unique_id: string
   status: 'pending' | 'approved'
 }
+import { getTeamMembers, normalizeTeamMember, formatCnicDisplay } from '@/lib/team-members'
 
 export function generatePendingRegistrationEmail(data: RegistrationData): string {
-  const teamMembersHtml = data.team_members && data.team_members.length > 0
+  const members = getTeamMembers(data)
+  const teamMembersHtml = members && members.length > 0
     ? `
         <div class="highlight">
           <h3>👥 Team Members</h3>
           <ul>
-            ${data.team_members.map((member: any, index: number) =>
-              `<li><strong>Member ${index + 1}:</strong> ${member.name} (${member.email})</li>`
-            ).join('')}
+            ${members.map((m: any, index: number) => {
+              const member = normalizeTeamMember(m)
+              return `<li><strong>Member ${index + 1}:</strong> ${member.name} (${member.email}${member.cnic ? ' | CNIC: ' + member.cnic_formatted : ''})</li>`
+            }).join('')}
           </ul>
         </div>
       `
@@ -37,6 +40,37 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
     : data.hostel === 'three_days'
     ? '3 Days Accommodation (PKR 5,000)'
     : 'Self-arranged accommodation'
+
+  const isBusinessInnovation = (data.module || '').toLowerCase().includes('business innovation')
+
+  const accessCodeHtml = isBusinessInnovation
+    ? `
+        <div class="access-code">
+          <h3>🔐 Your Access Code</h3>
+          <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+          <p style="margin-top: 10px; font-size: 14px;">Keep this code safe! You'll need it to access the Business Innovation portal.</p>
+        </div>
+      `
+    : ''
+
+  const businessInnovationPortalHtml = isBusinessInnovation
+    ? `
+          <div class="highlight">
+            <h3>💼 Business Innovation Portal Access</h3>
+            <div class="access-code">
+              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
+            </div>
+          </div>
+        `
+    : ''
+
+  const nextStepsList = `
+            <li><strong>Payment:</strong> Complete your payment using the bank details provided during registration</li>
+            <li><strong>Approval:</strong> Your registration will be approved within 24-48 hours after payment verification</li>
+            ${isBusinessInnovation ? '<li><strong>Portal Access:</strong> Once approved, use your access code to log into the Business Innovation portal</li>' : ''}
+            <li><strong>Stay Updated:</strong> Check your email regularly for approval notifications and event updates</li>
+          `
 
   return `
     <!DOCTYPE html>
@@ -71,7 +105,7 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
           <ul>
             <li><strong>Full Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
-            <li><strong>CNIC:</strong> ${data.cnic}</li>
+            <li><strong>CNIC:</strong> ${formatCnicDisplay(data.cnic)}</li>
             <li><strong>Phone:</strong> ${data.phone}</li>
             <li><strong>University:</strong> ${data.university}</li>
             <li><strong>Roll Number:</strong> ${data.roll_no}</li>
@@ -83,21 +117,9 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
 
         ${teamMembersHtml}
 
-        <div class="access-code">
-          <h3>🔐 Your Access Code</h3>
-          <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
-          <p style="margin-top: 10px; font-size: 14px;">Keep this code safe! You'll need it to access the event portal.</p>
-        </div>
+        ${accessCodeHtml}
 
-  ${data.module && data.module.trim().toLowerCase() === 'business innovation' ? `
-          <div class="highlight">
-            <h3>💼 Business Innovation Portal Access</h3>
-            <div class="access-code">
-              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
-              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
-            </div>
-          </div>
-        ` : ''}
+        ${businessInnovationPortalHtml}
 
         <div class="highlight">
           <h3>📅 Event Details</h3>
@@ -111,10 +133,7 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
         <div class="warning">
           <h3>⚠️ Important Next Steps</h3>
           <ol>
-            <li><strong>Payment:</strong> Complete your payment using the bank details provided during registration</li>
-            <li><strong>Approval:</strong> Your registration will be approved within 24-48 hours after payment verification</li>
-            <li><strong>Portal Access:</strong> Once approved, use your access code to log into the event portal</li>
-            <li><strong>Stay Updated:</strong> Check your email regularly for approval notifications and event updates</li>
+            ${nextStepsList}
           </ol>
         </div>
 
@@ -141,14 +160,16 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
 }
 
 export function generateApprovedRegistrationEmail(data: RegistrationData): string {
-  const teamMembersHtml = data.team_members && data.team_members.length > 0
+  const members = getTeamMembers(data)
+  const teamMembersHtml = members && members.length > 0
     ? `
         <div class="highlight">
           <h3>👥 Your Team Members</h3>
           <ul>
-            ${data.team_members.map((member: any, index: number) =>
-              `<li><strong>Member ${index + 1}:</strong> ${member.name} (${member.email})</li>`
-            ).join('')}
+            ${members.map((m: any, index: number) => {
+              const member = normalizeTeamMember(m)
+              return `<li><strong>Member ${index + 1}:</strong> ${member.name} (${member.email}${member.cnic ? ' | CNIC: ' + member.cnic_formatted : ''})</li>`
+            }).join('')}
           </ul>
         </div>
       `
@@ -163,6 +184,45 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
     : data.hostel === 'three_days'
     ? '3 Days Accommodation (PKR 5,000)'
     : 'Self-arranged accommodation'
+
+  const isBusinessInnovation = (data.module || '').toLowerCase().includes('business innovation')
+
+  const accessCodeHtml = isBusinessInnovation
+    ? `
+        <div class="access-code">
+          <h3>🔐 Your Access Code</h3>
+          <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+          <p style="margin-top: 10px; font-size: 14px;">Use this code to access the Business Innovation portal and all exclusive content.</p>
+        </div>
+      `
+    : ''
+
+  const businessInnovationPortalHtml = isBusinessInnovation
+    ? `
+          <div class="highlight">
+            <h3>💼 Business Innovation Portal Access</h3>
+            <div class="access-code">
+              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
+              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
+            </div>
+          </div>
+        `
+    : ''
+
+  const whatsNextList = `
+            ${isBusinessInnovation ? '<li><strong>Access Portal:</strong> Visit the Business Innovation portal and log in with your access code</li>' : ''}
+            <li><strong>Event Schedule:</strong> Check the complete event schedule and module details</li>
+            <li><strong>Team Communication:</strong> Coordinate with your team members to prepare for the event</li>
+            <li><strong>Stay Updated:</strong> Receive real-time updates and announcements</li>
+          `
+
+  const portalCtaHtml = isBusinessInnovation
+    ? `
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://umttechverse.com/business-innovation" class="portal-link">💼 Open Business Innovation Portal</a>
+        </div>
+      `
+    : ''
 
   return `
     <!DOCTYPE html>
@@ -201,7 +261,7 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
           <ul>
             <li><strong>Full Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
-            <li><strong>CNIC:</strong> ${data.cnic}</li>
+            <li><strong>CNIC:</strong> ${formatCnicDisplay(data.cnic)}</li>
             <li><strong>Phone:</strong> ${data.phone}</li>
             <li><strong>University:</strong> ${data.university}</li>
             <li><strong>Roll Number:</strong> ${data.roll_no}</li>
@@ -213,29 +273,14 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
 
         ${teamMembersHtml}
 
-        <div class="access-code">
-          <h3>🔐 Your Access Code</h3>
-          <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
-          <p style="margin-top: 10px; font-size: 14px;">Use this code to access the event portal and all exclusive content.</p>
-        </div>
+        ${accessCodeHtml}
 
-  ${data.module && data.module.trim().toLowerCase() === 'business innovation' ? `
-          <div class="highlight">
-            <h3>💼 Business Innovation Portal Access</h3>
-            <div class="access-code">
-              <div style="font-size: 24px; font-weight: bold; letter-spacing: 2px;">${data.access_code}</div>
-              <p style="margin-top: 10px; font-size: 14px;">Use this code along with your email (${data.email}) to access the Business Innovation portal: <a href="https://umttechverse.com/business-innovation">https://umttechverse.com/business-innovation</a></p>
-            </div>
-          </div>
-        ` : ''}
+        ${businessInnovationPortalHtml}
 
         <div class="highlight">
           <h3>🚀 What's Next?</h3>
           <ol>
-            <li><strong>Access Portal:</strong> Visit the event portal and log in with your access code</li>
-            <li><strong>Event Schedule:</strong> Check the complete event schedule and module details</li>
-            <li><strong>Team Communication:</strong> Connect with your team members through the portal</li>
-            <li><strong>Stay Updated:</strong> Receive real-time updates and announcements</li>
+            ${whatsNextList}
           </ol>
         </div>
 
@@ -249,9 +294,7 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
           </ul>
         </div>
 
-        <div style="text-align: center; margin: 30px 0;">
-          <a href="https://umttechverse.com" class="portal-link">🌐 Visit Event Portal</a>
-        </div>
+        ${portalCtaHtml}
 
         <p>If you have any questions or need assistance, our support team is here to help:</p>
         <ul>

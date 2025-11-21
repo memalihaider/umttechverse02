@@ -13,18 +13,26 @@ export async function GET(request: NextRequest) {
       const normalizedAccessCode = String(accessCode).trim().toUpperCase()
       const { data, error: authError } = await supabase
         .from('registrations')
-        .select('id, email, team_members')
+        .select('id, email, team_members, status, module')
         .eq('access_code', normalizedAccessCode)
-        .ilike('module', '%business innovation%')
-        .ilike('status', 'approved')
-        .single()
+        .maybeSingle()
 
       const user = data
       if (authError || !user) {
         return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
       }
 
-      const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+      const statusNormalized = String(user.status ?? '').trim().toLowerCase()
+      if (statusNormalized !== 'approved') {
+        return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      }
+
+      const moduleMatches = typeof user.module === 'string' && /business[\s-]*innovation/i.test(user.module)
+      if (!moduleMatches) {
+        return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      }
+
+      const isLeader = String(user.email || '').trim().toLowerCase() === normalizedEmail
       const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
       const isTeamMember = teamMembers.some((m: any) => {
         if (!m) return false

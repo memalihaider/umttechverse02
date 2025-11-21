@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { modules } from '@/lib/modules'
+import { getAdditionalTeamMembers, normalizeTeamMember } from '@/lib/team-members'
 import { useRouter } from 'next/navigation'
 
 interface UserData {
@@ -29,6 +30,7 @@ export default function BusinessInnovationPortal() {
   const [phaseLastUpdated, setPhaseLastUpdated] = useState<number | null>(null)
   const [nowTs, setNowTs] = useState(() => Date.now())
   const router = useRouter()
+  const additionalTeamMembers = userData ? getAdditionalTeamMembers(userData) : []
 
   const fetchPhaseStatus = async (email: string, accessCode: string) => {
     try {
@@ -136,6 +138,14 @@ export default function BusinessInnovationPortal() {
                 >
                   Submit Idea
                 </button>
+                {(currentPhase === 'design' || currentPhase === 'development' || currentPhase === 'submission') && (
+                  <button
+                    onClick={() => router.push('/business-innovation/portal/submission')}
+                    className="inline-flex items-center px-3 py-2 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-yellow-900/30 hover:bg-yellow-800/30 transition-colors"
+                  >
+                    Final Submission
+                  </button>
+                )}
                 <button
                   onClick={() => router.push('/business-innovation/portal/leaderboard')}
                   className="inline-flex items-center px-3 py-2 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-purple-900/30 hover:bg-purple-800/30 transition-colors"
@@ -176,7 +186,7 @@ export default function BusinessInnovationPortal() {
 
           {/* User Info Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
+              <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
               <h3 className="text-lg font-semibold text-blue-300 mb-2">Team Leader</h3>
               <p className="text-purple-200 font-medium">{userData.name}</p>
               <p className="text-purple-300 text-sm">{userData.email}</p>
@@ -191,7 +201,7 @@ export default function BusinessInnovationPortal() {
 
             <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
               <h3 className="text-lg font-semibold text-blue-300 mb-2">Team Size</h3>
-              <p className="text-purple-200 font-medium text-xl">{userData.team_members?.length || 1} members</p>
+              <p className="text-purple-200 font-medium text-xl">{1 + additionalTeamMembers.length} members</p>
               <p className="text-purple-400 text-sm">1-5 members allowed</p>
             </div>
             <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20">
@@ -213,18 +223,21 @@ export default function BusinessInnovationPortal() {
           </div>
 
           {/* Team Members */}
-          {userData.team_members && userData.team_members.length > 1 && (
+          {additionalTeamMembers.length > 0 && (
             <div className="bg-purple-900/30 rounded-xl p-6 border border-purple-500/20 mb-8">
               <h3 className="text-lg font-semibold text-blue-300 mb-4">Your Team</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {userData.team_members.slice(1).map((member, index) => (
-                  <div key={index} className="bg-black/30 rounded-lg p-4 border border-purple-500/10">
-                    <p className="text-purple-200 font-medium">{member.name}</p>
-                    <p className="text-purple-300 text-sm">{member.email}</p>
-                    <p className="text-purple-400 text-sm">{member.university}</p>
-                    <p className="text-purple-400 text-sm">Roll: {member.rollNo}</p>
-                  </div>
-                ))}
+                {additionalTeamMembers.map((member, index) => {
+                  const m = normalizeTeamMember(member as any)
+                  return (
+                    <div key={index} className="bg-black/30 rounded-lg p-4 border border-purple-500/10">
+                      <p className="text-purple-200 font-medium">{m.name}</p>
+                      <p className="text-purple-300 text-sm">{m.email}</p>
+                      <p className="text-purple-400 text-sm">{m.university}</p>
+                      <p className="text-purple-400 text-sm">Roll: {m.rollNo}</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           )}

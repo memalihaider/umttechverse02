@@ -7,7 +7,7 @@ const rateLimitStore = new Map<string, { count: number; resetTime: number }>()
 // Rate limit configuration
 const RATE_LIMIT = {
   windowMs: 15 * 60 * 1000, // 15 minutes
-  maxRequests: 100, // requests per window
+  maxRequests: process.env.NODE_ENV === 'development' ? 1000 : 100, // Higher limit for development
 }
 
 // Suspicious patterns to block

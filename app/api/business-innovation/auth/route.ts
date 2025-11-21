@@ -13,14 +13,12 @@ export async function POST(request: NextRequest) {
     const normalizedEmail = String(email).trim().toLowerCase()
     const normalizedAccessCode = String(accessCode).trim().toUpperCase()
 
-    // Query registration by access code and module/status - access_code is unique per registration
+    // Query registration by access code (unique value per registration)
     const { data: registration, error } = await supabase
       .from('registrations')
       .select('*')
       .eq('access_code', normalizedAccessCode)
-      .ilike('module', '%business innovation%')
-      .ilike('status', 'approved')
-      .single()
+      .maybeSingle()
 
     if (error || !registration) {
       console.error('BI auth lookup failed', { normalizedEmail, error })
@@ -29,9 +27,25 @@ export async function POST(request: NextRequest) {
       }, { status: 401 })
     }
 
+    const statusNormalized = String(registration.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      console.warn('BI auth rejected due to status', { normalizedEmail, registrationId: registration.id, status: registration.status })
+      return NextResponse.json({
+        error: 'Invalid credentials or registration not approved. Please check your email and access code.'
+      }, { status: 401 })
+    }
+
+    const moduleMatches = typeof registration.module === 'string' && /business[\s-]*innovation/i.test(registration.module)
+    if (!moduleMatches) {
+      console.warn('BI auth rejected due to non-BI module', { normalizedEmail, registrationId: registration.id, module: registration.module })
+      return NextResponse.json({
+        error: 'Invalid credentials or registration not approved. Please check your email and access code.'
+      }, { status: 401 })
+    }
+
     // Allow login if provided email matches the registration email or any of the team members' emails
     const providedEmailNormalized = normalizedEmail
-    const isLeader = String(registration.email).trim().toLowerCase() === providedEmailNormalized
+    const isLeader = String(registration.email || '').trim().toLowerCase() === providedEmailNormalized
     const teamMembers: any[] = Array.isArray(registration.team_members) ? registration.team_members : []
     const isTeamMember = teamMembers.some((m: any) => m?.email && String(m.email).trim().toLowerCase() === providedEmailNormalized)
     if (!isLeader && !isTeamMember) {

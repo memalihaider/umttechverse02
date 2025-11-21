@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useCallback, useRef } from 'react'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { validateEmailForFrontend } from '@/lib/email-validation-client'
 import ConfirmationModal from './ConfirmationModal'
 
@@ -9,6 +9,7 @@ interface TeamMember {
   email: string
   university: string
   rollNo: string
+  cnic?: string
 }
 
 interface FormData {
@@ -25,44 +26,15 @@ interface FormData {
 }
 
 // Valid ambassador codes for 10% discount
-const VALID_AMBASSADOR_CODES = [
-  'TECHVERSE2025',
-  'UMTAMBASSADOR',
-  'TECHVERSE10',
-  'UMTSTUDENT',
-  'TECHVERSEVIP',
-  'UMT2025',
-  'TECHVERSEPRO',
-  'UMTAMB10',
-  'TECHVERSEPLUS',
-  'UMTTECH',
-  'UMT.TECHVERSE'
+const VALID_AMBASSADOR_CODES = [ 
+  'UMT.TECHVERSE',
+  'SUPERIOR.IEEE'
 ]
 
 // Helper function to check if ambassador code is valid
 const isValidAmbassadorCode = (code: string | undefined): boolean => {
   if (!code) return false
   return VALID_AMBASSADOR_CODES.includes(code.toUpperCase() as any)
-}
-
-interface TeamMember {
-  name: string
-  email: string
-  university: string
-  rollNo: string
-}
-
-interface FormData {
-  name: string
-  email: string
-  cnic: string
-  phone: string
-  university: string
-  rollNo: string
-  module: string
-  hostel: string
-  ambassadorCode?: string
-  paymentReceipt?: File
 }
 
 const modules = [
@@ -209,16 +181,20 @@ export default function RegistrationForm() {
     ambassadorCode: '',
   })
 
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
-    { name: '', email: '', university: '', rollNo: '' }
-  ])
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
 
   const [loading, setLoading] = useState(false)
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [emailErrors, setEmailErrors] = useState<{[key: string]: string}>({})
   const [cnicError, setCnicError] = useState<string>('')
+  const [teamCnicErrors, setTeamCnicErrors] = useState<{[key: string]: string}>({})
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const [registrationCodes, setRegistrationCodes] = useState<{ accessCode: string; uniqueId: string } | null>(null)
+
+  // Math problem state
+  const [mathProblem, setMathProblem] = useState<{ question: string; answer: number }>({ question: '', answer: 0 })
+  const [mathAnswer, setMathAnswer] = useState('')
+  const [mathError, setMathError] = useState('')
 
   // Memoized calculations for performance
   const selectedModule = useMemo(() => {
@@ -357,27 +333,123 @@ export default function RegistrationForm() {
     }
   }, [])
 
+  // Timeout ref for team member CNIC uniqueness validation debounce
+  const teamCnicValidationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Generate random math problem
+  const generateMathProblem = useCallback(() => {
+    const operations = ['+', '-']
+    const operation = operations[Math.floor(Math.random() * operations.length)]
+    let num1, num2, answer
+
+    if (operation === '+') {
+      num1 = Math.floor(Math.random() * 20) + 1
+      num2 = Math.floor(Math.random() * 20) + 1
+      answer = num1 + num2
+    } else {
+      num1 = Math.floor(Math.random() * 20) + 10
+      num2 = Math.floor(Math.random() * 10) + 1
+      answer = num1 - num2
+    }
+
+    setMathProblem({
+      question: `${num1} ${operation} ${num2} = ?`,
+      answer
+    })
+    setMathAnswer('')
+    setMathError('')
+  }, [])
+
+  // Initialize math problem on component mount
+  useEffect(() => {
+    generateMathProblem()
+  }, [generateMathProblem])
+
   const handleTeamMemberChange = useCallback((index: number, field: keyof TeamMember, value: string) => {
     setTeamMembers(prev => {
       const updated = [...prev]
-      updated[index] = { ...updated[index], [field]: value }
+      // If the field is cnic, apply formatting
+      if (field === 'cnic') {
+        const cleaned = (value || '').replace(/\D/g, '')
+        const limited = cleaned.slice(0, 13)
+        const formatted = formatCNIC(limited)
+        updated[index] = { ...updated[index], [field]: formatted }
+        // Debounce uniqueness check similar to main CNIC flow
+        if (teamCnicValidationTimeoutRef.current) {
+          clearTimeout(teamCnicValidationTimeoutRef.current)
+        }
+        if (limited.length === 13) {
+          teamCnicValidationTimeoutRef.current = setTimeout(() => {
+            checkTeamMemberCnicUniqueness(formatted, index)
+          }, 500)
+        } else {
+          setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
+        }
+      } else {
+        updated[index] = { ...updated[index], [field]: value }
+      }
       return updated
     })
-  }, [])
+  }, [formatCNIC])
 
   const addTeamMember = useCallback(() => {
-    setTeamMembers(prev => [...prev, { name: '', email: '', university: '', rollNo: '' }])
+    setTeamMembers(prev => [...prev, { name: '', email: '', university: '', rollNo: '', cnic: '' }])
   }, [])
 
   const removeTeamMember = useCallback((index: number) => {
-    setTeamMembers(prev => prev.length > 1 ? prev.filter((_, i) => i !== index) : prev)
+    setTeamMembers(prev => {
+      const updated = prev.filter((_, i) => i !== index)
+
+      setEmailErrors(current => {
+        const next: { [key: string]: string } = {}
+        Object.entries(current).forEach(([key, value]) => {
+          if (key === 'email') {
+            next[key] = value
+            return
+          }
+
+          if (key.startsWith('teamMember-')) {
+            const idx = Number(key.split('-')[1])
+            if (Number.isNaN(idx) || idx === index) {
+              return
+            }
+            const newIdx = idx > index ? idx - 1 : idx
+            next[`teamMember-${newIdx}`] = value
+            return
+          }
+
+          next[key] = value
+        })
+        return next
+      })
+
+      setTeamCnicErrors(current => {
+        const next: { [key: string]: string } = {}
+        Object.entries(current).forEach(([key, value]) => {
+          if (!key.startsWith('tm-')) {
+            next[key] = value
+            return
+          }
+          const idx = Number(key.split('-')[1])
+          if (Number.isNaN(idx) || idx === index) {
+            return
+          }
+          const newIdx = idx > index ? idx - 1 : idx
+          next[`tm-${newIdx}`] = value
+        })
+        return next
+      })
+
+      return updated
+    })
   }, [])
 
   // CNIC validation timeout ref
   const cnicValidationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const checkCnicUniqueness = async (cnic: string) => {
-    if (!cnic || cnic.length < 13) return // Don't check incomplete CNICs
+    const cleaned = (cnic || '').replace(/\D/g, '')
+    if (!cnic || cleaned.length < 13) return // Don't check incomplete CNICs
 
     try {
       const response = await fetch('/api/check-cnic', {
@@ -385,7 +457,7 @@ export default function RegistrationForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ cnic }),
+  body: JSON.stringify({ cnic: cleaned }),
       })
 
       const data = await response.json()
@@ -399,6 +471,33 @@ export default function RegistrationForm() {
       console.error('Error checking CNIC:', error)
       // Don't show error for network issues, just clear any existing error
       setCnicError('')
+    }
+  }
+
+  const checkTeamMemberCnicUniqueness = async (cnic: string, index: number) => {
+    if (!cnic) {
+      setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
+      return
+    }
+    const cleaned = (cnic || '').replace(/\D/g, '')
+    if (cleaned.length < 13) {
+      setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
+      return
+    }
+    try {
+      const response = await fetch('/api/check-cnic', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnic: cleaned })
+      })
+      const data = await response.json()
+      if (data.isRegistered) {
+        setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: 'This CNIC is already registered' }))
+      } else {
+        setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
+      }
+    } catch (error) {
+      console.error('Error checking team cnic', error)
     }
   }
 
@@ -439,6 +538,13 @@ export default function RegistrationForm() {
     // Check for CNIC error
     if (cnicError) {
       alert('Please fix the CNIC error before submitting.')
+      return
+    }
+
+    // Validate math problem
+    if (parseInt(mathAnswer) !== mathProblem.answer) {
+      setMathError('Incorrect answer. Please solve the math problem correctly.')
+      generateMathProblem() // Generate new problem
       return
     }
 
@@ -549,7 +655,7 @@ export default function RegistrationForm() {
                     {emailErrors.email}
                   </p>
                 )}
-                <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your original email address - we will send important updates and access codes to this email.</p>
+                <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your original email address – we will send important updates (and Business Innovation portal access codes, if applicable) to this email.</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
@@ -930,6 +1036,11 @@ export default function RegistrationForm() {
               <p className="text-sm sm:text-base text-purple-300 mb-4 sm:mb-6 leading-relaxed">
                 You are the team leader. Add your team members below (optional - only add if you have team members).
               </p>
+              {teamMembers.length === 0 && (
+                <div className="mb-4 sm:mb-6 p-3 sm:p-4 border border-dashed border-indigo-500/40 rounded-lg sm:rounded-xl bg-black/30 text-sm sm:text-base text-purple-200">
+                  No team members added yet. Click <span className="font-semibold text-indigo-200">“Add Team Member”</span> to include your teammates (optional).
+                </div>
+              )}
               {teamMembers.map((member, index) => (
                 <div key={index} className="space-y-3 sm:space-y-4 lg:space-y-6 mb-4 sm:mb-6 p-3 sm:p-4 lg:p-5 xl:p-6 bg-black/40 rounded-lg sm:rounded-xl border border-indigo-500/20 shadow-lg">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
@@ -939,7 +1050,7 @@ export default function RegistrationForm() {
                       </svg>
                       Team Member {index + 1}
                     </h3>
-                    {index > 0 && (
+                    {teamMembers.length > 0 && (
                       <button
                         type="button"
                         onClick={() => removeTeamMember(index)}
@@ -990,7 +1101,7 @@ export default function RegistrationForm() {
                         </p>
                       )}
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                       <div>
                         <label className="block text-sm sm:text-base font-semibold text-purple-200 mb-2 sm:mb-3">University Name</label>
                         <input
@@ -1010,6 +1121,27 @@ export default function RegistrationForm() {
                           className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                           placeholder="Roll number"
                         />
+                      </div>
+                      <div>
+                        <label className="block text-sm sm:text-base font-semibold text-purple-200 mb-2 sm:mb-3">CNIC</label>
+                        <input
+                          type="text"
+                          value={member.cnic}
+                          inputMode="numeric"
+                          maxLength={15}
+                          onChange={(e) => handleTeamMemberChange(index, 'cnic', e.target.value)}
+                          onBlur={(e) => checkTeamMemberCnicUniqueness(e.target.value, index)}
+                          className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
+                          placeholder="xxxxx-xxxxxxx-x"
+                        />
+                        {teamCnicErrors[`tm-${index}`] && (
+                          <p className="mt-2 text-xs sm:text-sm text-red-400 flex items-center">
+                            <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            {teamCnicErrors[`tm-${index}`]}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1084,7 +1216,7 @@ export default function RegistrationForm() {
                     <div className="space-y-2 sm:space-y-3">
                       <p className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="font-semibold text-purple-300 mb-1 sm:mb-0">Account Title:</span>
-                        <span className="text-white break-words">University of Management and Technology (UMT)</span>
+                        <span className="text-white wrap-break-word">University of Management and Technology (UMT)</span>
                       </p>
                       <p className="flex flex-col sm:flex-row sm:justify-between">
                         <span className="font-semibold text-purple-300 mb-1 sm:mb-0">Bank Name:</span>
@@ -1137,6 +1269,73 @@ export default function RegistrationForm() {
                   </svg>
                   <span>Upload a clear image of your payment receipt. <strong>Max size: 1MB</strong>. Supported formats: JPEG, PNG, GIF, WebP.<br />
                   <strong className="text-blue-300">Note:</strong> Your payment receipt is required to complete the registration process and verify your payment.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Security Math Problem Section */}
+          <div className="bg-linear-to-br from-red-900/40 to-pink-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-red-500/30 shadow-xl backdrop-blur-sm">
+            <div className="flex items-center mb-4 sm:mb-6 lg:mb-8">
+              <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-red-500 to-pink-500 rounded-lg sm:rounded-xl flex items-center justify-center mr-3 sm:mr-4">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-red-300">Security Verification</h2>
+            </div>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 border border-red-500/20">
+                <p className="text-sm sm:text-base lg:text-lg text-purple-200 mb-4">
+                  Please solve this simple math problem to verify you are human:
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex items-center">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-red-300 mr-4">
+                      {mathProblem.question}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={generateMathProblem}
+                      className="inline-flex items-center px-3 py-2 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 hover:bg-red-800/30 transition-all duration-300"
+                      title="Generate new problem"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex-1">
+                    <input
+                      type="number"
+                      value={mathAnswer}
+                      onChange={(e) => {
+                        setMathAnswer(e.target.value)
+                        if (mathError) setMathError('')
+                      }}
+                      className={`w-full bg-black/60 border-2 border-red-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-red-400 focus:ring-2 focus:ring-red-400 focus:border-red-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-red-400/60 ${
+                        mathError ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
+                      }`}
+                      placeholder="Enter your answer"
+                      required
+                    />
+                  </div>
+                </div>
+                {mathError && (
+                  <p className="mt-3 text-xs sm:text-sm text-red-400 flex items-center">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {mathError}
+                  </p>
+                )}
+              </div>
+              <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-red-200 flex items-start">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-400 mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                  <span><strong className="text-red-300">Security Check:</strong> This helps prevent automated submissions and ensures only real users can register for Techverse 2026.</span>
                 </p>
               </div>
             </div>

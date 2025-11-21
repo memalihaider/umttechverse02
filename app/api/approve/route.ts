@@ -4,6 +4,7 @@ import { sendEmail } from '@/lib/email'
 // modules import removed: not required in approve route as templates handle module conditional logic
 import { quickValidateEmail } from '@/lib/email-validation'
 import { generateApprovedRegistrationEmail } from '@/lib/email-templates'
+import { getAdditionalTeamMembers, normalizeTeamMember } from '@/lib/team-members'
 import type { RegistrationData } from '@/lib/email-templates'
 
 export async function POST(request: NextRequest) {
@@ -41,10 +42,13 @@ export async function POST(request: NextRequest) {
 
     // Send email to all team members
     const emailAddresses = [registration.email]
-    if (registration.team_members && registration.team_members.length > 1) {
-      registration.team_members.slice(1).forEach((member: {email: string}) => {
-        if (member.email && !emailAddresses.includes(member.email)) {
-          emailAddresses.push(member.email)
+    const members = getAdditionalTeamMembers(registration)
+    if (members.length > 0) {
+      members.forEach((member: any) => {
+        const normalized = normalizeTeamMember(member)
+        const email = normalized.email || member.email
+        if (email && !emailAddresses.includes(email)) {
+          emailAddresses.push(email)
         }
       })
     }

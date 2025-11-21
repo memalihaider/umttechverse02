@@ -105,6 +105,39 @@ The application uses a comprehensive form validation schema defined in `lib/sche
    npm run dev
    ```
 
+   ## Supabase migration: backfill team_member CNIC
+
+   The project includes a migration to add the `cnic` key to objects in `team_members` JSON arrays stored in the `registrations` table.
+
+   Two options are available:
+
+   - Run the SQL directly in Supabase SQL Editor: open `add_team_member_cnic.sql` and execute it.
+   - Use the Node script which supports dry-run and apply modes (safer):
+
+   Environment variables required (example `.env.local`):
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   ```
+
+   Commands:
+   ```bash
+   # dry-run, prints registrations that would be updated
+   npm run migrate:add-team-member-cnic
+
+   # apply the changes (make sure to double-check the dry-run results first)
+   npm run migrate:add-team-member-cnic:apply
+
+   # verify how many registrations are missing the CNIC property
+   npm run verify:team-member-cnic
+   ```
+
+   Notes:
+   - The scripts require `SUPABASE_SERVICE_ROLE_KEY` (service role key) because they perform updates. Keep this key secure and do not check it into version control.
+   - If you prefer pure SQL, `add_team_member_cnic.sql` will add an empty `cnic` property to any team member objects that don't have it.
+   - We recommend running the `verify:team-member-cnic` script before and after applying the migration to confirm the results.
+
+
 ## 📁 Project Structure
 
 ```

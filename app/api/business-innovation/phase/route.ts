@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, accessCode, newPhase, githubRepo } = await request.json()
+  const { email, accessCode, newPhase, githubRepo, submissionMetadata } = await request.json()
 
     if (!email || !accessCode || !newPhase) {
       return NextResponse.json({ error: 'Email, access code, and new phase are required' }, { status: 400 })
@@ -22,16 +22,24 @@ export async function POST(request: NextRequest) {
       .from('registrations')
       .select('*')
       .eq('access_code', normalizedAccessCode)
-      .ilike('module', '%business innovation%')
-      .ilike('status', 'approved')
-      .single()
+      .maybeSingle()
 
     const user = data
     if (authError || !user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const statusNormalized = String(user.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const moduleMatches = typeof user.module === 'string' && /business[\s-]*innovation/i.test(user.module)
+    if (!moduleMatches) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email || '').trim().toLowerCase() === normalizedEmail
     const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
     const isTeamMember = teamMembers.some((m: any) => {
       if (!m) return false
@@ -43,12 +51,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    // Validate phase progression
+    // Validate phase progression - allow jumping from design to submission
     const phaseOrder = ['idea_selection', 'design', 'development', 'submission']
-    const currentPhaseIndex = phaseOrder.indexOf(user.current_phase)
+    const currentPhaseIndex = phaseOrder.indexOf(user.current_phase || 'idea_selection')
     const newPhaseIndex = phaseOrder.indexOf(newPhase)
 
-    if (newPhaseIndex < currentPhaseIndex) {
+    // Allow progression to later phases, but not backwards (except allow design->submission)
+    if (newPhaseIndex < currentPhaseIndex && !(user.current_phase === 'design' && newPhase === 'submission')) {
       return NextResponse.json({ error: 'Cannot move to a previous phase' }, { status: 400 })
     }
 
@@ -66,6 +75,12 @@ export async function POST(request: NextRequest) {
     if (newPhase === 'submission' && githubRepo) {
       updateData.github_repo = githubRepo
       updateData.submission_status = 'submitted'
+
+      // Accept optional final submission metadata (submissionMetadata) and add it under business_idea.final_submission
+      if (submissionMetadata && typeof submissionMetadata === 'object') {
+        const existingIdea = user.business_idea || {}
+        updateData.business_idea = { ...existingIdea, final_submission: submissionMetadata }
+      }
     }
 
     const { error: updateError } = await supabase
@@ -195,18 +210,26 @@ export async function GET(request: NextRequest) {
 
     const { data, error: authError } = await supabase
       .from('registrations')
-      .select('current_phase, submission_status, github_repo, email, team_members')
+      .select('id, current_phase, submission_status, github_repo, business_idea, email, team_members, status, module')
       .eq('access_code', normalizedAccessCode)
-      .ilike('module', '%business innovation%')
-      .ilike('status', 'approved')
-      .single()
+      .maybeSingle()
 
     const user = data
     if (authError || !user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const statusNormalized = String(user.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const moduleMatches = typeof user.module === 'string' && /business[\s-]*innovation/i.test(user.module)
+    if (!moduleMatches) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email || '').trim().toLowerCase() === normalizedEmail
     const teamMembers: any[] = Array.isArray(user.team_members) ? user.team_members : []
     const isTeamMember = teamMembers.some((m: any) => {
       if (!m) return false
@@ -221,7 +244,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       currentPhase: user.current_phase,
       submissionStatus: user.submission_status,
-      githubRepo: user.github_repo
+      githubRepo: user.github_repo,
+      finalSubmission: user.business_idea?.final_submission || null
     })
   } catch (error) {
     console.error('Phase fetch error:', error)

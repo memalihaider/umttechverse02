@@ -7,6 +7,8 @@ type Registration = {
   team_members?: Array<{ email?: string } | string>
   business_idea?: unknown
   current_phase?: string
+  status?: string
+  module?: string
 }
 
 export async function POST(request: NextRequest) {
@@ -26,17 +28,25 @@ export async function POST(request: NextRequest) {
       .from('registrations')
       .select('*')
       .eq('access_code', normalizedAccessCode)
-      .ilike('module', '%business innovation%')
-      .ilike('status', 'approved')
-      .single()
+      .maybeSingle()
 
     const user = data as Registration | null
     if (authError || !user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
+    const statusNormalized = String(user.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const moduleMatches = typeof user.module === 'string' && /business[\s-]*innovation/i.test(user.module)
+    if (!moduleMatches) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
     // Allow team members to submit by checking if provided email matches registration leader or any team member
-    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const isLeader = String(user.email || '').trim().toLowerCase() === normalizedEmail
   const teamMembers: Array<{ email?: string } | string> = Array.isArray(user.team_members) ? user.team_members : []
   const isTeamMember = teamMembers.some((m: { email?: string } | string) => {
       if (!m) return false
@@ -89,18 +99,26 @@ export async function GET(request: NextRequest) {
 
   const { data, error: authError } = await supabase
       .from('registrations')
-      .select('business_idea, current_phase, email, team_members')
+      .select('business_idea, current_phase, email, team_members, status, module')
       .eq('access_code', normalizedAccessCode)
-      .ilike('module', '%business innovation%')
-      .ilike('status', 'approved')
-      .single()
+      .maybeSingle()
 
     const user = data as Registration | null
     if (authError || !user) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
 
-    const isLeader = String(user.email).trim().toLowerCase() === normalizedEmail
+    const statusNormalized = String(user.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const moduleMatches = typeof user.module === 'string' && /business[\s-]*innovation/i.test(user.module)
+    if (!moduleMatches) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+    }
+
+    const isLeader = String(user.email || '').trim().toLowerCase() === normalizedEmail
   const teamMembers: Array<{ email?: string } | string> = Array.isArray(user.team_members) ? user.team_members : []
   const isTeamMember = teamMembers.some((m: { email?: string } | string) => {
       if (!m) return false

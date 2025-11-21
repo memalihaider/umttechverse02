@@ -40,18 +40,28 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verify participant exists
+    // Verify participant exists in registrations table and is Business Innovation approved
     const { data: participant, error: participantError } = await supabase
-      .from('business_innovation_participants')
+      .from('registrations')
       .select('*')
       .eq('id', participantId)
-      .single()
+      .maybeSingle()
 
     if (participantError || !participant) {
       return NextResponse.json(
         { error: 'Participant not found' },
         { status: 404 }
       )
+    }
+
+    const statusNormalized = String(participant.status ?? '').trim().toLowerCase()
+    if (statusNormalized !== 'approved') {
+      return NextResponse.json({ error: 'Participant not approved' }, { status: 403 })
+    }
+
+    const moduleMatches = typeof participant.module === 'string' && /business[\s-]*innovation/i.test(participant.module)
+    if (!moduleMatches) {
+      return NextResponse.json({ error: 'Participant not part of Business Innovation' }, { status: 403 })
     }
 
     // Insert evaluation
