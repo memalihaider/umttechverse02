@@ -14,7 +14,7 @@ export default function ModulesPage() {
     return modules.filter((m) => m.name.toLowerCase().includes(q))
   }, [query])
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden" style={{ scrollBehavior: 'smooth' }}>
+    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden scroll-smooth">
       {/* Animated background particles */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-20"></div>
@@ -26,7 +26,7 @@ export default function ModulesPage() {
         <div className="absolute top-1/6 left-1/6 w-4 h-4 border-2 border-blue-400/30 rotate-45 animate-bounce opacity-20 delay-300"></div>
         <div className="absolute top-2/3 right-1/6 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse delay-700"></div>
         <div className="absolute bottom-1/3 left-1/2 w-2 h-6 bg-cyan-400/15 rounded-full animate-ping delay-1200"></div>
-        <div className="absolute top-1/3 right-1/3 w-5 h-5 border border-pink-400/25 rotate-12 animate-spin opacity-15 delay-500" style={{animationDuration: '8s'}}></div>
+  <div className="absolute top-1/3 right-1/3 w-5 h-5 border border-pink-400/25 rotate-12 animate-spin opacity-15 delay-500 spin-long"></div>
         <div className="absolute bottom-1/6 right-1/4 w-3 h-3 bg-green-400/20 rounded-lg animate-bounce delay-900"></div>
 
         {/* Gradient wave effects */}

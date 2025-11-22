@@ -3,16 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Security Headers
   async headers() {
-    return [
+    // Build headers common to all environments
+    const commonHeaders = [
+      // XSS Protection
       {
-        // Apply to all routes
-        source: '/(.*)',
-        headers: [
-          // XSS Protection
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
+        key: 'X-XSS-Protection',
+        value: '1; mode=block'
+      },
           // Prevent clickjacking
           {
             key: 'X-Frame-Options',
@@ -43,27 +40,58 @@ const nextConfig: NextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains; preload'
           },
-          // Content Security Policy
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' https://www.youtube.com https://www.googletagmanager.com",
-              "style-src 'self' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https://* blob:",
-              "connect-src 'self' https://api.github.com https://*.supabase.co https://*.resend.com https://api.sendgrid.com",
-              "frame-src 'self' https://www.youtube.com https://youtube.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests"
-            ].join('; ')
-          }
-        ]
+      // Permissions Policy (formerly Feature Policy)
+      {
+        key: 'Permissions-Policy',
+        value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+      },
+      // DNS Prefetch Control
+      {
+        key: 'X-DNS-Prefetch-Control',
+        value: 'on'
+      },
+      // Strict Transport Security (HSTS) - only for HTTPS
+      {
+        key: 'Strict-Transport-Security',
+        value: 'max-age=31536000; includeSubDomains; preload'
       }
-    ];
+    ]
+
+    // Only add the strict Content-Security-Policy in production.
+    // Development tooling (Next.js dev overlay, React DevTools, Turbopack) injects
+    // inline styles and scripts which will be blocked by a strict CSP. Omitting
+    // the CSP in development prevents the dev tools from failing while keeping
+    // a strict policy in production.
+    const headersForAllRoutes = [
+      {
+        source: '/(.*)',
+        headers: commonHeaders.concat(
+          process.env.NODE_ENV === 'production'
+            ? [
+                {
+                  key: 'Content-Security-Policy',
+                  value: [
+                    "default-src 'self'",
+                    "script-src 'self' https://www.youtube.com https://www.googletagmanager.com",
+                    "style-src 'self' https://fonts.googleapis.com",
+                    "font-src 'self' https://fonts.gstatic.com",
+                    "img-src 'self' data: https://* blob:",
+                    "connect-src 'self' https://api.github.com https://*.supabase.co https://*.resend.com https://api.sendgrid.com",
+                    "frame-src 'self' https://www.youtube.com https://youtube.com",
+                    "object-src 'none'",
+                    "base-uri 'self'",
+                    "form-action 'self'",
+                    "frame-ancestors 'none'",
+                    "upgrade-insecure-requests"
+                  ].join('; ')
+                }
+              ]
+            : []
+        )
+      }
+    ]
+
+    return headersForAllRoutes;
   },
 
   // Image optimization with security
