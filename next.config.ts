@@ -70,10 +70,14 @@ const nextConfig: NextConfig = {
             ? [
                 {
                   key: 'Content-Security-Policy',
+                  // Relaxed for production to allow necessary inlined runtime scripts/styles
+                  // (Next.js may inject small inline scripts/styles required for app runtime).
+                  // This is a pragmatic production fix; for higher security consider
+                  // implementing nonces or hashes for inline content and removing 'unsafe-inline'.
                   value: [
                     "default-src 'self'",
-                    "script-src 'self' https://www.youtube.com https://www.googletagmanager.com",
-                    "style-src 'self' https://fonts.googleapis.com",
+                    "script-src 'self' 'unsafe-inline' https://www.youtube.com https://www.googletagmanager.com",
+                    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                     "font-src 'self' https://fonts.gstatic.com",
                     "img-src 'self' data: https://* blob:",
                     "connect-src 'self' https://api.github.com https://*.supabase.co https://*.resend.com https://api.sendgrid.com",
