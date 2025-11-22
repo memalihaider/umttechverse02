@@ -28,7 +28,27 @@ interface FormData {
 // Valid ambassador codes for 10% discount
 const VALID_AMBASSADOR_CODES = [ 
   'UMT.TECHVERSE',
-  'SUPERIOR.IEEE'
+  'SUPERIOR.IEEE',
+  'COMSAT.TECHVERSE',
+  'FAST.TECHVERSE',
+  'NUCES.TECHVERSE',
+  'NUST.TECHVERSE',
+  'UET.TECHVERSE',
+  'GIKI.TECHVERSE',
+  'IQRA.TECHVERSE',
+  'IBA.TECHVERSE',
+  'ACM.TECHVERSE',
+  'CYBER.TECHVERSE',
+  'GAMERS.TECHVERSE',
+  'INTELAI.TECHVERSE',
+  'UCP.TECHVERSE',
+  'LGU.TECHVERSE',
+  'TECHSPHERE.TECHVERSE',
+  'SAE.TECHVERSE',
+  'IEEEBAHRIA.TECHVERSE',
+  'BAHRIA.TECHVERSE'
+
+
 ]
 
 // Helper function to check if ambassador code is valid
@@ -131,7 +151,7 @@ const modules = [
     fee: 1000,
     contactPerson: 'Zain - +92 331 5758888',
     teamSize: 'Individual',
-    winnerPrize: 15000,
+    winnerPrize: 20000,
     runnerUpPrize: 10000
   },
   {
@@ -139,7 +159,7 @@ const modules = [
     fee: 2000,
     contactPerson: 'Zainab Salman - +92 302 1402652',
     teamSize: '2-4 members',
-    winnerPrize: 15000,
+    winnerPrize: 20000,
     runnerUpPrize: 10000
   },
   {
@@ -168,6 +188,31 @@ const modules = [
   }
 ]
 
+// Parse a human-readable teamSize string (e.g. "1-5 members", "2-4 members", "Individual/Team", "5 members + 1 sub")
+// and return a conservative maximum allowed number of team members (number).
+function parseMaxTeamSize(teamSize: string): number {
+  if (!teamSize) return Infinity
+
+  // range like 1-5
+  const rangeMatch = teamSize.match(/(\d+)\s*-\s*(\d+)/)
+  if (rangeMatch) {
+    return Number(rangeMatch[2])
+  }
+
+  // find all numbers and return the largest (e.g., "5 members + 1 sub" -> 5)
+  const nums = Array.from(teamSize.matchAll(/(\d+)/g)).map(m => Number(m[0]))
+  if (nums.length > 0) {
+    return Math.max(...nums)
+  }
+
+  // common words
+  if (/individual/i.test(teamSize)) return 1
+  if (/team/i.test(teamSize)) return 5 // fallback guess for vague "team"
+
+  // fallback: allow up to 5
+  return 5
+}
+
 export default function RegistrationForm() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -184,6 +229,7 @@ export default function RegistrationForm() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
 
   const [loading, setLoading] = useState(false)
+  const [teamLimitError, setTeamLimitError] = useState('')
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [emailErrors, setEmailErrors] = useState<{[key: string]: string}>({})
   const [cnicError, setCnicError] = useState<string>('')
@@ -200,6 +246,18 @@ export default function RegistrationForm() {
   const selectedModule = useMemo(() => {
     return formData.module ? modules.find(m => m.name === formData.module) : null
   }, [formData.module])
+
+  const maxTeamSize = useMemo(() => {
+    if (!selectedModule) return Infinity
+    return parseMaxTeamSize(selectedModule.teamSize)
+  }, [selectedModule])
+
+  // The registering user (team leader) counts as one team member.
+  const slotsRemaining = useMemo(() => {
+    if (!Number.isFinite(maxTeamSize)) return Infinity
+    const remaining = Math.max(0, maxTeamSize - 1 - teamMembers.length)
+    return remaining
+  }, [maxTeamSize, teamMembers.length])
 
   const hasValidAmbassadorCode = useMemo(() => {
     return isValidAmbassadorCode(formData.ambassadorCode)
@@ -393,8 +451,19 @@ export default function RegistrationForm() {
   }, [formatCNIC])
 
   const addTeamMember = useCallback(() => {
+    // Enforce maximum team size for the selected module (leader counts as 1)
+    if (selectedModule) {
+      if (!Number.isFinite(maxTeamSize)) {
+        // no limit
+      } else if (teamMembers.length >= Math.max(0, maxTeamSize - 1)) {
+        setTeamLimitError(`Maximum ${maxTeamSize} team members allowed for this module (including you).`)
+        return
+      }
+    }
+
+    setTeamLimitError('')
     setTeamMembers(prev => [...prev, { name: '', email: '', university: '', rollNo: '', cnic: '' }])
-  }, [])
+  }, [selectedModule, teamMembers, maxTeamSize])
 
   const removeTeamMember = useCallback((index: number) => {
     setTeamMembers(prev => {
@@ -504,6 +573,52 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Pre-submit: ensure all required leader fields are present (ambassadorCode is explicitly optional)
+    const missingLeaderFields: string[] = []
+    if (!formData.name || formData.name.trim() === '') missingLeaderFields.push('Full Name')
+    if (!formData.email || formData.email.trim() === '') missingLeaderFields.push('Email')
+    if (!formData.cnic || formData.cnic.trim() === '') missingLeaderFields.push('CNIC')
+    if (!formData.phone || formData.phone.trim() === '') missingLeaderFields.push('Phone')
+    if (!formData.university || formData.university.trim() === '') missingLeaderFields.push('University')
+    if (!formData.rollNo || formData.rollNo.trim() === '') missingLeaderFields.push('Roll Number')
+    if (!formData.module || formData.module.trim() === '') missingLeaderFields.push('Module')
+    if (!formData.paymentReceipt) missingLeaderFields.push('Payment Receipt')
+
+    if (missingLeaderFields.length > 0) {
+      alert('Please fill the required fields: ' + missingLeaderFields.join(', '))
+      return
+    }
+
+    // Validate team members: if any team member is added, all their fields are required
+    for (let i = 0; i < teamMembers.length; i++) {
+      const m = teamMembers[i]
+      if (!m.name || m.name.trim() === '') {
+        alert(`Team member ${i + 1}: Name is required.`)
+        return
+      }
+      if (!m.email || m.email.trim() === '') {
+        alert(`Team member ${i + 1}: Email is required.`)
+        return
+      }
+      const emailValid = validateEmailForFrontend(m.email)
+      if (!emailValid.isValid) {
+        alert(`Team member ${i + 1}: ${emailValid.message}`)
+        return
+      }
+      if (!m.university || m.university.trim() === '') {
+        alert(`Team member ${i + 1}: University is required.`)
+        return
+      }
+      if (!m.rollNo || m.rollNo.trim() === '') {
+        alert(`Team member ${i + 1}: Roll Number is required.`)
+        return
+      }
+      if (!m.cnic || m.cnic.trim() === '') {
+        alert(`Team member ${i + 1}: CNIC is required.`)
+        return
+      }
+    }
+
     // Validate all emails before submission
     let hasEmailErrors = false
     const newEmailErrors: {[key: string]: string} = {}
@@ -548,6 +663,12 @@ export default function RegistrationForm() {
       return
     }
 
+    // Validate total team size including the registering user (leader)
+    if (Number.isFinite(maxTeamSize) && (1 + teamMembers.length) > maxTeamSize) {
+      alert(`Team size exceeds the allowed maximum (${maxTeamSize}) for this module. Please remove some members or choose a different module.`)
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -561,7 +682,19 @@ export default function RegistrationForm() {
       formDataToSend.append('module', formData.module)
       formDataToSend.append('hostel', formData.hostel)
       formDataToSend.append('ambassadorCode', formData.ambassadorCode || '')
-      formDataToSend.append('teamMembers', JSON.stringify(teamMembers))
+      // The registering user is also a team member (leader). Prepend leader info to the
+      // teamMembers array before sending so server receives a full list including the leader.
+      const payloadTeamMembers = [
+        {
+          name: formData.name,
+          email: formData.email,
+          university: formData.university,
+          rollNo: formData.rollNo,
+          cnic: formData.cnic,
+        },
+        ...teamMembers
+      ]
+      formDataToSend.append('teamMembers', JSON.stringify(payloadTeamMembers))
       if (formData.paymentReceipt) {
         formDataToSend.append('paymentReceipt', formData.paymentReceipt)
       }
@@ -1070,6 +1203,7 @@ export default function RegistrationForm() {
                         type="text"
                         value={member.name}
                         onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
+                        required
                         className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                         placeholder="Enter full name"
                       />
@@ -1087,6 +1221,7 @@ export default function RegistrationForm() {
                             setEmailErrors(prev => ({ ...prev, [`teamMember-${index}`]: '' }))
                           }
                         }}
+                        required
                         className={`w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60 ${
                           emailErrors[`teamMember-${index}`] ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                         }`}
@@ -1108,6 +1243,7 @@ export default function RegistrationForm() {
                           type="text"
                           value={member.university}
                           onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
+                          required
                           className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                           placeholder="University name"
                         />
@@ -1118,6 +1254,7 @@ export default function RegistrationForm() {
                           type="text"
                           value={member.rollNo}
                           onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
+                          required
                           className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                           placeholder="Roll number"
                         />
@@ -1130,6 +1267,7 @@ export default function RegistrationForm() {
                           inputMode="numeric"
                           maxLength={15}
                           onChange={(e) => handleTeamMemberChange(index, 'cnic', e.target.value)}
+                          required
                           onBlur={(e) => checkTeamMemberCnicUniqueness(e.target.value, index)}
                           className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                           placeholder="xxxxx-xxxxxxx-x"
@@ -1150,13 +1288,22 @@ export default function RegistrationForm() {
               <button
                 type="button"
                 onClick={addTeamMember}
-                className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border-2 border-indigo-500/50 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold text-indigo-200 bg-indigo-900/30 hover:bg-indigo-800/40 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                disabled={!(Number.isFinite(slotsRemaining) ? slotsRemaining > 0 : true)}
+                className={`inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border-2 border-indigo-500/50 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold text-indigo-200 bg-indigo-900/30 hover:bg-indigo-800/40 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                  Number.isFinite(slotsRemaining) && slotsRemaining <= 0 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
                 <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                Add Team Member
+                {Number.isFinite(slotsRemaining) ? (slotsRemaining > 0 ? 'Add Team Member' : `Max ${maxTeamSize} reached`) : 'Add Team Member'}
               </button>
+              {Number.isFinite(slotsRemaining) && (
+                <p className="mt-2 text-xs sm:text-sm text-purple-300">Slots remaining (including you): {slotsRemaining}</p>
+              )}
+              {teamLimitError && (
+                <p className="mt-2 text-xs sm:text-sm text-red-400">{teamLimitError}</p>
+              )}
             </div>
           )}
 
