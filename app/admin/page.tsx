@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { getAdditionalTeamMembers, normalizeTeamMember, formatCnicDisplay } from '@/lib/team-members'
+import ConfirmationModal from '../components/ConfirmationModal'
 
 interface Registration {
   id: string
@@ -19,6 +20,8 @@ interface Registration {
   team_members: { name: string; email: string; university: string; rollNo: string; cnic?: string }[]
   payment_receipt_url: string
   access_code: string
+  unique_id?: string
+  team_pass_path?: string
   status: 'pending' | 'approved' | 'rejected'
   created_at: string
   // Business Innovation fields
@@ -186,6 +189,14 @@ export default function AdminPortal() {
   const [showViewModal, setShowViewModal] = useState(false)
   const [viewRegistration, setViewRegistration] = useState<Registration | null>(null)
   const [showRawTeamMembers, setShowRawTeamMembers] = useState(false)
+  // Admin confirm modal state
+  const [showAdminConfirm, setShowAdminConfirm] = useState(false)
+  const [adminConfirmTitle, setAdminConfirmTitle] = useState('')
+  const [adminConfirmMessage, setAdminConfirmMessage] = useState('')
+  const [adminConfirmLabel, setAdminConfirmLabel] = useState('Confirm')
+  const [adminConfirmVariant, setAdminConfirmVariant] = useState<'danger' | 'success' | 'neutral'>('success')
+  const [adminConfirmLoading, setAdminConfirmLoading] = useState(false)
+  const [adminConfirmAction, setAdminConfirmAction] = useState<(() => Promise<void>) | null>(null)
   const itemsPerPage = 10
   const additionalMembersForView = viewRegistration ? getAdditionalTeamMembers(viewRegistration) : []
   const additionalMembersForSelected = selectedParticipant ? getAdditionalTeamMembers(selectedParticipant) : []
@@ -326,6 +337,8 @@ export default function AdminPortal() {
         reg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (reg.team_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (reg.unique_id || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (reg.access_code || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.module.toLowerCase().includes(searchTerm.toLowerCase())
 
@@ -357,7 +370,7 @@ export default function AdminPortal() {
     setSelectedRegistrations([])
   }, [registrations, searchTerm, statusFilter, moduleFilter, sortBy, sortOrder])
 
-  const updateStatus = async (id: string, status: 'approved' | 'rejected') => {
+  const doUpdateStatus = async (id: string, status: 'approved' | 'rejected') => {
     setActionLoading(id)
     console.log('Updating status for id:', id, 'to:', status)
     try {
@@ -380,6 +393,9 @@ export default function AdminPortal() {
         prev.map(reg => reg.id === id ? { ...reg, status } : reg)
       )
 
+      // Refresh registrations to pick up any new fields (e.g., team_pass_path)
+      await fetchRegistrations()
+
       // Update stats
       setStats(prev => ({
         ...prev,
@@ -396,10 +412,23 @@ export default function AdminPortal() {
     }
   }
 
-  const bulkUpdateStatus = async (status: 'approved' | 'rejected') => {
-    if (selectedRegistrations.length === 0) return
+  const updateStatus = (id: string, status: 'approved' | 'rejected') => {
+    // open confirmation modal
+    setAdminConfirmTitle(`${status === 'approved' ? 'Approve' : 'Reject'} registration`)
+    setAdminConfirmMessage(`Are you sure you want to ${status} this registration?`)
+    setAdminConfirmLabel(status === 'approved' ? 'Approve' : 'Reject')
+    setAdminConfirmVariant(status === 'approved' ? 'success' : 'danger')
+    setAdminConfirmLoading(false)
+    setAdminConfirmAction(() => async () => {
+      setAdminConfirmLoading(true)
+      await doUpdateStatus(id, status)
+      setAdminConfirmLoading(false)
+    })
+    setShowAdminConfirm(true)
+  }
 
-    if (!confirm(`Are you sure you want to ${status} ${selectedRegistrations.length} registration(s)?`)) return
+  const doBulkUpdateStatus = async (status: 'approved' | 'rejected') => {
+    if (selectedRegistrations.length === 0) return
 
     setActionLoading('bulk')
     try {
@@ -436,9 +465,21 @@ export default function AdminPortal() {
     }
   }
 
-  const deleteRegistration = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this registration? This action cannot be undone.')) return
+  const bulkUpdateStatus = (status: 'approved' | 'rejected') => {
+    if (selectedRegistrations.length === 0) return
+    setAdminConfirmTitle(`${status === 'approved' ? 'Approve' : 'Reject'} selected registrations`)
+    setAdminConfirmMessage(`Are you sure you want to ${status} ${selectedRegistrations.length} registration(s)?`)
+    setAdminConfirmLabel(status === 'approved' ? 'Approve Selected' : 'Reject Selected')
+    setAdminConfirmVariant(status === 'approved' ? 'success' : 'danger')
+    setAdminConfirmAction(() => async () => {
+      setAdminConfirmLoading(true)
+      await doBulkUpdateStatus(status)
+      setAdminConfirmLoading(false)
+    })
+    setShowAdminConfirm(true)
+  }
 
+  const doDeleteRegistration = async (id: string) => {
     setActionLoading(id)
     try {
       const response = await fetch('/api/admin/delete-registration', {
@@ -478,6 +519,19 @@ export default function AdminPortal() {
     }
   }
 
+  const deleteRegistration = (id: string) => {
+    setAdminConfirmTitle('Delete registration')
+    setAdminConfirmMessage('Are you sure you want to delete this registration? This action cannot be undone.')
+    setAdminConfirmLabel('Delete')
+    setAdminConfirmVariant('danger')
+    setAdminConfirmAction(() => async () => {
+      setAdminConfirmLoading(true)
+      await doDeleteRegistration(id)
+      setAdminConfirmLoading(false)
+    })
+    setShowAdminConfirm(true)
+  }
+
   const fetchParticipantEvaluations = async (participantId: string) => {
     try {
       const { data, error } = await supabase
@@ -496,7 +550,7 @@ export default function AdminPortal() {
   }
 
   const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'CNIC', 'Phone', 'University', 'Roll No', 'Module', 'Team Name', 'Hostel', 'Team Size', 'Status', 'Created At']
+  const headers = ['Name', 'Email', 'CNIC', 'Phone', 'University', 'Roll No', 'Module', 'Unique ID', 'Team Name', 'Team Pass URL', 'Hostel', 'Team Size', 'Status', 'Created At']
     const csvData = filteredRegistrations.map(reg => [
       reg.name,
       reg.email,
@@ -505,6 +559,8 @@ export default function AdminPortal() {
       reg.university,
       reg.roll_no,
       reg.module,
+  reg.unique_id || '',
+  reg.team_pass_path ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/passes/${reg.team_pass_path}` : '',
       reg.team_name || '',
       reg.hostel === 'none' ? 'Self-arranged' : reg.hostel === 'one_day' ? '1 Day (PKR 2,000)' : '3 Days (PKR 5,000)',
       1 + getAdditionalTeamMembers(reg).length,
@@ -529,18 +585,21 @@ export default function AdminPortal() {
     const filtered = businessInnovationParticipants
       .filter(p => biStatusFilter === 'all' ? true : p.status === biStatusFilter)
       .filter(p => biSearch === '' ? true : (
-        p.name?.toLowerCase().includes(biSearch.toLowerCase()) ||
-        p.email?.toLowerCase().includes(biSearch.toLowerCase()) ||
+  p.name?.toLowerCase().includes(biSearch.toLowerCase()) ||
+  p.email?.toLowerCase().includes(biSearch.toLowerCase()) ||
+  (p.unique_id || '').toLowerCase().includes(biSearch.toLowerCase()) ||
         p.business_idea?.title?.toLowerCase()?.includes(biSearch.toLowerCase()) ||
         (p.team_name || '').toLowerCase().includes(biSearch.toLowerCase()) ||
         p.access_code?.toLowerCase().includes(biSearch.toLowerCase())
       ))
 
-  const headers = ['Name', 'Email', 'Access Code', 'Team Name', 'Team Size', 'University', 'Phase', 'Submission Status', 'Avg Total', 'Eval Count', 'Last Eval', 'Innovation', 'Feasibility', 'Market', 'Presentation', 'Technical', 'Business Model']
+  const headers = ['Name', 'Email', 'Access Code', 'Unique ID', 'Team Name', 'Team Pass URL', 'Team Size', 'University', 'Phase', 'Submission Status', 'Avg Total', 'Eval Count', 'Last Eval', 'Innovation', 'Feasibility', 'Market', 'Presentation', 'Technical', 'Business Model']
     const csvData = filtered.map(p => [
   p.name,
       p.email,
       p.access_code,
+  p.unique_id || '',
+  p.team_pass_path ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/passes/${p.team_pass_path}` : '',
   p.team_name || '',
       1 + getAdditionalTeamMembers(p).length,
       p.university,
@@ -699,13 +758,13 @@ export default function AdminPortal() {
 
             {/* Filters and Search */}
             <div className="bg-black/80 backdrop-blur-sm rounded-xl p-6 mb-6 border border-purple-500/20">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 {/* Search */}
-                <div>
+                  <div>
                   <label className="block text-sm font-medium text-purple-200 mb-2">Search</label>
                   <input
                     type="text"
-                    placeholder="Name, email, university..."
+                    placeholder="Name, email, university, team name or unique ID..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full bg-black/50 border-purple-500/50 rounded-lg px-3 py-2 text-white placeholder-purple-400 focus:ring-purple-400 focus:border-purple-400"
@@ -867,6 +926,7 @@ export default function AdminPortal() {
                           <p>🎓 Roll: {reg.roll_no}</p>
                           <p>🆔 CNIC: {formatCnicDisplay(reg.cnic)}</p>
                           <p>🔑 Access Code: <span className="font-mono font-medium">{reg.access_code}</span></p>
+                          <p>🪪 Unique ID: <span className="font-mono font-medium">{reg.unique_id || '—'}</span></p>
                           <p>📅 {new Date(reg.created_at).toLocaleDateString()}</p>
                         </div>
 
@@ -968,6 +1028,42 @@ export default function AdminPortal() {
                 <div className="px-6 py-4 border-t border-purple-500/20 flex items-center justify-between">
                   <div className="text-sm text-purple-300">
                     Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredRegistrations.length)} of {filteredRegistrations.length} registrations
+                  </div>
+                  <div className="flex items-end">
+                    <button
+                      onClick={async () => {
+                        const token = localStorage.getItem('admin_token')
+                        if (!token) {
+                          alert('Please sign in as admin to perform this action.')
+                          return
+                        }
+                        if (!confirm('Generate unique IDs for registrations missing them? This will assign unique certificate IDs to all registrations without one.')) return
+                        setActionLoading('generate-unique-ids')
+                        try {
+                          const res = await fetch('/api/admin/generate-unique-ids', {
+                            method: 'POST',
+                            headers: {
+                              'Authorization': `Bearer ${token}`
+                            }
+                          })
+                          const data = await res.json()
+                          if (!res.ok) {
+                            throw new Error(data.error || 'Failed to generate unique IDs')
+                          }
+                          alert(`Generated ${data.updatedCount} unique ID(s).`)
+                          await fetchRegistrations()
+                        } catch (err) {
+                          console.error(err)
+                          alert('Failed to generate unique IDs. Check console for details.')
+                        } finally {
+                          setActionLoading(null)
+                        }
+                      }}
+                      disabled={actionLoading === 'generate-unique-ids'}
+                      className="inline-flex items-center px-3 py-2 border border-purple-500/50 rounded-lg text-sm font-medium text-purple-200 bg-purple-900/30 hover:bg-purple-800/30 transition-colors ml-2"
+                    >
+                      {actionLoading === 'generate-unique-ids' ? '...' : 'Generate Unique IDs'}
+                    </button>
                   </div>
                   <div className="flex space-x-2">
                     <button
@@ -1247,6 +1343,10 @@ export default function AdminPortal() {
                       <span className="text-purple-200 ml-2 font-mono">{viewRegistration.access_code}</span>
                     </div>
                     <div>
+                      <span className="text-purple-400 font-medium">Unique ID:</span>
+                      <span className="text-purple-200 ml-2 font-mono">{viewRegistration.unique_id || '—'}</span>
+                    </div>
+                    <div>
                       <span className="text-purple-400 font-medium">Created At:</span>
                       <span className="text-purple-200 ml-2">{new Date(viewRegistration.created_at).toLocaleString()}</span>
                     </div>
@@ -1260,6 +1360,19 @@ export default function AdminPortal() {
                           className="text-blue-400 hover:text-blue-300 ml-2 transition-colors"
                         >
                           View Receipt
+                        </a>
+                      </div>
+                    )}
+                    {viewRegistration.team_pass_path && (
+                      <div>
+                        <span className="text-purple-400 font-medium">Team Pass:</span>
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/passes/${viewRegistration.team_pass_path}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:text-blue-300 ml-2 transition-colors"
+                        >
+                          Download Team Pass (PDF)
                         </a>
                       </div>
                     )}
@@ -1559,6 +1672,21 @@ export default function AdminPortal() {
             </div>
           </div>
         )}
+        {/* Admin Confirm Modal */}
+        <ConfirmationModal
+          isOpen={showAdminConfirm}
+          onClose={() => setShowAdminConfirm(false)}
+          title={adminConfirmTitle}
+          message={adminConfirmMessage}
+          showConfirm={true}
+          confirmLabel={adminConfirmLabel}
+          confirmVariant={adminConfirmVariant}
+          onConfirm={async () => {
+            if (adminConfirmAction) await adminConfirmAction()
+          }}
+          confirmLoading={adminConfirmLoading}
+          autoRedirectDelay={0}
+        />
       </div>
     </div>
   )

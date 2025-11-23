@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS public.registrations (
     hostel TEXT DEFAULT 'none' CHECK (hostel IN ('none', 'one_day', 'three_days')),
     ambassador_code TEXT, -- Ambassador code for discount (optional)
     team_members JSONB DEFAULT '[]'::jsonb,
+    team_pass_path TEXT,
     payment_receipt_url TEXT,
     access_code TEXT UNIQUE, -- Unique access code for portal login
     unique_id TEXT UNIQUE, -- Unique certificate ID for certificate generation
@@ -161,6 +162,11 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('receipts', 'receipts', true)
 ON CONFLICT (id) DO NOTHING;
 
+-- Create passes bucket if it doesn't exist (for Team Pass PDFs)
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('passes', 'passes', true)
+ON CONFLICT (id) DO NOTHING;
+
 -- =========================================
 -- 7. Storage Policies for Receipts Bucket
 -- =========================================
@@ -174,6 +180,11 @@ CREATE POLICY "Allow public uploads to receipts" ON storage.objects
 CREATE POLICY "Allow public reads from receipts" ON storage.objects
     FOR SELECT
     USING (bucket_id = 'receipts');
+
+-- Allow public reads from passes bucket (for downloading team passes)
+CREATE POLICY "Allow public reads from passes" ON storage.objects
+    FOR SELECT
+    USING (bucket_id = 'passes');
 
 -- Policy: Allow authenticated users to delete receipts (for admin cleanup)
 CREATE POLICY "Allow authenticated deletes from receipts" ON storage.objects

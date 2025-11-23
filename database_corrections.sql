@@ -185,6 +185,24 @@ END $$;
 
 CREATE INDEX IF NOT EXISTS idx_registrations_team_name ON public.registrations(team_name);
 
+-- Add team_pass_path column if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public' AND table_name = 'registrations' AND column_name = 'team_pass_path'
+    ) THEN
+        ALTER TABLE public.registrations ADD COLUMN team_pass_path TEXT;
+    END IF;
+END $$;
+
+CREATE INDEX IF NOT EXISTS idx_registrations_team_pass_path ON public.registrations(team_pass_path);
+
+-- Create passes storage bucket if it doesn't exist
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('passes', 'passes', true)
+ON CONFLICT (id) DO NOTHING;
+
 -- =========================================
 -- 7. Update Statistics Views (refresh)
 -- =========================================

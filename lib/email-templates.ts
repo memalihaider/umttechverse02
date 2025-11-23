@@ -13,6 +13,7 @@ export interface RegistrationData {
   access_code: string
   unique_id: string
   status: 'pending' | 'approved'
+  team_pass_url?: string
 }
 import { getTeamMembers, normalizeTeamMember, formatCnicDisplay } from '@/lib/team-members'
 
@@ -131,6 +132,19 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
             <li><strong>Certificate ID:</strong> ${data.unique_id}</li>
           </ul>
         </div>
+
+        ${data.team_pass_url ? `
+        <div class="highlight">
+          <h3>🎟️ Team Pass</h3>
+          <p>Your Team Pass is ready. Download it from the link below and present it at the event entrance:</p>
+          <p style="text-align:center; margin-top: 10px;"><a href="${data.team_pass_url}" style="display:inline-block;background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Download Entry Pass (PDF)</a></p>
+        </div>
+        ` : `
+        <div class="highlight">
+          <h3>🎟️ Team Pass</h3>
+          <p>Your Team Pass is being prepared and will be shared via email once available. You can also check the <a href="https://umttechverse.com/admin">admin portal</a> for details.</p>
+        </div>
+        `}
 
         <div class="warning">
           <h3>⚠️ Important Next Steps</h3>
@@ -295,6 +309,19 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
             <li><strong>Registration Status:</strong> ✅ Approved</li>
           </ul>
         </div>
+
+        ${data.team_pass_url ? `
+        <div class="highlight">
+          <h3>🎟️ Team Pass</h3>
+          <p>Your Team Pass is ready. Download it from the link below and present it at the event entrance:</p>
+          <p style="text-align:center; margin-top: 10px;"><a href="${data.team_pass_url}" style="display:inline-block;background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Download Entry Pass (PDF)</a></p>
+        </div>
+        ` : `
+        <div class="highlight">
+          <h3>🎟️ Team Pass</h3>
+          <p>Your Team Pass is being prepared and will be shared via email once available. You can also check the <a href="https://umttechverse.com/admin">admin portal</a> for details.</p>
+        </div>
+        `}
 
         ${portalCtaHtml}
 

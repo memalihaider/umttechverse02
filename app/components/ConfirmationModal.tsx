@@ -11,6 +11,12 @@ interface ConfirmationModalProps {
   redirectTo?: string
   autoRedirectDelay?: number
   registrationCodes?: { accessCode: string; uniqueId: string } | null
+  // Optional confirm action button (used by admin for confirm dialogs)
+  showConfirm?: boolean
+  confirmLabel?: string
+  confirmVariant?: 'danger' | 'success' | 'neutral'
+  onConfirm?: () => void | Promise<void>
+  confirmLoading?: boolean
 }
 
 export default function ConfirmationModal({
@@ -21,6 +27,12 @@ export default function ConfirmationModal({
   redirectTo = '/',
   autoRedirectDelay = 3000,
   registrationCodes
+  ,
+  showConfirm = false,
+  confirmLabel = 'Confirm',
+  confirmVariant = 'success',
+  onConfirm,
+  confirmLoading = false
 }: ConfirmationModalProps) {
   const router = useRouter()
 
@@ -103,6 +115,24 @@ export default function ConfirmationModal({
           >
             Check Gmail
           </button>
+          {showConfirm && (
+            <button
+              type="button"
+              className={`px-4 py-2 rounded-lg transition-colors font-medium ${
+                confirmVariant === 'danger' ? 'bg-red-600 text-white hover:bg-red-700' :
+                confirmVariant === 'neutral' ? 'bg-gray-600 text-white hover:bg-gray-700' :
+                'bg-green-600 text-white hover:bg-green-700'
+              }`}
+              onClick={async () => {
+                if (onConfirm) await onConfirm()
+                // close modal after confirming
+                onClose()
+              }}
+              disabled={confirmLoading}
+            >
+              {confirmLoading ? 'Processing...' : confirmLabel}
+            </button>
+          )}
           <button
             type="button"
             className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"

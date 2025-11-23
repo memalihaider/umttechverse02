@@ -5,6 +5,10 @@ import { sendEmail } from '@/lib/email'
 import { quickValidateEmail } from '@/lib/email-validation'
 import { generateApprovedRegistrationEmail } from '@/lib/email-templates'
 import { getAdditionalTeamMembers, normalizeTeamMember } from '@/lib/team-members'
+// NOTE: generateTeamPassPdf imports `pdfkit` which brings in `fontkit`.
+// That in turn triggers a Turbopack static analysis error when bundling the app route
+// (applyDecoratedDescriptor export mismatch in @swc/helpers). To avoid this, we
+// dynamically import the PDF helper only at runtime when needed (on approval).
 import type { RegistrationData } from '@/lib/email-templates'
 
 export async function POST(request: NextRequest) {
@@ -71,12 +75,12 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Send email
+  // Send email
     
     const subject = status === 'approved' ? 'Techverse 2026 - Registration Approved' : 'Techverse 2026 - Registration Rejected'
 
-    let html: string
-    if (status === 'approved') {
+  let html: string
+  if (status === 'approved') {
       // Prepare registration data for email template
       const registrationData: RegistrationData = {
         name: registration.name,
@@ -93,6 +97,58 @@ export async function POST(request: NextRequest) {
         unique_id: registration.unique_id,
         status: 'approved' as const,
       }
+      // If a pass already exists, construct a public URL so it can be included in the email
+      if (registration.team_pass_path) {
+        try {
+          const { data: publicData } = supabase.storage.from('passes').getPublicUrl(registration.team_pass_path)
+          if (publicData && (publicData as any).publicUrl) {
+            registrationData.team_pass_url = (publicData as any).publicUrl
+          }
+        } catch (err) {
+          console.warn('Could not construct public URL for existing team pass:', err)
+        }
+      }
+
+      // Generate team pass PDF and upload to Supabase (only if it doesn't already exist)
+      try {
+        const membersForPdf = Array.isArray(registration.team_members) && registration.team_members.length > 0
+          ? registration.team_members
+          : [{ name: registration.name, email: registration.email, university: registration.university, rollNo: registration.roll_no, cnic: registration.cnic }]
+
+        const uniqueId = registration.unique_id || registration.access_code || registration.id
+
+        // Only generate pass if not already present
+          if (!registration.team_pass_path) {
+          // Dynamically import the PDF helper at runtime to avoid bundling `pdfkit`.
+          const { generateTeamPassPdf } = await import('@/lib/generate-team-pass')
+          const pdfBuffer = await generateTeamPassPdf({
+          teamName: registration.team_name || registration.name,
+          moduleName: registration.module,
+          teamMembers: membersForPdf,
+          uniqueId,
+          })
+
+          const fileName = `team-pass-${uniqueId}.pdf`
+
+        // Upload PDF to storage bucket 'passes'
+        const { error: uploadError } = await supabase.storage.from('passes').upload(fileName, pdfBuffer as any, { contentType: 'application/pdf' })
+          if (uploadError) {
+          console.warn('Failed to upload team pass PDF:', uploadError)
+        } else {
+          // Save pass path in DB and create a public URL
+            const passPath = fileName
+          await supabase.from('registrations').update({ team_pass_path: passPath }).eq('id', id)
+          const { data: publicData } = supabase.storage.from('passes').getPublicUrl(passPath)
+          if (publicData && (publicData as any).publicUrl) {
+            // Include pass URL in email template
+            registrationData.team_pass_url = (publicData as any).publicUrl
+          }
+          }
+        }
+      } catch (passErr) {
+        console.error('Error generating or uploading team pass PDF:', passErr)
+      }
+
       html = generateApprovedRegistrationEmail(registrationData)
     } else {
       html = `
