@@ -210,7 +210,7 @@ export async function GET(request: NextRequest) {
 
     const { data, error: authError } = await supabase
       .from('registrations')
-      .select('id, current_phase, submission_status, github_repo, business_idea, email, team_members, status, module')
+      .select('id, current_phase, submission_status, github_repo, business_idea, email, team_members, team_name, status, module')
       .eq('access_code', normalizedAccessCode)
       .maybeSingle()
 

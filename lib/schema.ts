@@ -61,6 +61,11 @@ export const registrationFormSchema = z.object({
   module: z.string()
     .min(1, 'Please select a module'),
 
+  // Team Name (required for all registrations)
+  teamName: z.string()
+    .min(2, 'Team name must be at least 2 characters')
+    .max(100, 'Team name must be less than 100 characters'),
+
   // Team Members (array with at least 1 member - the team leader)
   teamMembers: z.array(teamMemberSchema)
     .min(1, 'At least one team member (team leader) is required')
@@ -248,7 +253,8 @@ export const databaseSchema = {
     university: 'text (required)',
     roll_no: 'text (required)',
     module: 'text (required)',
-    team_members: 'jsonb (array of team member objects)',
+  team_members: 'jsonb (array of team member objects)',
+  team_name: 'text',
     payment_receipt_url: 'text',
     status: 'text (pending/approved/rejected)',
     created_at: 'timestamp',

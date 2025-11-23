@@ -54,7 +54,8 @@ export async function POST(request: NextRequest) {
     const module = formData.get('module') as string
     const hostel = formData.get('hostel') as string
     const ambassadorCode = formData.get('ambassadorCode') as string
-    const teamMembers = JSON.parse(formData.get('teamMembers') as string)
+  const teamMembers = JSON.parse(formData.get('teamMembers') as string)
+  const teamName = (formData.get('teamName') as string) || ''
     const paymentReceipt = formData.get('paymentReceipt') as File | null
 
     // Validate team member emails if provided (temporarily relaxed)
@@ -108,7 +109,7 @@ export async function POST(request: NextRequest) {
 
     const { error } = await supabase
       .from('registrations')
-      .insert({
+  .insert({
         name,
         email,
   cnic: (cnic || '').replace(/\D/g, ''),
@@ -119,6 +120,7 @@ export async function POST(request: NextRequest) {
         hostel,
         ambassador_code: ambassadorCode || null,
   team_members: normalizedTeamMembers,
+    team_name: teamName || null,
         payment_receipt_url: receiptUrl,
         access_code: accessCode,
         unique_id: uniqueCertificateId,
@@ -172,6 +174,7 @@ export async function POST(request: NextRequest) {
       access_code: accessCode,
       unique_id: uniqueCertificateId,
       status: 'pending' as const,
+      team_name: teamName || undefined,
     }
 
     const bookingEmailHtml = generatePendingRegistrationEmail(registrationData)

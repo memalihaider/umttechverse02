@@ -8,6 +8,7 @@ export interface RegistrationData {
   module: string
   hostel: string
   ambassador_code?: string
+  team_name?: string
   team_members: any[]
   access_code: string
   unique_id: string
@@ -109,6 +110,7 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
             <li><strong>Phone:</strong> ${data.phone}</li>
             <li><strong>University:</strong> ${data.university}</li>
             <li><strong>Roll Number:</strong> ${data.roll_no}</li>
+              <li><strong>Team Name:</strong> ${data.team_name || '—'}</li>
             <li><strong>Module:</strong> ${data.module}</li>
             <li><strong>Accommodation:</strong> ${hostelInfo}</li>
             ${ambassadorDiscountHtml}

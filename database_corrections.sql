@@ -172,6 +172,18 @@ CREATE INDEX IF NOT EXISTS idx_registrations_current_phase ON public.registratio
 CREATE INDEX IF NOT EXISTS idx_evaluations_registration_id ON public.business_innovation_evaluations(registration_id);
 CREATE INDEX IF NOT EXISTS idx_evaluations_phase ON public.business_innovation_evaluations(phase);
 CREATE INDEX IF NOT EXISTS idx_evaluations_total_score ON public.business_innovation_evaluations(total_score DESC);
+-- Add team_name column if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public' AND table_name = 'registrations' AND column_name = 'team_name'
+    ) THEN
+        ALTER TABLE public.registrations ADD COLUMN team_name TEXT;
+    END IF;
+END $$;
+
+CREATE INDEX IF NOT EXISTS idx_registrations_team_name ON public.registrations(team_name);
 
 -- =========================================
 -- 7. Update Statistics Views (refresh)

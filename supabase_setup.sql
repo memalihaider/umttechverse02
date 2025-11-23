@@ -84,6 +84,7 @@ CREATE INDEX IF NOT EXISTS idx_registrations_module ON public.registrations(modu
 CREATE INDEX IF NOT EXISTS idx_registrations_university ON public.registrations(university);
 CREATE INDEX IF NOT EXISTS idx_registrations_access_code ON public.registrations(access_code);
 CREATE INDEX IF NOT EXISTS idx_registrations_unique_id ON public.registrations(unique_id);
+CREATE INDEX IF NOT EXISTS idx_registrations_team_name ON public.registrations(team_name);
 CREATE INDEX IF NOT EXISTS idx_registrations_current_phase ON public.registrations(current_phase);
 CREATE INDEX IF NOT EXISTS idx_evaluations_registration_id ON public.business_innovation_evaluations(registration_id);
 CREATE INDEX IF NOT EXISTS idx_evaluations_phase ON public.business_innovation_evaluations(phase);
@@ -293,6 +294,7 @@ RETURNS TABLE (
     roll_no TEXT,
     module TEXT,
     team_members JSONB,
+    team_name TEXT,
     payment_receipt_url TEXT,
     access_code TEXT,
     status TEXT,
@@ -305,7 +307,7 @@ AS $$
 BEGIN
     RETURN QUERY
     SELECT r.id, r.name, r.email, r.cnic, r.phone, r.university, r.roll_no,
-           r.module, r.team_members, r.payment_receipt_url, r.access_code, r.status,
+           r.module, r.team_members, r.team_name, r.payment_receipt_url, r.access_code, r.status,
            r.created_at, r.updated_at
     FROM public.registrations r
     WHERE r.email = user_email;
@@ -324,6 +326,7 @@ RETURNS TABLE (
     roll_no TEXT,
     module TEXT,
     team_members JSONB,
+    team_name TEXT,
     payment_receipt_url TEXT,
     access_code TEXT,
     status TEXT,
@@ -336,7 +339,7 @@ AS $$
 BEGIN
     RETURN QUERY
     SELECT r.id, r.name, r.email, r.cnic, r.phone, r.university, r.roll_no,
-           r.module, r.team_members, r.payment_receipt_url, r.access_code, r.status,
+            r.module, r.team_members, r.team_name, r.payment_receipt_url, r.access_code, r.status,
            r.created_at, r.updated_at
     FROM public.registrations r
     WHERE r.access_code = user_access_code AND r.status = 'approved';

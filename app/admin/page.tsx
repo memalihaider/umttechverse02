@@ -14,6 +14,7 @@ interface Registration {
   university: string
   roll_no: string
   module: string
+  team_name?: string
   hostel: string
   team_members: { name: string; email: string; university: string; rollNo: string; cnic?: string }[]
   payment_receipt_url: string
@@ -324,6 +325,7 @@ export default function AdminPortal() {
       const matchesSearch = searchTerm === '' ||
         reg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (reg.team_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
         reg.module.toLowerCase().includes(searchTerm.toLowerCase())
 
@@ -494,7 +496,7 @@ export default function AdminPortal() {
   }
 
   const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'CNIC', 'Phone', 'University', 'Roll No', 'Module', 'Hostel', 'Team Size', 'Status', 'Created At']
+    const headers = ['Name', 'Email', 'CNIC', 'Phone', 'University', 'Roll No', 'Module', 'Team Name', 'Hostel', 'Team Size', 'Status', 'Created At']
     const csvData = filteredRegistrations.map(reg => [
       reg.name,
       reg.email,
@@ -503,6 +505,7 @@ export default function AdminPortal() {
       reg.university,
       reg.roll_no,
       reg.module,
+      reg.team_name || '',
       reg.hostel === 'none' ? 'Self-arranged' : reg.hostel === 'one_day' ? '1 Day (PKR 2,000)' : '3 Days (PKR 5,000)',
       1 + getAdditionalTeamMembers(reg).length,
       reg.status,
@@ -529,14 +532,16 @@ export default function AdminPortal() {
         p.name?.toLowerCase().includes(biSearch.toLowerCase()) ||
         p.email?.toLowerCase().includes(biSearch.toLowerCase()) ||
         p.business_idea?.title?.toLowerCase()?.includes(biSearch.toLowerCase()) ||
+        (p.team_name || '').toLowerCase().includes(biSearch.toLowerCase()) ||
         p.access_code?.toLowerCase().includes(biSearch.toLowerCase())
       ))
 
-    const headers = ['Name', 'Email', 'Access Code', 'Team Size', 'University', 'Phase', 'Submission Status', 'Avg Total', 'Eval Count', 'Last Eval', 'Innovation', 'Feasibility', 'Market', 'Presentation', 'Technical', 'Business Model']
+  const headers = ['Name', 'Email', 'Access Code', 'Team Name', 'Team Size', 'University', 'Phase', 'Submission Status', 'Avg Total', 'Eval Count', 'Last Eval', 'Innovation', 'Feasibility', 'Market', 'Presentation', 'Technical', 'Business Model']
     const csvData = filtered.map(p => [
-      p.name,
+  p.name,
       p.email,
       p.access_code,
+  p.team_name || '',
       1 + getAdditionalTeamMembers(p).length,
       p.university,
       p.current_phase || '',
@@ -868,6 +873,10 @@ export default function AdminPortal() {
                         <div className="mb-3">
                           <span className="text-sm font-medium text-purple-300">Module: </span>
                           <span className="text-sm text-blue-300">{reg.module}</span>
+                        </div>
+                        <div className="mb-3">
+                          <span className="text-sm font-medium text-purple-300">Team Name: </span>
+                          <span className="text-sm text-blue-300">{reg.team_name || '—'}</span>
                         </div>
 
                         <div className="mb-3">
@@ -1208,6 +1217,10 @@ export default function AdminPortal() {
                     <div>
                       <span className="text-purple-400 font-medium">Roll No:</span>
                       <span className="text-purple-200 ml-2">{viewRegistration.roll_no}</span>
+                    </div>
+                    <div>
+                      <span className="text-purple-400 font-medium">Team Name:</span>
+                      <span className="text-purple-200 ml-2">{viewRegistration.team_name || '—'}</span>
                     </div>
                   </div>
                   <div className="space-y-4">

@@ -97,9 +97,9 @@ export async function GET(request: NextRequest) {
     const normalizedEmail = String(email).trim().toLowerCase()
     const normalizedAccessCode = String(accessCode).trim().toUpperCase()
 
-  const { data, error: authError } = await supabase
-      .from('registrations')
-      .select('business_idea, current_phase, email, team_members, status, module')
+      const { data, error: authError } = await supabase
+          .from('registrations')
+          .select('business_idea, current_phase, email, team_members, team_name, status, module')
       .eq('access_code', normalizedAccessCode)
       .maybeSingle()
 

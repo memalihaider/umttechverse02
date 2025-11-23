@@ -22,6 +22,7 @@ interface FormData {
   module: string
   hostel: string
   ambassadorCode?: string
+  teamName?: string
   paymentReceipt?: File
 }
 
@@ -224,6 +225,7 @@ export default function RegistrationForm() {
     module: '',
     hostel: 'none',
     ambassadorCode: '',
+    teamName: '',
   })
 
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
@@ -231,6 +233,7 @@ export default function RegistrationForm() {
   const [loading, setLoading] = useState(false)
   const [teamLimitError, setTeamLimitError] = useState('')
   const [showBankDetails, setShowBankDetails] = useState(false)
+  const [teamNameError, setTeamNameError] = useState('')
   const [emailErrors, setEmailErrors] = useState<{[key: string]: string}>({})
   const [cnicError, setCnicError] = useState<string>('')
   const [teamCnicErrors, setTeamCnicErrors] = useState<{[key: string]: string}>({})
@@ -581,7 +584,8 @@ export default function RegistrationForm() {
     if (!formData.phone || formData.phone.trim() === '') missingLeaderFields.push('Phone')
     if (!formData.university || formData.university.trim() === '') missingLeaderFields.push('University')
     if (!formData.rollNo || formData.rollNo.trim() === '') missingLeaderFields.push('Roll Number')
-    if (!formData.module || formData.module.trim() === '') missingLeaderFields.push('Module')
+  if (!formData.module || formData.module.trim() === '') missingLeaderFields.push('Module')
+  if (!formData.teamName || formData.teamName.trim() === '') missingLeaderFields.push('Team Name')
     if (!formData.paymentReceipt) missingLeaderFields.push('Payment Receipt')
 
     if (missingLeaderFields.length > 0) {
@@ -681,7 +685,8 @@ export default function RegistrationForm() {
       formDataToSend.append('rollNo', formData.rollNo)
       formDataToSend.append('module', formData.module)
       formDataToSend.append('hostel', formData.hostel)
-      formDataToSend.append('ambassadorCode', formData.ambassadorCode || '')
+  formDataToSend.append('ambassadorCode', formData.ambassadorCode || '')
+  formDataToSend.append('teamName', formData.teamName || '')
       // The registering user is also a team member (leader). Prepend leader info to the
       // teamMembers array before sending so server receives a full list including the leader.
       const payloadTeamMembers = [
@@ -891,6 +896,21 @@ export default function RegistrationForm() {
                 ))}
               </select>
             </div>
+
+              {/* Team Name */}
+              <div className="mb-4 sm:mb-6">
+                <label htmlFor="teamName" className="block text-sm sm:text-base font-semibold text-purple-200 mb-3 sm:mb-4">Team Name</label>
+                <input
+                  type="text"
+                  id="teamName"
+                  name="teamName"
+                  required
+                  value={formData.teamName || ''}
+                  onChange={handleInputChange}
+                  placeholder="Enter your team's name"
+                  className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
+                />
+              </div>
 
             {/* Module Details Display */}
             {formData.module && (
