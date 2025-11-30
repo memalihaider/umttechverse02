@@ -229,6 +229,9 @@ export default function LandingPage() {
               Transform your innovative ideas into real business solutions.
             </p>
             <div className="text-center mb-4">
+              <Countdown targetDate="2025-12-15T00:00:00+05:00" label="Module starts in" variant="large" />
+            </div>
+            <div className="text-center mb-4">
               <p className="text-yellow-300 text-sm sm:text-base font-medium">
                 🗓️ Starts: 15 December 2025 • Duration: 20+ Days • 31st December Phase 01 Submission
               </p>
@@ -248,6 +251,18 @@ export default function LandingPage() {
                     Develop groundbreaking business solutions that address real-world problems using cutting-edge technology,
                     innovative thinking, and entrepreneurial vision.
                   </p>
+                  
+                  <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+                    <h4 className="text-yellow-300 font-semibold text-sm sm:text-base mb-2 flex items-center">
+                      <span className="text-lg mr-2">🏆</span>
+                      Recognition for All Participants
+                    </h4>
+                    <p className="text-purple-200 text-xs sm:text-sm">
+                      Every participant receives a prestigious recognition certificate highlighting their innovation,
+                      technical skills, and entrepreneurial journey. Winners get additional rewards and special honors.
+                    </p>
+                  </div>
+                  
                   <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
                     <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center">
                       <div className="text-lg sm:text-2xl font-bold text-blue-300">PKR 40K + Rewards</div>
@@ -265,37 +280,72 @@ export default function LandingPage() {
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
                 <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
                   <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">📊</span>
-                  Competition Phases
+                  Competition Timeline
                 </h3>
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex items-center space-x-3 sm:space-x-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">1</div>
-                    <div>
-                      <h4 className="text-blue-300 font-semibold text-sm sm:text-base">Idea Selection</h4>
-                      <p className="text-purple-300 text-xs sm:text-sm">Submit your innovative business concept</p>
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">1</div>
+                      <div>
+                        <h4 className="text-blue-300 font-semibold text-sm sm:text-base">Phase 1: Product Development</h4>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">15 Dec 2025 - 31 Dec 2025</p>
+                      </div>
                     </div>
+                    <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
+                      Teams and Solo entrepreneurs build their products. Focus on creating MVPs with core features.
+                    </p>
                   </div>
-                  <div className="flex items-center space-x-3 sm:space-x-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">2</div>
-                    <div>
-                      <h4 className="text-purple-300 font-semibold text-sm sm:text-base">Design Phase</h4>
-                      <p className="text-purple-300 text-xs sm:text-sm">Develop detailed business plans and prototypes</p>
+                  
+                  <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">2</div>
+                      <div>
+                        <h4 className="text-green-300 font-semibold text-sm sm:text-base">Phase 2: Selection Round</h4>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">1 Jan 2026 - 4 Jan 2026</p>
+                      </div>
                     </div>
+                    <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
+                      A panel sits down and selects Top 30 Products for the final round based on initial evaluations.
+                    </p>
                   </div>
-                  <div className="flex items-center space-x-3 sm:space-x-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">3</div>
-                    <div>
-                      <h4 className="text-green-300 font-semibold text-sm sm:text-base">Development</h4>
-                      <p className="text-purple-300 text-xs sm:text-sm">Build MVP and validate market fit</p>
+                  
+                  <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">3</div>
+                      <div>
+                        <h4 className="text-orange-300 font-semibold text-sm sm:text-base">Final Round: Product Enhancement</h4>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">5 Jan 2026 - 11 Jan 2026</p>
+                      </div>
                     </div>
+                    <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
+                      Convert MVP to complete end-to-end product with guidance from Business Innovation team. 
+                      Case studies and implementation support provided.
+                    </p>
                   </div>
-                  <div className="flex items-center space-x-3 sm:space-x-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">4</div>
-                    <div>
-                      <h4 className="text-yellow-300 font-semibold text-sm sm:text-base">Final Submission</h4>
-                      <p className="text-purple-300 text-xs sm:text-sm">Present to judges and compete for prizes</p>
+                  
+                  <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+                    <div className="flex items-center space-x-3 sm:space-x-4 mb-2">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">4</div>
+                      <div>
+                        <h4 className="text-red-300 font-semibold text-sm sm:text-base">Mini Shark Tank Finale</h4>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">11 Jan 2026</p>
+                      </div>
                     </div>
+                    <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
+                      Final teams pitch to investors, collaborators, and top industry persons. Winners get rewards, 
+                      others receive proper recognition and certifications.
+                    </p>
                   </div>
+                </div>
+                
+                <div className="mt-6 p-4 bg-yellow-900/20 rounded-lg border border-yellow-500/30">
+                  <h4 className="text-yellow-300 font-semibold text-sm sm:text-base mb-2">🎯 Evaluation Criteria (MVP Focus)</h4>
+                  <ul className="text-purple-300 text-xs sm:text-sm space-y-1">
+                    <li>• Product Implementation & Core Features</li>
+                    <li>• Security & Technical Robustness</li>
+                    <li>• Market Viability & Innovation</li>
+                    <li>• Presentation & Business Model</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -356,32 +406,33 @@ export default function LandingPage() {
               <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
                 <h3 className="text-xl sm:text-2xl font-bold text-yellow-300 mb-4 sm:mb-6 flex items-center">
                   <span className="text-2xl sm:text-3xl mr-2 sm:mr-3">🎯</span>
-                  Evaluation Criteria
+                  MVP Evaluation Criteria
                 </h3>
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">30%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Problem-Solution Fit</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">25%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Market Potential</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">20%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Technical Feasibility</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">15%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Business Model</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">10%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Presentation</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-lg sm:text-2xl font-bold text-blue-300">100%</div>
-                    <div className="text-xs sm:text-sm text-purple-300">Total Score</div>
+                <div className="space-y-4">
+                  <p className="text-purple-200 text-sm mb-4">
+                    Since this is an MVP (not a complete product), evaluation focuses on core implementation quality:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-purple-900/40 rounded-lg p-4 text-center border border-purple-500/30">
+                      <div className="text-xl sm:text-2xl font-bold text-blue-300 mb-2">40%</div>
+                      <div className="text-sm text-purple-300 font-medium">Product Implementation</div>
+                      <div className="text-xs text-purple-400 mt-1">Core functionality & technical execution</div>
+                    </div>
+                    <div className="bg-purple-900/40 rounded-lg p-4 text-center border border-purple-500/30">
+                      <div className="text-xl sm:text-2xl font-bold text-blue-300 mb-2">30%</div>
+                      <div className="text-sm text-purple-300 font-medium">Security & Robustness</div>
+                      <div className="text-xs text-purple-400 mt-1">Data protection & system security</div>
+                    </div>
+                    <div className="bg-purple-900/40 rounded-lg p-4 text-center border border-purple-500/30">
+                      <div className="text-xl sm:text-2xl font-bold text-blue-300 mb-2">20%</div>
+                      <div className="text-sm text-purple-300 font-medium">Core Features</div>
+                      <div className="text-xs text-purple-400 mt-1">Essential MVP features completeness</div>
+                    </div>
+                    <div className="bg-purple-900/40 rounded-lg p-4 text-center border border-purple-500/30">
+                      <div className="text-xl sm:text-2xl font-bold text-blue-300 mb-2">10%</div>
+                      <div className="text-sm text-purple-300 font-medium">Innovation & Viability</div>
+                      <div className="text-xs text-purple-400 mt-1">Market potential & uniqueness</div>
+                    </div>
                   </div>
                 </div>
               </div>
