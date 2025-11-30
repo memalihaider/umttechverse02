@@ -994,7 +994,7 @@ export default function RegistrationForm() {
           </div>
 
           {/* Ambassador Code Section */}
-          <div className="bg-linear-to-br from-green-900/40 to-blue-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-green-500/30 shadow-xl backdrop-blur-sm">
+          {/* <div className="bg-linear-to-br from-green-900/40 to-blue-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-green-500/30 shadow-xl backdrop-blur-sm">
             <div className="flex items-center mb-4 sm:mb-6">
               <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-green-500 to-yellow-500 rounded-lg sm:rounded-xl flex items-center justify-center mr-3 sm:mr-4">
                 <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1023,7 +1023,7 @@ export default function RegistrationForm() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Accommodation Section */}
           {/* <div className="bg-linear-to-br from-orange-900/40 to-purple-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 xl:p-8 border border-orange-500/30 shadow-xl backdrop-blur-sm">

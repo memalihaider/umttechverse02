@@ -1,198 +1,74 @@
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Techverse 2026 - Registration Approved</title>
-      <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 650px; margin: 0 auto; padding: 20px; background: #f8f9fa; }
-        .container { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
-        .header { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color: white; padding: 40px 30px; text-align: center; position: relative; }
-        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>'); opacity: 0.1; }
-        .content { padding: 40px 30px; }
-        .highlight { background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%); padding: 20px; border-left: 4px solid #4caf50; margin: 25px 0; border-radius: 8px; }
-        .approved-badge { display: inline-block; background: #4caf50; color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-        .info-item { background: #f8f9fa; padding: 12px; border-radius: 8px; border-left: 3px solid #4caf50; }
-        .team-member { background: #f0fff0; padding: 15px; margin: 10px 0; border-radius: 8px; border: 1px solid #e8f5e8; }
-        .qr-section { text-align: center; margin: 30px 0; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border: 2px solid #4caf50; border-radius: 15px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.1); }
-        .qr-placeholder { width: 150px; height: 150px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: 10px; display: inline-block; margin: 20px 0; position: relative; }
-        .qr-placeholder::after { content: 'QR Code'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #666; font-weight: bold; }
-        .largify-section { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 30px; margin-top: 30px; border-radius: 10px; }
-        .largify-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .service-item { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; padding: 20px; background: #f8f9fa; border-radius: 0 0 15px 15px; }
-        .button { display: inline-block; background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 10px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
-        .success-message { background: linear-gradient(135deg, #e8f5e8 0%, #f8fff8 100%); border: 2px solid #4caf50; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1 style="margin: 0; font-size: 28px;">🎉 Registration Approved!</h1>
-          <p style="margin: 10px 0 0 0; opacity: 0.9;">Welcome to Techverse 2026</p>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Techverse 2026 - Registration Approved</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+    .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { text-align: center; border-bottom: 2px solid #28a745; padding-bottom: 20px; margin-bottom: 30px; }
+    .status { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: center; }
+    .details { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+    .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; border-top: 1px solid #eee; padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="color: #28a745; margin: 0;">Techverse 2026</h1>
+      <p style="margin: 5px 0 0 0; font-size: 14px;">Registration Approved</p>
+    </div>
 
-        <div class="content">
-          <div class="success-message">
-            <h2 style="margin-top: 0; color: #2e7d32;">Congratulations, John Doe!</h2>
-            <p style="font-size: 18px; margin: 10px 0;">Your registration for <strong>AI Hackathon</strong> has been <span style="color: #4caf50; font-weight: bold;">APPROVED</span>!</p>
-          </div>
+    <p>Dear John Doe,</p>
 
-          <div class="highlight">
-            <h3>📋 Registration Details</h3>
-            <div class="info-grid">
-              <div class="info-item"><strong>Registration ID:</strong><br>TV2025-ABC123</div>
-              <div class="info-item"><strong>Module:</strong><br>AI Hackathon</div>
-              <div class="info-item"><strong>Status:</strong><br><span class="approved-badge">Approved</span></div>
-              <div class="info-item"><strong>Event Date:</strong><br>13-14 November 2025</div>
-            </div>
-          </div>
+    <p>Congratulations! Your registration for Techverse 2026 has been approved.</p>
 
-          <div class="highlight">
-            <h3>👤 Personal Information</h3>
-            <div class="info-grid">
-              <div class="info-item"><strong>Name:</strong><br>John Doe</div>
-              <div class="info-item"><strong>Email:</strong><br>john.doe@example.com</div>
-              <div class="info-item"><strong>University:</strong><br>University of Management and Technology</div>
-              <div class="info-item"><strong>Roll Number:</strong><br>CS-2021-001</div>
-              <div class="info-item"><strong>Phone:</strong><br>+92 300 1234567</div>
-              <div class="info-item"><strong>CNIC:</strong><br>12345-6789012-3</div>
-            </div>
-          </div>
+    <div class="status">
+      <strong>Registration Status: Approved</strong>
+    </div>
 
-          
-          <div class="highlight">
-            <h3>👥 Team Members</h3>
-            
-            <div class="team-member">
-              <strong>1. Jane Smith</strong><br>
-              <span style="color: #666;">jane.smith@example.com | LUMS (CS-2021-002) | CNIC: 12345-6789012-3</span>
-            </div>
-            
-            <div class="team-member">
-              <strong>2. Bob Johnson</strong><br>
-              <span style="color: #666;">bob.johnson@example.com | UMT (CS-2021-003) | CNIC: 12345-6789012-4</span>
-            </div>
-            
-          </div>
-          
+    <div class="details">
+      <h3>Registration Details</h3>
+      <ul>
+        <li><strong>Name:</strong> John Doe</li>
+        <li><strong>Email:</strong> john.doe@example.com</li>
+        <li><strong>Module:</strong> AI Hackathon</li>
+        <li><strong>Team Name:</strong> Tech Innovators</li>
+        <li><strong>Unique ID:</strong> TV2025-ABC123</li>
+      </ul>
+    </div>
 
-          <div class="highlight">
-            <h3>📚 Module Information</h3>
-            <div class="info-grid">
-              <div class="info-item"><strong>Module Name:</strong><br>AI Hackathon</div>
-              <div class="info-item"><strong>Team Size:</strong><br>2-4 members</div>
-              <div class="info-item"><strong>Entry Fee:</strong><br>PKR 2,500</div>
-              <div class="info-item"><strong>Contact:</strong><br>Umair Khan - +92 308 6707770</div>
-            </div>
-          </div>
+    <div class="details">
+      <h3>Event Information</h3>
+      <ul>
+        <li><strong>Event Dates:</strong> January 5-11, 2026</li>
+        <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
+      </ul>
+    </div>
 
-          
+    <div class="details">
+      <h3>Next Steps</h3>
+      <ol>
+        <li>Prepare for the event according to your module requirements</li>
+        <li>Bring valid CNIC and registration confirmation</li>
+        <li>Arrive at the venue on time</li>
+      </ol>
+    </div>
 
-          <div class="qr-section">
-            <h3 style="margin-top: 0; color: #2e7d32;">📱 Your Digital Entry Pass</h3>
-            <p>Scan this QR code at the venue for quick check-in and registration verification.</p>
-            <div class="qr-placeholder"></div>
-            <p style="margin-top: 15px; font-size: 14px; color: #666;">
-              Registration ID: <strong>TV2025ABC123</strong><br>
-              Valid for: Techverse 2026 Event (5-11 January 2026)
-            </p>
-            <div style="text-align:center; margin-top: 18px;">
-              <a href="#" style="display:inline-block; background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color: white; padding: 14px 22px; text-decoration:none; border-radius: 8px; font-weight:bold; box-shadow: 0 6px 20px rgba(76, 175, 80, 0.25);">Download Entry Pass (PDF)</a>
-            </div>
-          </div>
+    <p>For any questions, please contact us at <a href="mailto:techverse@umt.edu.pk">techverse@umt.edu.pk</a></p>
 
-          <div class="highlight">
-            <h3>🎯 Event Information</h3>
-            <ul>
-              <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
-              <li><strong>Date:</strong> 13-14 November 2025</li>
-              <li><strong>Reporting Time:</strong> 8:00 AM (Day 1)</li>
-              <li><strong>Bring:</strong> Valid CNIC, Registration ID, and required materials for your module</li>
-              <li><strong>Accommodation:</strong> Booked (3 Days)</li>
-            </ul>
-          </div>
+    <p>We look forward to your participation in Techverse 2026.</p>
 
-          <div class="highlight">
-            <h3>📜 Certificate Information</h3>
-            <p>Your unique certificate ID: <strong>TV2025-ABC123</strong></p>
-            <p>Use this ID along with your CNIC to generate your participation certificate after the event.</p>
-            <div style="text-align: center; margin: 20px 0;">
-              <a href="https://umttechverse.com/certificate" class="button">Generate Certificate</a>
-            </div>
-          </div>
+    <p>Best regards,<br>
+    Techverse 2026 Organizing Committee<br>
+    University of Management and Technology</p>
+  </div>
 
-          <div class="highlight">
-            <h3>⚡ Important Reminders</h3>
-            <ul>
-              <li>Arrive at the venue 30 minutes before your module's start time</li>
-              <li>Bring all required documents and materials</li>
-              <li>Keep your registration ID and CNIC handy</li>
-              <li>Follow all event rules and guidelines</li>
-              <li>Stay updated through our WhatsApp group and social media</li>
-            </ul>
-          </div>
-
-          <p>If you have any questions or need assistance, please contact us:</p>
-          <ul>
-            <li><strong>Email:</strong> techverse@umt.edu.pk</li>
-            
-            <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
-          </ul>
-
-          <p><strong>We can't wait to see your innovation and creativity at Techverse 2026!</strong></p>
-
-          <p>Best regards,<br>
-          <strong>Techverse 2026 Organizing Committee</strong><br>
-          University of Management and Technology</p>
-
-          <div class="largify-section">
-            <h3 style="margin-top: 0; text-align: center;">🚀 Powered by Largify Solutions</h3>
-            <p style="text-align: center; margin-bottom: 20px;">Your trusted partner in digital innovation and technology solutions</p>
-
-            <div class="largify-services">
-              <div class="service-item">
-                <h4>🌐 Web Development</h4>
-                <p>Custom websites, web applications, and digital platforms</p>
-              </div>
-              <div class="service-item">
-                <h4>📱 Mobile App Development</h4>
-                <p>iOS and Android applications with modern UI/UX</p>
-              </div>
-              <div class="service-item">
-                <h4>📢 Digital Marketing</h4>
-                <p>SEO, social media marketing, and online presence management</p>
-              </div>
-              <div class="service-item">
-                <h4>🔒 Cyber Solutions</h4>
-                <p>Security audits, penetration testing, and cybersecurity consulting</p>
-              </div>
-              <div class="service-item">
-                <h4>🤖 AI Solutions</h4>
-                <p>Artificial intelligence integration and machine learning solutions</p>
-              </div>
-              <div class="service-item">
-                <h4>🎨 UI/UX Design</h4>
-                <p>User-centered design and interface optimization</p>
-              </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 20px;">
-              <p><strong>Contact Largify Solutions:</strong></p>
-              <p>📧 info@largifysolutions.com | 📱 +966 59 736 9443 | 📱 +92 310 6207245</p>
-              <p>🌐 www.largifysolutions.com</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">
-          <p>This is an automated email from Techverse 2026 registration system.</p>
-          <p>Please do not reply to this message. For support, contact techverse@umt.edu.pk</p>
-          <p>© 2025 Techverse 2026 & Largify Solutions. All rights reserved.</p>
-        </div>
-      </div>
-    </body>
-    </html>
-  
+  <div class="footer">
+    <p>This email was sent to john.doe@example.com. Please do not reply to this message.</p>
+    <p>© 2025 Techverse 2026. All rights reserved.</p>
+  </div>
+</body>
+</html>  

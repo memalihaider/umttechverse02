@@ -80,94 +80,60 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Techverse 2026 - Registration Confirmed</title>
+      <title>Techverse 2026 - Registration Confirmation</title>
       <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-        .highlight { background: #e8f4fd; padding: 15px; border-left: 4px solid #667eea; margin: 20px 0; }
-        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-        .access-code { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; font-family: monospace; font-size: 18px; text-align: center; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 2px solid #667eea; padding-bottom: 20px; margin-bottom: 30px; }
+        .status { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: center; }
+        .details { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; border-top: 1px solid #eee; padding-top: 20px; }
       </style>
     </head>
     <body>
-      <div class="header">
-        <h1>🎉 Registration Confirmed!</h1>
-        <p>Techverse 2026 - University of Management and Technology</p>
-      </div>
+      <div class="container">
+        <div class="header">
+          <h1 style="color: #667eea; margin: 0;">Techverse 2026</h1>
+          <p style="margin: 5px 0 0 0; font-size: 14px;">Registration Confirmation</p>
+        </div>
 
-      <div class="content">
-        <p>Dear <strong>${data.name}</strong>,</p>
+        <p>Dear ${data.name},</p>
 
-        <p>Congratulations! Your registration for <strong>Techverse 2026</strong> has been successfully submitted and is now under review.</p>
+        <p>Thank you for registering for Techverse 2026. Your registration has been received and is currently under review.</p>
 
-        <div class="highlight">
-          <h3>📋 Registration Details</h3>
+        <div class="status">
+          <strong>Registration Status: Pending Approval</strong>
+        </div>
+
+        <div class="details">
+          <h3>Registration Details</h3>
           <ul>
-            <li><strong>Full Name:</strong> ${data.name}</li>
+            <li><strong>Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
-            <li><strong>CNIC:</strong> ${formatCnicDisplay(data.cnic)}</li>
-            <li><strong>Phone:</strong> ${data.phone}</li>
-            <li><strong>University:</strong> ${data.university}</li>
-            <li><strong>Roll Number:</strong> ${data.roll_no}</li>
-              <li><strong>Team Name:</strong> ${data.team_name || '—'}</li>
             <li><strong>Module:</strong> ${data.module}</li>
-            <li><strong>Accommodation:</strong> ${hostelInfo}</li>
-            ${ambassadorDiscountHtml}
+            <li><strong>Team Name:</strong> ${data.team_name || 'N/A'}</li>
+            <li><strong>Unique ID:</strong> ${data.unique_id}</li>
           </ul>
         </div>
 
-        ${teamMembersHtml}
-
-        ${accessCodeHtml}
-
-        ${businessInnovationPortalHtml}
-
-        <div class="highlight">
-          <h3>📅 Event Details</h3>
-          <ul>
-            <li><strong>Event Dates:</strong> January 5-11, 2026</li>
-            <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
-            <li><strong>Certificate ID:</strong> ${data.unique_id}</li>
-          </ul>
-        </div>
-
-        ${data.team_pass_url ? `
-        <div class="highlight">
-          <h3>🎟️ Team Pass</h3>
-          <p>Your Team Pass is ready. Download it from the link below and present it at the event entrance:</p>
-          <p style="text-align:center; margin-top: 10px;"><a href="${data.team_pass_url}" style="display:inline-block;background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Download Entry Pass (PDF)</a></p>
-        </div>
-        ` : `
-        <div class="highlight">
-          <h3>🎟️ Team Pass</h3>
-          <p>Your Team Pass is being prepared and will be shared via email once available. You can also check the <a href="https://umttechverse.com/admin">admin portal</a> for details.</p>
-        </div>
-        `}
-
-        <div class="warning">
-          <h3>⚠️ Important Next Steps</h3>
+        <div class="details">
+          <h3>Next Steps</h3>
           <ol>
-            ${nextStepsList}
+            <li>Complete payment using the provided bank details</li>
+            <li>Wait for approval confirmation (typically within 24-48 hours)</li>
+            <li>Check your email for approval notification</li>
           </ol>
         </div>
 
-        <p>If you have any questions or need assistance, please don't hesitate to contact us:</p>
-        <ul>
-            <li><strong>Email:</strong> techverse@umt.edu.pk</li>
-            <li><strong>Website:</strong> <a href="https://umttechverse.com">umttechverse.com</a></li>
-          </ul>
-
-        <p>We look forward to seeing you at Techverse 2026!</p>
+        <p>For any questions, please contact us at <a href="mailto:techverse@umt.edu.pk">techverse@umt.edu.pk</a></p>
 
         <p>Best regards,<br>
-        <strong>Techverse 2026 Organizing Committee</strong><br>
+        Techverse 2026 Organizing Committee<br>
         University of Management and Technology</p>
       </div>
 
       <div class="footer">
-        <p>This email was sent to ${data.email} regarding your Techverse 2026 registration.</p>
+        <p>This email was sent to ${data.email}. Please do not reply to this message.</p>
         <p>© 2025 Techverse 2026. All rights reserved.</p>
       </div>
     </body>
@@ -248,99 +214,68 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Techverse 2026 - Registration Approved</title>
       <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-        .highlight { background: #d4edda; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0; }
-        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-        .access-code { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; font-family: monospace; font-size: 18px; text-align: center; }
-        .portal-link { display: inline-block; background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin: 10px 0; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 2px solid #28a745; padding-bottom: 20px; margin-bottom: 30px; }
+        .status { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: center; }
+        .details { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; border-top: 1px solid #eee; padding-top: 20px; }
       </style>
     </head>
     <body>
-      <div class="header">
-        <h1>✅ Registration Approved!</h1>
-        <p>Techverse 2026 - Welcome to the Event!</p>
-      </div>
-
-      <div class="content">
-        <p>Dear <strong>${data.name}</strong>,</p>
-
-        <div class="success">
-          <h3>🎉 Great News!</h3>
-          <p>Your registration for <strong>Techverse 2026</strong> has been <strong>approved</strong>! Welcome to the most exciting tech event of the year.</p>
+      <div class="container">
+        <div class="header">
+          <h1 style="color: #28a745; margin: 0;">Techverse 2026</h1>
+          <p style="margin: 5px 0 0 0; font-size: 14px;">Registration Approved</p>
         </div>
 
-        <div class="highlight">
-          <h3>📋 Your Registration Details</h3>
+        <p>Dear ${data.name},</p>
+
+        <p>Congratulations! Your registration for Techverse 2026 has been approved.</p>
+
+        <div class="status">
+          <strong>Registration Status: Approved</strong>
+        </div>
+
+        <div class="details">
+          <h3>Registration Details</h3>
           <ul>
-            <li><strong>Full Name:</strong> ${data.name}</li>
+            <li><strong>Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
-            <li><strong>CNIC:</strong> ${formatCnicDisplay(data.cnic)}</li>
-            <li><strong>Phone:</strong> ${data.phone}</li>
-            <li><strong>University:</strong> ${data.university}</li>
-            <li><strong>Roll Number:</strong> ${data.roll_no}</li>
             <li><strong>Module:</strong> ${data.module}</li>
-            <li><strong>Accommodation:</strong> ${hostelInfo}</li>
-            ${ambassadorDiscountHtml}
+            <li><strong>Team Name:</strong> ${data.team_name || 'N/A'}</li>
+            <li><strong>Unique ID:</strong> ${data.unique_id}</li>
           </ul>
         </div>
 
-        ${teamMembersHtml}
-
-        ${accessCodeHtml}
-
-        ${businessInnovationPortalHtml}
-
-        <div class="highlight">
-          <h3>🚀 What's Next?</h3>
-          <ol>
-            ${whatsNextList}
-          </ol>
-        </div>
-
-        <div class="highlight">
-          <h3>📅 Event Information</h3>
+        <div class="details">
+          <h3>Event Information</h3>
           <ul>
             <li><strong>Event Dates:</strong> January 5-11, 2026</li>
             <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
-            <li><strong>Certificate ID:</strong> ${data.unique_id}</li>
-            <li><strong>Registration Status:</strong> ✅ Approved</li>
           </ul>
         </div>
 
-        ${data.team_pass_url ? `
-        <div class="highlight">
-          <h3>🎟️ Team Pass</h3>
-          <p>Your Team Pass is ready. Download it from the link below and present it at the event entrance:</p>
-          <p style="text-align:center; margin-top: 10px;"><a href="${data.team_pass_url}" style="display:inline-block;background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Download Entry Pass (PDF)</a></p>
+        <div class="details">
+          <h3>Next Steps</h3>
+          <ol>
+            <li>Prepare for the event according to your module requirements</li>
+            <li>Bring valid CNIC and registration confirmation</li>
+            <li>Arrive at the venue on time</li>
+          </ol>
         </div>
-        ` : `
-        <div class="highlight">
-          <h3>🎟️ Team Pass</h3>
-          <p>Your Team Pass is being prepared and will be shared via email once available. You can also check the <a href="https://umttechverse.com/admin">admin portal</a> for details.</p>
-        </div>
-        `}
 
-        ${portalCtaHtml}
+        <p>For any questions, please contact us at <a href="mailto:techverse@umt.edu.pk">techverse@umt.edu.pk</a></p>
 
-        <p>If you have any questions or need assistance, our support team is here to help:</p>
-        <ul>
-          <li><strong>Email:</strong> techverse@umt.edu.pk</li>
-          <li><strong>Website:</strong> <a href="https://umttechverse.com">umttechverse.com</a></li>
-          <li><strong>Portal:</strong> Access through the event website</li>
-        </ul>
-
-        <p>Get ready for an amazing experience at Techverse 2026! We can't wait to see your innovation and creativity.</p>
+        <p>We look forward to your participation in Techverse 2026.</p>
 
         <p>Best regards,<br>
-        <strong>Techverse 2026 Organizing Committee</strong><br>
+        Techverse 2026 Organizing Committee<br>
         University of Management and Technology</p>
       </div>
 
       <div class="footer">
-        <p>This email was sent to ${data.email} regarding your Techverse 2026 registration approval.</p>
+        <p>This email was sent to ${data.email}. Please do not reply to this message.</p>
         <p>© 2025 Techverse 2026. All rights reserved.</p>
       </div>
     </body>
