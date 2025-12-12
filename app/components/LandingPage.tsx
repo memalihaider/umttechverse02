@@ -45,196 +45,301 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden">
-      {/* Animated background particles */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-20"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-30 delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-cyan-400 rounded-full animate-pulse opacity-10"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-25 delay-500"></div>
+    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden relative">
+      {/* Enhanced Animated Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Dynamic gradient orbs */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 rounded-full blur-3xl animate-pulse opacity-30"></div>
+          <div className="absolute top-3/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-orange-600/20 rounded-full blur-3xl animate-pulse opacity-25 delay-1000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-cyan-600/20 via-blue-600/20 to-purple-600/20 rounded-full blur-3xl animate-pulse opacity-20 delay-500"></div>
+        </div>
 
-        {/* Simple floating geometric shapes */}
-        <div className="absolute top-1/6 left-1/6 w-4 h-4 border-2 border-blue-400/30 rotate-45 animate-bounce opacity-20 delay-300"></div>
-        <div className="absolute top-2/3 right-1/6 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse delay-700"></div>
-        <div className="absolute bottom-1/3 left-1/2 w-2 h-6 bg-cyan-400/15 rounded-full animate-ping delay-1200"></div>
+        {/* Floating particles with enhanced animations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60 shadow-lg shadow-blue-400/50"></div>
+          <div className="absolute top-3/4 right-1/4 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-70 shadow-lg shadow-purple-400/50 delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-cyan-400 rounded-full animate-pulse opacity-50 shadow-lg shadow-cyan-400/50 delay-500"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-pink-400 rounded-full animate-bounce opacity-65 shadow-lg shadow-pink-400/50 delay-700"></div>
+          <div className="absolute top-1/6 right-1/6 w-1 h-1 bg-yellow-400 rounded-full animate-ping opacity-80 shadow-lg shadow-yellow-400/50 delay-300"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-3 h-3 bg-green-400 rounded-full animate-pulse opacity-55 shadow-lg shadow-green-400/50 delay-1200"></div>
+        </div>
+
+        {/* Geometric floating shapes */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/6 left-1/6 w-6 h-6 border-2 border-blue-400/40 rotate-45 animate-spin opacity-30 shadow-lg" style={{animationDuration: '8s'}}></div>
+          <div className="absolute top-2/3 right-1/6 w-4 h-4 bg-purple-400/30 rounded-full animate-bounce opacity-40 shadow-lg delay-700"></div>
+          <div className="absolute bottom-1/3 left-1/2 w-2 h-8 bg-cyan-400/25 rounded-full animate-pulse opacity-35 shadow-lg delay-1200"></div>
+          <div className="absolute top-1/3 right-1/4 w-5 h-5 border-2 border-pink-400/40 rotate-12 animate-spin opacity-25 shadow-lg" style={{animationDuration: '6s'}}></div>
+        </div>
+
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
       </div>
+
       {/* Navigation */}
       <Navbar />
 
-      {/* Hero Section */}
-  <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 section-transition relative overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section className="pt-20 pb-20 px-4 sm:px-6 lg:px-8 section-transition relative overflow-hidden">
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          {/* Decorative gradient orb behind hero */}
-          <div className="absolute -translate-y-12 -left-10 blur-3xl opacity-20 pointer-events-none" aria-hidden>
-            <div className="w-72 h-72 bg-linear-to-br from-blue-400/40 via-purple-500/30 to-cyan-400/30 rounded-full" />
+          {/* Enhanced decorative elements */}
+          <div className="absolute -translate-y-16 -left-16 blur-3xl opacity-25 pointer-events-none" aria-hidden>
+            <div className="w-96 h-96 bg-gradient-to-br from-blue-500/30 via-purple-600/30 to-cyan-500/30 rounded-full animate-pulse" />
           </div>
-          <div className="bg-black/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 border border-purple-500/20 shadow-2xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold bg-linear-to-r from-blue-400 via-purple-400 to-cyan-300 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight animate-fade-in-up">
-              TECHVERSE 2026
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-purple-200 mb-6 sm:mb-8 px-2 animate-slide-in-left delay-200">
-              Where Innovation Meets Competition
-            </p>
-            <div className="text-sm sm:text-base lg:text-lg text-purple-300 mb-6 sm:mb-8 space-y-1 sm:space-y-2 animate-slide-in-right delay-300">
-              <p className="mb-1 sm:mb-2">📅 Date: 5-11 January 2026</p>
-              <p className="mb-1 sm:mb-2">📍 Venue: University of Management and Technology (UMT), Lahore</p>
-              <p>🎯 Join Pakistan's Premier Tech Competition Event</p>
-              <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="large" />
-                
-                {/* <div className="mt-1 sm:mt-0 text-xs text-purple-300">Starts: 5 January 2026 • 09:00 AM (PKT)</div> */}
+          <div className="absolute -translate-y-8 -right-16 blur-3xl opacity-20 pointer-events-none" aria-hidden>
+            <div className="w-80 h-80 bg-gradient-to-br from-purple-500/30 via-pink-500/30 to-orange-500/30 rounded-full animate-pulse delay-1000" />
+          </div>
+
+          {/* Enhanced hero container with glassmorphism */}
+          <div className="relative bg-black/30 backdrop-blur-xl rounded-3xl sm:rounded-4xl p-8 sm:p-12 lg:p-16 border border-purple-500/30 shadow-2xl shadow-purple-500/20">
+            {/* Subtle inner glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-cyan-600/5 rounded-3xl sm:rounded-4xl"></div>
+
+            <div className="relative z-10">
+              {/* Enhanced title with better typography */}
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-black bg-gradient-to-r from-blue-300 via-purple-300 via-cyan-300 to-blue-300 bg-clip-text text-transparent mb-6 sm:mb-8 leading-none animate-fade-in-up tracking-tight">
+                TECHVERSE
+                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent mt-2">
+                  2026
+                </span>
+              </h1>
+
+              {/* Enhanced subtitle */}
+              <p className="text-xl sm:text-2xl md:text-3xl text-purple-100 mb-8 sm:mb-10 px-4 animate-slide-in-left delay-200 font-medium leading-relaxed">
+                Where Innovation Meets Competition
+              </p>
+
+              {/* Enhanced event details with better styling */}
+              <div className="text-base sm:text-lg lg:text-xl text-purple-200 mb-8 sm:mb-12 space-y-3 sm:space-y-4 animate-slide-in-right delay-300">
+                <div className="flex items-center justify-center gap-3 bg-purple-900/20 rounded-full px-6 py-3 backdrop-blur-sm border border-purple-500/20">
+                  <span className="text-2xl">📅</span>
+                  <span className="font-semibold">5-11 January 2026 - Pakistan National Event</span>
+                </div>
+                <div className="flex items-center justify-center gap-3 bg-purple-900/20 rounded-full px-6 py-3 backdrop-blur-sm border border-purple-500/20">
+                  <span className="text-2xl">📍</span>
+                  <span className="font-semibold">University of Management and Technology (UMT), Lahore</span>
+                </div>
+                {/* <div className="flex items-center justify-center gap-3 bg-blue-900/20 rounded-full px-6 py-3 backdrop-blur-sm border border-blue-500/20">
+                  <span className="text-2xl">🎯</span>
+                  <span className="font-semibold">Pakistan's Premier Tech Competition Event</span>
+                </div> */}
+
+                {/* Enhanced countdown */}
+                <div className="mt-6 flex flex-col items-center justify-center gap-4 ">
+                  <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="large" />
+                </div>
+              </div>
+
+              {/* Enhanced CTA buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4 animate-scale-in delay-500">
+                <Link
+                  href="/register"
+                  className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-500 hover:via-purple-500 hover:to-blue-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl transition-all duration-500 transform hover:scale-105 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 overflow-hidden"
+                >
+                  <span className="relative z-10">Register Now</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                </Link>
+
+                <Link
+                  href="/modules"
+                  className="group relative border-2 border-purple-400/60 text-purple-100 hover:bg-purple-500/20 hover:border-purple-400 px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl transition-all duration-500 transform hover:scale-105 backdrop-blur-sm shadow-lg hover:shadow-purple-500/20"
+                >
+                  <span className="relative z-10">View Modules</span>
+                </Link>
+
+                {/* Enhanced calendar button */}
+                <a
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Techverse+2026&dates=20260105T040000Z/20260112T040000Z&details=Join+Techverse+2026%21&location=UMT+Lahore"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-800/60 to-blue-800/60 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-4 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg backdrop-blur-sm border border-purple-500/30"
+                >
+                  <span className="text-xl">📅</span>
+                  <span className="hidden sm:inline">Add to Calendar</span>
+                </a>
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 animate-scale-in delay-500">
-              <Link
-                href="/register"
-                className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                Register Now
-              </Link>
-              <a
-                href="/modules"
-                className="border-2 border-purple-500/50 text-purple-200 hover:bg-purple-500/20 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300"
-              >
-                View Modules
-              </a>
-              <div className="flex items-center gap-2">
-                  
-                  <a
-                    href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Techverse+2026&dates=20260105T040000Z/20260112T040000Z&details=Join+Techverse+2026%21&location=UMT+Lahore"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-purple-800/50 hover:bg-purple-700 text-white px-3 py-2 rounded-lg font-medium transition"
-                  >
-                    Add to Calendar
-                  </a>
-                </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Event Stats */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+      {/* Enhanced Event Stats */}
+      <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
-              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">16+</div>
-              <div className="text-purple-200 text-sm sm:text-base">Exciting Modules</div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div className="group relative bg-gradient-to-br from-purple-900/40 to-blue-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 shadow-xl hover:shadow-purple-500/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10">
+                <div className="text-3xl sm:text-3xl font-black text-blue-300 mb-3 sm:mb-4 group-hover:text-blue-200 transition-colors duration-300">16+</div>
+                <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Exciting Modules</div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
-              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">2000+</div>
-              <div className="text-purple-200 text-sm sm:text-base">Expected Participants</div>
+
+            <div className="group relative bg-gradient-to-br from-purple-900/40 to-cyan-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 shadow-xl hover:shadow-cyan-500/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10">
+                <div className="text-3xl sm:text-3xl font-black text-cyan-300 mb-3 sm:mb-4 group-hover:text-cyan-200 transition-colors duration-300">2000+</div>
+                <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Expected Participants</div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
-              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">PKR 480K+</div>
-              <div className="text-purple-200 text-sm sm:text-base">Total Prize Pool</div>
+
+            <div className="group relative bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 shadow-xl hover:shadow-pink-500/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10">
+                <div className="text-3xl sm:text-3xl font-black text-pink-300 mb-3 sm:mb-4 group-hover:text-pink-200 transition-colors duration-300">PKR 480K+</div>
+                <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Total Prize Pool</div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </div>
             </div>
-            <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 text-center border border-purple-500/20">
-              <div className="text-2xl sm:text-4xl font-bold text-blue-300 mb-1 sm:mb-2">7 Days</div>
-              <div className="text-purple-200 text-sm sm:text-base">Non-Stop Innovation</div>
+
+            <div className="group relative bg-gradient-to-br from-purple-900/40 to-orange-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 text-center border border-purple-500/30 shadow-xl hover:shadow-orange-500/20 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10">
+                <div className="text-3xl sm:text-3xl font-black text-orange-300 mb-3 sm:mb-4 group-hover:text-orange-200 transition-colors duration-300">7 Days</div>
+                <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Non-Stop Innovation</div>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-purple-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Event */}
-      <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+      {/* Enhanced About Event */}
+      <section id="about" className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 section-transition relative">
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
+          <div className="text-center mb-16 sm:mb-20 animate-fade-in-up">
+            <div className="inline-flex items-center bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 border border-blue-500/30 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6 backdrop-blur-sm">
+              <span className="text-blue-300 font-bold text-sm sm:text-base animate-pulse">🎯 ABOUT TECHVERSE 2026</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-6 sm:mb-8 leading-tight">
               About Techverse 2026
             </h2>
-            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
+            <p className="text-xl sm:text-2xl text-purple-200 max-w-4xl mx-auto px-4 leading-relaxed">
               Techverse 2026 is Pakistan's premier technology event, bringing together the brightest minds in technology,
               innovation, and creativity. From AI and cybersecurity to gaming and robotics, experience the future of technology today.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div className="space-y-4 sm:space-y-6 animate-slide-in-left">
-              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 border border-purple-500/20">
-                <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-3 sm:mb-4">🎯 Our Mission</h3>
-                <p className="text-purple-200 text-sm sm:text-base">
-                  To create a platform where technology enthusiasts can showcase their skills, learn from peers,
-                  and compete in an environment that fosters innovation and collaboration.
-                </p>
+            <div className="space-y-6 sm:space-y-8 animate-slide-in-left">
+              <div className="group relative bg-gradient-to-br from-purple-900/40 to-blue-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-purple-500/30 shadow-xl hover:shadow-blue-500/20 transition-all duration-500 transform hover:scale-105 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-blue-300 mb-4 sm:mb-6 flex items-center">
+                    <span className="text-3xl sm:text-4xl mr-3 sm:mr-4">🎯</span>
+                    Our Mission
+                  </h3>
+                  <p className="text-purple-200 text-base sm:text-lg leading-relaxed">
+                    To create a platform where technology enthusiasts can showcase their skills, learn from peers,
+                    and compete in an environment that fosters innovation and collaboration.
+                  </p>
+                </div>
               </div>
-              <div className="bg-purple-900/30 rounded-xl p-4 sm:p-6 border border-purple-500/20">
-                <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-3 sm:mb-4">🏆 What to Expect</h3>
-                <p className="text-purple-200 text-sm sm:text-base">
-                  Intense competitions, networking opportunities, workshops, and prizes worth over PKR 480,000.
-                  Join us for 7 days of non-stop technological excellence.
-                </p>
+
+              <div className="group relative bg-gradient-to-br from-purple-900/40 to-green-900/40 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-purple-500/30 shadow-xl hover:shadow-green-500/20 transition-all duration-500 transform hover:scale-105 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-green-300 mb-4 sm:mb-6 flex items-center">
+                    <span className="text-3xl sm:text-4xl mr-3 sm:mr-4">🏆</span>
+                    What to Expect
+                  </h3>
+                  <p className="text-purple-200 text-base sm:text-lg leading-relaxed">
+                    Intense competitions, networking opportunities, workshops, and prizes worth over PKR 480,000.
+                    Join us for 7 days of non-stop technological excellence.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="bg-purple-900/30 rounded-xl p-6 sm:p-8 border border-purple-500/20 animate-slide-in-right">
-              <h3 className="text-xl sm:text-2xl font-semibold text-blue-300 mb-4 sm:mb-6 text-center">Event Highlights</h3>
-              <ul className="space-y-3 sm:space-y-4 text-purple-200 text-sm sm:text-base">
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⚡</span>
-                  <div>16+ Diverse Technology Modules</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🎮</span>
-                  <div>Gaming, AI, Robotics & Cybersecurity</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">💰</span>
-                  <div>Massive Prize Pool & Certificates</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🤝</span>
-                  <div>Networking with Industry Experts</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">🏢</span>
-                  <div>Hosted at UMT Lahore Campus</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
-                  <div>7 Days of Continuous Innovation</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
-                  <div>National Level Career Fair</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
-                  <div>Exciting Workshops & Seminars</div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-400 mr-2 sm:mr-3 mt-1">⏰</span>
-                  <div>Exclusive Social Nights</div>
-                </li>
-              </ul>
+            <div className="group relative bg-gradient-to-br from-purple-900/40 to-cyan-900/40 backdrop-blur-xl rounded-2xl p-8 sm:p-10 border border-purple-500/30 shadow-xl hover:shadow-cyan-500/20 transition-all duration-500 transform hover:scale-105 animate-slide-in-right overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl sm:text-3xl font-bold text-cyan-300 mb-6 sm:mb-8 text-center">Event Highlights</h3>
+                <ul className="space-y-4 sm:space-y-6 text-purple-200 text-base sm:text-lg">
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">⚡</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-blue-300">16+ Diverse Technology Modules</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">🎮</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-purple-300">Gaming, AI, Robotics & Cybersecurity</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">💰</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-green-300">Massive Prize Pool & Certificates</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">🤝</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-cyan-300">Networking with Industry Experts</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">🏢</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-orange-300">Hosted at UMT Lahore Campus</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start group/item hover:bg-purple-900/20 rounded-lg p-3 transition-colors duration-300">
+                    <span className="text-2xl sm:text-3xl mr-3 sm:mr-4 mt-1 group-hover/item:scale-110 transition-transform duration-300">⏰</span>
+                    <div className="flex-1">
+                      <span className="font-semibold text-pink-300">7 Days of Continuous Innovation</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Business Innovation Signature Module */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
+      {/* Enhanced Business Innovation Signature Module */}
+      <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 section-transition relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
-            <div className="inline-flex items-center bg-yellow-500/20 border border-yellow-500/50 rounded-full px-3 sm:px-4 py-1 sm:py-2 mb-4 sm:mb-6">
-              <span className="text-yellow-300 font-semibold text-xs sm:text-sm">⭐ SIGNATURE MODULE</span>
+          {/* Enhanced decorative elements */}
+          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse opacity-30"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-orange-500/10 via-yellow-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse opacity-25 delay-1000"></div>
+
+          <div className="text-center mb-16 sm:mb-20 animate-fade-in-up">
+            <div className="inline-flex items-center bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border border-yellow-500/40 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-6 backdrop-blur-sm shadow-lg">
+              <span className="text-yellow-300 font-bold text-sm sm:text-base animate-pulse">⭐ SIGNATURE MODULE</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-linear-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-4 sm:mb-6 px-2">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-6 sm:mb-8 leading-tight">
               Business Innovation Challenge
             </h2>
-            <p className="text-lg sm:text-xl text-purple-200 max-w-4xl mx-auto px-4">
+            <p className="text-xl sm:text-2xl text-purple-200 max-w-4xl mx-auto px-4 leading-relaxed">
               Techverse 2026's flagship competition where entrepreneurship meets technology.
               Transform your innovative ideas into real business solutions.
             </p>
-            <div className="text-center mb-4">
+            <div className="text-center mb-6">
               <Countdown targetDate="2025-12-15T00:00:00+05:00" label="Module starts in" variant="large" />
             </div>
-            <div className="text-center mb-4">
-              <p className="text-yellow-300 text-sm sm:text-base font-medium">
-                🗓️ Starts: 15 December 2025 • Duration: 20+ Days • 31st December Phase 01 Submission
-              </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-yellow-900/20 rounded-2xl px-6 py-4 backdrop-blur-sm border border-yellow-500/30 max-w-2xl mx-auto">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">🗓️</span>
+                <span className="text-yellow-300 font-semibold">Starts: 15 December 2025</span>
+              </div>
+              <div className="hidden sm:block text-yellow-400">•</div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">⏱️</span>
+                <span className="text-yellow-300 font-semibold">Duration: 20+ Days</span>
+              </div>
+              <div className="hidden sm:block text-yellow-400">•</div>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">📝</span>
+                <span className="text-yellow-300 font-semibold">Phase 01: 31st Dec</span>
+              </div>
             </div>
           </div>
 
@@ -455,19 +560,19 @@ export default function LandingPage() {
           <div className="bg-black/60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-yellow-500/30">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">50+</div>
+                <div className="text-2xl sm:text-2xl font-bold text-yellow-300 mb-1 sm:mb-2">50+</div>
                 <div className="text-purple-200 text-sm sm:text-base">Teams Expected</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">4</div>
+                <div className="text-2xl sm:text-2xl font-bold text-yellow-300 mb-1 sm:mb-2">4</div>
                 <div className="text-purple-200 text-sm sm:text-base">Competition Phases</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">PKR 80K+ + Rewards</div>
+                <div className="text-2xl sm:text-2xl font-bold text-yellow-300 mb-1 sm:mb-2">PKR 80K+ Rewards</div>
                 <div className="text-purple-200 text-sm sm:text-base">Total Rewards</div>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-yellow-300 mb-1 sm:mb-2">20+ Days</div>
+                <div className="text-2xl sm:text-2xl font-bold text-yellow-300 mb-1 sm:mb-2">20+ Days</div>
                 <div className="text-purple-200 text-sm sm:text-base">Innovation Time</div>
               </div>
             </div>
@@ -475,44 +580,61 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Explore Modules Section */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 section-transition relative">
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="bg-linear-to-r from-blue-600/20 via-purple-600/20 to-blue-600/20 rounded-2xl p-8 sm:p-12 border border-purple-500/30 animate-scale-in">
-            <div className="inline-flex items-center bg-linear-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/30 rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-6 backdrop-blur-sm">
-              <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">🎯 COMPETITION MODULES</span>
+      {/* Enhanced Explore Modules Section */}
+      <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 section-transition relative overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          {/* Enhanced decorative elements */}
+          <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-cyan-600/10 rounded-full blur-2xl animate-pulse opacity-40"></div>
+          <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-gradient-to-br from-purple-600/10 via-cyan-600/10 to-blue-600/10 rounded-full blur-2xl animate-pulse opacity-35 delay-700"></div>
+
+          <div className="relative bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-cyan-600/20 backdrop-blur-xl rounded-3xl p-10 sm:p-16 border border-purple-500/30 shadow-2xl animate-scale-in">
+            {/* Subtle inner glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-cyan-600/5 rounded-3xl"></div>
+
+            <div className="relative z-10">
+              <div className="inline-flex items-center bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border border-cyan-500/40 rounded-full px-6 sm:px-8 py-3 sm:py-4 mb-8 backdrop-blur-sm shadow-lg">
+                <span className="text-cyan-300 font-bold text-sm sm:text-base animate-pulse">🎯 COMPETITION MODULES</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-6 sm:mb-8 leading-tight">
+                Discover All Modules
+              </h2>
+
+              <p className="text-xl sm:text-2xl text-purple-200 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
+                Explore our comprehensive collection of 16+ exciting technology competitions.
+                From AI and cybersecurity to gaming and robotics - find your perfect challenge.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
+                <div className="group bg-gradient-to-br from-purple-900/40 to-blue-900/40 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 shadow-lg hover:shadow-blue-500/20 transition-all duration-500 transform hover:scale-105">
+                  <div className="text-2xl sm:text-2xl font-black text-blue-300 mb-2 group-hover:text-blue-200 transition-colors duration-300">16+</div>
+                  <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Modules</div>
+                </div>
+
+                <div className="group bg-gradient-to-br from-purple-900/40 to-cyan-900/40 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 shadow-lg hover:shadow-cyan-500/20 transition-all duration-500 transform hover:scale-105">
+                  <div className="text-2xl sm:text-2xl font-black text-cyan-300 mb-2 group-hover:text-cyan-200 transition-colors duration-300">PKR 480K+</div>
+                  <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Prize Pool</div>
+                </div>
+
+                <div className="group bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 shadow-lg hover:shadow-pink-500/20 transition-all duration-500 transform hover:scale-105">
+                  <div className="text-2xl sm:text-2xl font-black text-pink-300 mb-2 group-hover:text-pink-200 transition-colors duration-300">2000+</div>
+                  <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Participants</div>
+                </div>
+
+                <div className="group bg-gradient-to-br from-purple-900/40 to-orange-900/40 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30 shadow-lg hover:shadow-orange-500/20 transition-all duration-500 transform hover:scale-105">
+                  <div className="text-2xl sm:text-2xl font-black text-orange-300 mb-2 group-hover:text-orange-200 transition-colors duration-300">7 Days</div>
+                  <div className="text-purple-200 text-sm sm:text-base font-semibold group-hover:text-purple-100 transition-colors duration-300">Competition</div>
+                </div>
+              </div>
+
+              <Link
+                href="/modules"
+                className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 hover:from-blue-500 hover:via-purple-500 hover:to-cyan-500 text-white px-10 sm:px-16 py-4 sm:py-6 rounded-2xl font-bold text-lg sm:text-xl transition-all duration-500 transform hover:scale-105 shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 overflow-hidden inline-block"
+              >
+                <span className="relative z-10">Explore All Modules →</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              </Link>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Discover All Modules
-            </h2>
-            <p className="text-lg sm:text-xl text-purple-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Explore our comprehensive collection of 16+ exciting technology competitions.
-              From AI and cybersecurity to gaming and robotics - find your perfect challenge.
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
-                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">16+</div>
-                <div className="text-xs sm:text-sm text-purple-300">Modules</div>
-              </div>
-              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
-                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">PKR 480K+</div>
-                <div className="text-xs sm:text-sm text-purple-300">Prize Pool</div>
-              </div>
-              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
-                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">2000+</div>
-                <div className="text-xs sm:text-sm text-purple-300">Participants</div>
-              </div>
-              <div className="bg-purple-900/40 rounded-lg p-3 sm:p-4 text-center border border-purple-500/30">
-                <div className="text-lg sm:text-2xl font-bold text-blue-300 mb-1">7 Days</div>
-                <div className="text-xs sm:text-sm text-purple-300">Competition</div>
-              </div>
-            </div>
-            <Link
-              href="/modules"
-              className="bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-xl font-bold text-lg sm:text-xl transition-all duration-300 transform hover:scale-105 shadow-lg inline-block"
-            >
-              Explore All Modules →
-            </Link>
           </div>
         </div>
       </section>
@@ -1230,12 +1352,12 @@ export default function LandingPage() {
 
           {/* Supporting Team */}
           <div className="text-center">
-            <Link
+            {/* <Link
               href="/team"
               className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 inline-block"
             >
               Meet Our Full Team
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>

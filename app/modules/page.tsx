@@ -47,12 +47,12 @@ export default function ModulesPage() {
             <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
               Choose from our comprehensive range of technology competitions. Each module offers unique challenges and opportunities to showcase your skills.
             </p>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="compact" />
-            </div>
+            </div> */}
           </div>
 
-          <div className="mt-6 max-w-3xl mx-auto px-4">
+          <div className="mt-10 max-w-3xl mx-auto px-4">
             <div className="w-full bg-purple-900/20 rounded-full p-2 sm:p-3 flex items-center gap-3 border border-purple-500/20 shadow-sm mx-auto">
               <svg className="w-5 h-5 text-purple-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/>
@@ -78,7 +78,7 @@ export default function ModulesPage() {
               </button>
             </div>
             {/* Result count and organic helpers */}
-            <div className="mt-2 text-center">
+            <div className="mt-6 text-center">
               <p className="text-sm text-purple-300" aria-live="polite">
                 {filtered.length} of {modules.length} modules shown
               </p>

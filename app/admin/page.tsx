@@ -927,7 +927,7 @@ export default function AdminPortal() {
                           <p>🆔 CNIC: {formatCnicDisplay(reg.cnic)}</p>
                           <p>🔑 Access Code: <span className="font-mono font-medium">{reg.access_code}</span></p>
                           <p>🪪 Unique ID: <span className="font-mono font-medium">{reg.unique_id || '—'}</span></p>
-                          <p>📅 {new Date(reg.created_at).toLocaleDateString()}</p>
+                          <p>📅 {new Date(reg.created_at).toLocaleString()}</p>
                         </div>
 
                         <div className="mb-3">
@@ -1157,6 +1157,7 @@ export default function AdminPortal() {
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Business Idea</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Phase</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Registration Time</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Avg Score</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">#Evals</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-purple-200 uppercase tracking-wider">Last Eval</th>
@@ -1218,6 +1219,9 @@ export default function AdminPortal() {
                           }`}>
                             {participant.submission_status?.replace('_', ' ') || 'not_started'}
                           </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-purple-200">{new Date(participant.created_at).toLocaleString()}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-purple-200">
