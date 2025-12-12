@@ -738,22 +738,22 @@ export default function AdminPortal() {
                 <div className="text-2xl font-bold text-red-300">{stats.rejected}</div>
                 <div className="text-purple-200 text-sm">Rejected</div>
               </div>
-              <div className="bg-blue-900/30 rounded-xl p-4 text-center border border-blue-500/20">
+              {/* <div className="bg-blue-900/30 rounded-xl p-4 text-center border border-blue-500/20">
                 <div className="text-2xl font-bold text-blue-300">{stats.uniqueUniversities}</div>
                 <div className="text-purple-200 text-sm">Universities</div>
-              </div>
+              </div> */}
               <div className="bg-indigo-900/30 rounded-xl p-4 text-center border border-indigo-500/20">
                 <div className="text-2xl font-bold text-indigo-300">{stats.uniqueModules}</div>
                 <div className="text-purple-200 text-sm">Modules</div>
               </div>
-              <div className="bg-cyan-900/30 rounded-xl p-4 text-center border border-cyan-500/20">
+              {/* <div className="bg-cyan-900/30 rounded-xl p-4 text-center border border-cyan-500/20">
                 <div className="text-2xl font-bold text-cyan-300">PKR {stats.totalAmount.toLocaleString()}</div>
                 <div className="text-purple-200 text-sm">Total Amount</div>
-              </div>
-              <div className="bg-pink-900/30 rounded-xl p-4 text-center border border-pink-500/20">
+              </div> */}
+              {/* <div className="bg-pink-900/30 rounded-xl p-4 text-center border border-pink-500/20">
                 <div className="text-2xl font-bold text-pink-300">{stats.totalTeams}</div>
                 <div className="text-purple-200 text-sm">Total Teams</div>
-              </div>
+              </div> */}
             </div>
 
             {/* Filters and Search */}
