@@ -96,6 +96,7 @@ export async function POST(request: NextRequest) {
         access_code: registration.access_code,
         unique_id: registration.unique_id,
         status: 'approved' as const,
+        team_name: registration.team_name || undefined,
       }
       // If a pass already exists, construct a public URL so it can be included in the email
       if (registration.team_pass_path) {

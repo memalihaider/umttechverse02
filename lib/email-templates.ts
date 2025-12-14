@@ -111,7 +111,7 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
             <li><strong>Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
             <li><strong>Module:</strong> ${data.module}</li>
-            <li><strong>Team Name:</strong> ${data.team_name || 'N/A'}</li>
+            <li><strong>Team Name:</strong> ${data.team_name || data.name}</li>
             <li><strong>Unique ID:</strong> ${data.unique_id}</li>
           </ul>
         </div>
@@ -243,7 +243,7 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
             <li><strong>Name:</strong> ${data.name}</li>
             <li><strong>Email:</strong> ${data.email}</li>
             <li><strong>Module:</strong> ${data.module}</li>
-            <li><strong>Team Name:</strong> ${data.team_name || 'N/A'}</li>
+            <li><strong>Team Name:</strong> ${data.team_name || data.name}</li>
             <li><strong>Unique ID:</strong> ${data.unique_id}</li>
           </ul>
         </div>
