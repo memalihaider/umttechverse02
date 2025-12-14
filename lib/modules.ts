@@ -1,5 +1,5 @@
 export const modules = [
-  { name: 'AI Hackathon', fee: 2500, teamSize: '2-4 members', contact: 'Ahmad Hassan - +92 320 0966011', guidebook: 'https://drive.google.com/file/d/1tbTAK88uvjWV2CfpMY8sJNMoOWjFPi_d/view?usp=sharing' },
+  { name: 'AI Hackathon', fee: 2500, teamSize: '2-4 members', contact: 'Ahmad Hassan - +92 320 0966011', guidebook: 'https://drive.google.com/file/d/1F-q1MvrlwR82ZtUBEtv77kMTeGx-Dylx/view?usp=sharing' },
   { name: 'Cyber Hackathon', fee: 1500, teamSize: '1-3 members', contact: 'Nabaha Umar - +92 349 4709369', guidebook: 'https://drive.google.com/file/d/1xGi_VkOxqL_niSGThaF7lF3g9aHiSly7/view?usp=sharing' },
   { name: 'FIFA 26', fee: 1000, teamSize: 'Individual/Team', contact: 'Asad - +92 324 8443622', guidebook: 'https://drive.google.com/file/d/1JLwD7aw7Kz6ueQzHeYDizP-_Fb4YB4cS/view?usp=drive_link' },
   { name: 'Line Following Robot', fee: 1500, teamSize: '1-3 members', contact: 'Hassan - +92 309 6755404; Muhammad Itayab - +92 333 4204421', guidebook: 'https://drive.google.com/file/d/1fZhDB3fVNMQZfyF0ZUQlxoGO-225nf8c/view?usp=sharing' },
