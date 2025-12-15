@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "clean-install": "rm -rf node_modules package-lock.json && npm install",
     "security:audit": "npm audit --audit-level=moderate",
     "security:audit:fix": "npm audit fix",
     "security:check": "npm run security:audit && npm run security:dependencies",
