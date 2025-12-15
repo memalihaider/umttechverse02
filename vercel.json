@@ -10,7 +10,9 @@
   "regions": ["iad1"],
   "build": {
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "npm_config_platform": "linux",
+      "npm_config_arch": "x64"
     }
   }
 }
