@@ -1413,7 +1413,7 @@ export default function RegistrationForm() {
         title="Registration Successful! 🎉"
         message="Your registration has been submitted successfully! Please check your email for confirmation details and important updates about Techverse 2026."
         redirectTo="/"
-        autoRedirectDelay={5000}
+        autoRedirectDelay={0}
         registrationCodes={registrationCodes}
       />
     </div>
