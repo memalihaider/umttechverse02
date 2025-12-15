@@ -323,12 +323,12 @@ export default function LandingPage() {
               Transform your innovative ideas into real business solutions.
             </p>
             <div className="text-center mb-6">
-              <Countdown targetDate="2025-12-15T00:00:00+05:00" label="Module starts in" variant="large" />
+              <Countdown targetDate="2025-12-20T00:00:00+05:00" label="Module starts in" variant="large" />
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-yellow-900/20 rounded-2xl px-6 py-4 backdrop-blur-sm border border-yellow-500/30 max-w-2xl mx-auto">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">🗓️</span>
-                <span className="text-yellow-300 font-semibold">Starts: 15 December 2025</span>
+                <span className="text-yellow-300 font-semibold">Starts: 20th December 2025</span>
               </div>
               <div className="hidden sm:block text-yellow-400">•</div>
               <div className="flex items-center gap-2">
@@ -359,12 +359,33 @@ export default function LandingPage() {
                   
                   <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
                     <h4 className="text-yellow-300 font-semibold text-sm sm:text-base mb-2 flex items-center">
-                      <span className="text-lg mr-2">🏆</span>
-                      Recognition for All Participants
+                      <span className="text-lg mr-2">🌍</span>
+                      Open for All Industries
                     </h4>
                     <p className="text-purple-200 text-xs sm:text-sm">
-                      Every participant receives a prestigious recognition certificate highlighting their innovation,
-                      technical skills, and entrepreneurial journey. Winners get additional rewards and special honors.
+                      This module welcomes innovative ideas from all sectors including Ecommerce, Technology, Marketing, 
+                      Healthcare, Education, Finance, and many more. Any industry with potential for technological innovation is eligible.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+                    <h4 className="text-blue-300 font-semibold text-sm sm:text-base mb-2 flex items-center">
+                      <span className="text-lg mr-2">👥</span>
+                      Module Founders
+                    </h4>
+                    <p className="text-purple-200 text-xs sm:text-sm">
+                      <strong className="text-blue-200">Muhammad Ali Haider</strong> & <strong className="text-blue-200">Kainaat Afzal</strong>
+                    </p>
+                  </div>
+                  
+                  <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+                    <h4 className="text-green-300 font-semibold text-sm sm:text-base mb-2 flex items-center">
+                      <span className="text-lg mr-2">⚡</span>
+                      Powered by Largify Solutions
+                    </h4>
+                    <p className="text-purple-200 text-xs sm:text-sm">
+                      Professional execution and mentorship provided by Largify Solutions, bringing enterprise-level 
+                      business development expertise to guide your entrepreneurial journey.
                     </p>
                   </div>
                   
@@ -393,7 +414,7 @@ export default function LandingPage() {
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">1</div>
                       <div>
                         <h4 className="text-blue-300 font-semibold text-sm sm:text-base">Phase 1: Product Development</h4>
-                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">15 Dec 2025 - 31 Dec 2025</p>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">20 Dec 2025 - 5 Jan 2026</p>
                       </div>
                     </div>
                     <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
@@ -406,7 +427,7 @@ export default function LandingPage() {
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">2</div>
                       <div>
                         <h4 className="text-green-300 font-semibold text-sm sm:text-base">Phase 2: Selection Round</h4>
-                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">1 Jan 2026 - 4 Jan 2026</p>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">6 Jan 2026 - 9 Jan 2026</p>
                       </div>
                     </div>
                     <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
@@ -419,7 +440,7 @@ export default function LandingPage() {
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">3</div>
                       <div>
                         <h4 className="text-orange-300 font-semibold text-sm sm:text-base">Final Round: Product Enhancement</h4>
-                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">5 Jan 2026 - 11 Jan 2026</p>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">10 Jan 2026 - 16 Jan 2026</p>
                       </div>
                     </div>
                     <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
@@ -433,7 +454,7 @@ export default function LandingPage() {
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">4</div>
                       <div>
                         <h4 className="text-red-300 font-semibold text-sm sm:text-base">Mini Shark Tank Finale</h4>
-                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">11 Jan 2026</p>
+                        <p className="text-yellow-300 text-xs sm:text-sm font-medium">16 Jan 2026</p>
                       </div>
                     </div>
                     <p className="text-purple-300 text-xs sm:text-sm ml-13 sm:ml-16">
