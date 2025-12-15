@@ -235,8 +235,6 @@ export default function RegistrationForm() {
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [teamNameError, setTeamNameError] = useState('')
   const [emailErrors, setEmailErrors] = useState<{[key: string]: string}>({})
-  const [cnicError, setCnicError] = useState<string>('')
-  const [teamCnicErrors, setTeamCnicErrors] = useState<{[key: string]: string}>({})
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const [registrationCodes, setRegistrationCodes] = useState<{ accessCode: string; uniqueId: string } | null>(null)
 
@@ -360,20 +358,6 @@ export default function RegistrationForm() {
       const formatted = formatCNIC(value)
       const finalValue = formatted || value
       setFormData(prev => ({ ...prev, cnic: finalValue }))
-
-      // Check CNIC uniqueness after a short delay
-      if (finalValue.length >= 13) {
-        // Clear previous timeout
-        if (cnicValidationTimeoutRef.current) {
-          clearTimeout(cnicValidationTimeoutRef.current)
-        }
-
-        cnicValidationTimeoutRef.current = setTimeout(() => {
-          checkCnicUniqueness(finalValue)
-        }, 500) // 500ms delay to avoid too many API calls
-      } else {
-        setCnicError('')
-      }
     }
   }, [formatCNIC])
 
@@ -393,9 +377,6 @@ export default function RegistrationForm() {
       setFormData(prev => ({ ...prev, paymentReceipt: file }))
     }
   }, [])
-
-  // Timeout ref for team member CNIC uniqueness validation debounce
-  const teamCnicValidationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Generate random math problem
   const generateMathProblem = useCallback(() => {
@@ -435,17 +416,6 @@ export default function RegistrationForm() {
         const limited = cleaned.slice(0, 13)
         const formatted = formatCNIC(limited)
         updated[index] = { ...updated[index], [field]: formatted }
-        // Debounce uniqueness check similar to main CNIC flow
-        if (teamCnicValidationTimeoutRef.current) {
-          clearTimeout(teamCnicValidationTimeoutRef.current)
-        }
-        if (limited.length === 13) {
-          teamCnicValidationTimeoutRef.current = setTimeout(() => {
-            checkTeamMemberCnicUniqueness(formatted, index)
-          }, 500)
-        } else {
-          setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
-        }
       } else {
         updated[index] = { ...updated[index], [field]: value }
       }
@@ -495,83 +465,9 @@ export default function RegistrationForm() {
         return next
       })
 
-      setTeamCnicErrors(current => {
-        const next: { [key: string]: string } = {}
-        Object.entries(current).forEach(([key, value]) => {
-          if (!key.startsWith('tm-')) {
-            next[key] = value
-            return
-          }
-          const idx = Number(key.split('-')[1])
-          if (Number.isNaN(idx) || idx === index) {
-            return
-          }
-          const newIdx = idx > index ? idx - 1 : idx
-          next[`tm-${newIdx}`] = value
-        })
-        return next
-      })
-
       return updated
     })
   }, [])
-
-  // CNIC validation timeout ref
-  const cnicValidationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const checkCnicUniqueness = async (cnic: string) => {
-    const cleaned = (cnic || '').replace(/\D/g, '')
-    if (!cnic || cleaned.length < 13) return // Don't check incomplete CNICs
-
-    try {
-      const response = await fetch('/api/check-cnic', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-  body: JSON.stringify({ cnic: cleaned }),
-      })
-
-      const data = await response.json()
-
-      if (data.isRegistered) {
-        setCnicError('This CNIC is already registered. Each CNIC can only be used once.')
-      } else {
-        setCnicError('')
-      }
-    } catch (error) {
-      console.error('Error checking CNIC:', error)
-      // Don't show error for network issues, just clear any existing error
-      setCnicError('')
-    }
-  }
-
-  const checkTeamMemberCnicUniqueness = async (cnic: string, index: number) => {
-    if (!cnic) {
-      setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
-      return
-    }
-    const cleaned = (cnic || '').replace(/\D/g, '')
-    if (cleaned.length < 13) {
-      setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
-      return
-    }
-    try {
-      const response = await fetch('/api/check-cnic', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cnic: cleaned })
-      })
-      const data = await response.json()
-      if (data.isRegistered) {
-        setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: 'This CNIC is already registered' }))
-      } else {
-        setTeamCnicErrors(prev => ({ ...prev, [`tm-${index}`]: '' }))
-      }
-    } catch (error) {
-      console.error('Error checking team cnic', error)
-    }
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -651,12 +547,6 @@ export default function RegistrationForm() {
 
     if (hasEmailErrors) {
       alert('Please fix the email validation errors before submitting.')
-      return
-    }
-
-    // Check for CNIC error
-    if (cnicError) {
-      alert('Please fix the CNIC error before submitting.')
       return
     }
 
@@ -806,20 +696,10 @@ export default function RegistrationForm() {
                     value={formData.cnic}
                     onChange={handleCNICChange}
                     maxLength={17}
-                    className={`w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60 ${
-                      cnicError ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
-                    }`}
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                     placeholder="12345-1234567-1"
                   />
                   <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your CNIC</p>
-                  {cnicError && (
-                    <p className="mt-2 text-xs sm:text-sm text-red-400 flex items-center">
-                      <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      {cnicError}
-                    </p>
-                  )}
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm sm:text-base font-semibold text-purple-200 mb-2 sm:mb-3">Phone Number</label>
@@ -1288,18 +1168,9 @@ export default function RegistrationForm() {
                           maxLength={15}
                           onChange={(e) => handleTeamMemberChange(index, 'cnic', e.target.value)}
                           required
-                          onBlur={(e) => checkTeamMemberCnicUniqueness(e.target.value, index)}
                           className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
                           placeholder="xxxxx-xxxxxxx-x"
                         />
-                        {teamCnicErrors[`tm-${index}`] && (
-                          <p className="mt-2 text-xs sm:text-sm text-red-400 flex items-center">
-                            <svg className="w-3 h-3 sm:w-4 sm:h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                            </svg>
-                            {teamCnicErrors[`tm-${index}`]}
-                          </p>
-                        )}
                       </div>
                     </div>
                   </div>

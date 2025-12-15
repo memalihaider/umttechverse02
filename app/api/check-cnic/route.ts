@@ -12,24 +12,10 @@ export async function POST(request: NextRequest) {
     // Clean the CNIC (remove dashes and spaces)
     const cleanCnic = cnic.replace(/[-\s]/g, '')
 
-    // Check if CNIC exists either as main registrant CNIC or in team_members[*].cnic
-    const teamMembersQuery = JSON.stringify([{ cnic: cleanCnic }])
-    const { data, error } = await supabase
-      .from('registrations')
-      .select('cnic')
-      .or(`cnic.eq.${cleanCnic},team_members.cs.${teamMembersQuery}`)
-      .limit(1)
-
-    if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
-      throw error
-    }
-
-  // `data` is an array when using PostgREST. If empty array, it is truthy, so check length instead.
-  const isRegistered = Array.isArray(data) ? data.length > 0 : !!data
-
+    // Allow multiple registrations with the same CNIC - always return false
     return NextResponse.json({
-      isRegistered,
-      message: isRegistered ? 'This CNIC is already registered' : 'CNIC is available'
+      isRegistered: false,
+      message: 'CNIC is available'
     })
   } catch (error) {
     console.error('CNIC check error:', error)

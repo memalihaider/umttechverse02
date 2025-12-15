@@ -132,12 +132,7 @@ export async function POST(request: NextRequest) {
 
       // Handle specific database errors
       if (error.code === '23505') {
-        if (error.message.includes('cnic')) {
-          return NextResponse.json({
-            error: 'CNIC already registered',
-            message: 'This CNIC has already been used for registration. Each CNIC can only be registered once.'
-          }, { status: 400 })
-        } else if (error.message.includes('email')) {
+        if (error.message.includes('email')) {
           return NextResponse.json({
             error: 'Email already registered',
             message: 'This email address has already been used for registration. Each email can only be registered once.'
