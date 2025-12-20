@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "clean-install": "rm -rf node_modules package-lock.json && npm install",
     "security:audit": "npm audit --audit-level=moderate",
     "security:audit:fix": "npm audit fix",
     "security:check": "npm run security:audit && npm run security:dependencies",
@@ -28,7 +27,9 @@
     "@types/nodemailer": "^7.0.3",
     "@vercel/speed-insights": "^1.2.0",
     "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
+    "framer-motion": "^12.23.26",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.553.0",
     "next": "^16.0.10",
@@ -38,6 +39,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "resend": "^6.4.2",
+    "tailwind-merge": "^3.4.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {

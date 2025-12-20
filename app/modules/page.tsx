@@ -14,91 +14,95 @@ export default function ModulesPage() {
     return modules.filter((m) => m.name.toLowerCase().includes(q))
   }, [query])
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 overflow-x-hidden scroll-smooth">
+    <div className="min-h-screen bg-black overflow-x-hidden scroll-smooth selection:bg-purple-500/30">
       {/* Animated background particles */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-20"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400 rounded-full animate-ping opacity-30 delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-cyan-400 rounded-full animate-pulse opacity-10"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-pink-400 rounded-full animate-ping opacity-25 delay-500"></div>
-
-        {/* Enhanced floating geometric shapes */}
-        <div className="absolute top-1/6 left-1/6 w-4 h-4 border-2 border-blue-400/30 rotate-45 animate-bounce opacity-20 delay-300"></div>
-        <div className="absolute top-2/3 right-1/6 w-3 h-3 bg-purple-400/20 rounded-full animate-pulse delay-700"></div>
-        <div className="absolute bottom-1/3 left-1/2 w-2 h-6 bg-cyan-400/15 rounded-full animate-ping delay-1200"></div>
-  <div className="absolute top-1/3 right-1/3 w-5 h-5 border border-pink-400/25 rotate-12 animate-spin opacity-15 delay-500 spin-long"></div>
-        <div className="absolute bottom-1/6 right-1/4 w-3 h-3 bg-green-400/20 rounded-lg animate-bounce delay-900"></div>
-
-        {/* Gradient wave effects */}
-        <div className="absolute top-0 left-0 w-full h-32 bg-linear-to-b from-blue-500/5 via-transparent to-transparent animate-pulse delay-200"></div>
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-linear-to-t from-purple-500/5 via-transparent to-transparent animate-pulse delay-1000"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(76,29,149,0.1),rgba(0,0,0,0))]" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] animate-pulse delay-1000" />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       </div>
 
       {/* Navigation */}
       <Navbar />
 
       {/* Modules Grid Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen">
+      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 min-h-screen relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
-              Competition Modules
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+              <span className="text-sm font-medium text-purple-300 tracking-wider uppercase">Explore Competitions</span>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-6 tracking-tight">
+              Competition <br />
+              <span className="bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                Modules
+              </span>
             </h1>
-            <p className="text-lg sm:text-xl text-purple-200 max-w-3xl mx-auto px-4">
+            
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Choose from our comprehensive range of technology competitions. Each module offers unique challenges and opportunities to showcase your skills.
             </p>
-            {/* <div className="mt-4">
-              <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Event starts in" variant="compact" />
-            </div> */}
           </div>
 
-          <div className="mt-10 max-w-3xl mx-auto px-4">
-            <div className="w-full bg-purple-900/20 rounded-full p-2 sm:p-3 flex items-center gap-3 border border-purple-500/20 shadow-sm mx-auto">
-              <svg className="w-5 h-5 text-purple-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/>
-              </svg>
-              <label htmlFor="module-search" className="sr-only">Search modules</label>
-              <input
-                id="module-search"
-                aria-label="Search modules"
-                placeholder="Search modules (AI, Cyber, FIFA, Robot, etc.)"
-                className="bg-transparent outline-none text-sm sm:text-base text-purple-200 placeholder-purple-400 grow pl-1 pr-2"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              <button
-                onClick={() => setQuery('')}
-                className="ml-2 p-1 rounded-md text-purple-300 hover:text-white hover:bg-purple-700/40 transition-colors"
-                aria-label="Clear search"
-                title="Clear search"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+          <div className="mt-12 max-w-2xl mx-auto mb-16">
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-linear-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-500" />
+              <div className="relative bg-black/50 backdrop-blur-xl rounded-2xl border border-white/10 p-2 flex items-center gap-4">
+                <div className="pl-4 text-gray-400">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"/>
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search modules (AI, Cyber, FIFA, Robot, etc.)"
+                  className="w-full bg-transparent border-none outline-none text-white placeholder-gray-500 text-lg py-2"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                {query && (
+                  <button
+                    onClick={() => setQuery('')}
+                    className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </div>
-            {/* Result count and organic helpers */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-purple-300" aria-live="polite">
-                {filtered.length} of {modules.length} modules shown
+            <div className="mt-4 text-center">
+              <p className="text-sm text-gray-500">
+                Showing {filtered.length} of {modules.length} modules
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.length === 0 ? (
-              <div className="col-span-full">
-                <div className="p-8 text-center">
-                  <p className="text-lg text-purple-300 mb-2">No modules match your search.</p>
-                  <p className="text-sm text-purple-400">Try different keywords (e.g., "AI", "Cyber", "Robot") or clear the search to show all modules.</p>
+              <div className="col-span-full py-20 text-center">
+                <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span className="text-4xl">🔍</span>
                 </div>
+                <h3 className="text-2xl font-bold text-white mb-2">No modules found</h3>
+                <p className="text-gray-400">Try adjusting your search terms</p>
               </div>
             ) : (
               filtered.map((module, index) => (
               <div
                 key={index}
-                className="bg-purple-900/30 rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-400/50 transition-all duration-300 transform hover:scale-105 block group shadow-lg hover:shadow-purple-500/10"
+                className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2"
               >
-                <div className="h-32 sm:h-36 md:h-40 bg-linear-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
+                {/* Hover Glow */}
+                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/10 group-hover:via-purple-600/5 group-hover:to-blue-600/10 transition-all duration-500" />
+
+                <div className="h-32 sm:h-36 md:h-40 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
                   <img
                     src={
                       module.name === 'AI Hackathon' ? 'https://images.pexels.com/photos/9783353/pexels-photo-9783353.jpeg' :

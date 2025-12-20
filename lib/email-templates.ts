@@ -116,6 +116,15 @@ export function generatePendingRegistrationEmail(data: RegistrationData): string
           </ul>
         </div>
 
+        <div class="details">
+          <h3>Next Steps</h3>
+          <ol>
+            <li>Complete payment using the provided bank details</li>
+            <li>Wait for approval confirmation (typically within 24-48 hours)</li>
+            <li>Check your email for approval notification</li>
+          </ol>
+        </div>
+
         <p>For any questions, please contact us at <a href="mailto:techverse@umt.edu.pk">techverse@umt.edu.pk</a></p>
 
         <p>Best regards,<br>
@@ -245,6 +254,15 @@ export function generateApprovedRegistrationEmail(data: RegistrationData): strin
             <li><strong>Event Dates:</strong> January 5-11, 2026</li>
             <li><strong>Venue:</strong> University of Management and Technology (UMT), Lahore</li>
           </ul>
+        </div>
+
+        <div class="details">
+          <h3>Next Steps</h3>
+          <ol>
+            <li>Prepare for the event according to your module requirements</li>
+            <li>Bring valid CNIC and registration confirmation</li>
+            <li>Arrive at the venue on time</li>
+          </ol>
         </div>
 
         <p>For any questions, please contact us at <a href="mailto:techverse@umt.edu.pk">techverse@umt.edu.pk</a></p>

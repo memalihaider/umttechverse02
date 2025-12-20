@@ -58,7 +58,7 @@ export default function Countdown({ targetDate = '2026-01-05T09:00:00+05:00', la
           <div className={`text-sm sm:text-base font-semibold text-cyan-300 ${variant === 'compact' ? 'px-2' : ''}`}>Event started</div>
         ) : (
           blocks && blocks.map((b) => (
-            <div key={b.label} className={`flex flex-col items-center bg-linear-to-br from-purple-800/30 to-purple-900/40 rounded-md px-3 py-2 ${variant === 'compact' ? 'text-xs' : 'text-base sm:text-lg'} shadow-md`}> 
+            <div key={b.label} className={`flex flex-col items-center bg-gradient-to-br from-purple-800/30 to-purple-900/40 rounded-md px-3 py-2 ${variant === 'compact' ? 'text-xs' : 'text-base sm:text-lg'} shadow-md`}> 
               <div className={`font-semibold text-white tracking-wider ${variant === 'large' ? 'text-xl sm:text-2xl' : 'text-base'}`}>
                 {String(b.value).padStart(2, '0')}
               </div>

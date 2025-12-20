@@ -113,7 +113,7 @@ export default function BusinessIdeaSubmission() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto mb-4"></div>
           <div className="text-purple-300 text-xl">Loading...</div>
@@ -123,7 +123,7 @@ export default function BusinessIdeaSubmission() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900">
       {/* Header */}
       <header className="bg-black/80 backdrop-blur-sm border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -19,7 +19,7 @@ export default function TeamPage() {
   const [selectedYear, setSelectedYear] = useState('2026')
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900">
       {/* Navigation */}
       <Navbar />
 

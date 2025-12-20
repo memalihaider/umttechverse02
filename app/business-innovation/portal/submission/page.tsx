@@ -109,13 +109,13 @@ export default function FinalSubmissionPage() {
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900 flex items-center justify-center">
       <div className="text-center text-purple-200">Loading...</div>
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-purple-900 to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-900 to-blue-900">
       <header className="bg-black/80 backdrop-blur-sm border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div>
