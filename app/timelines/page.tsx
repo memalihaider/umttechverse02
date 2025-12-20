@@ -37,7 +37,7 @@ export default function TimelinesPage() {
             </h1>
 
             <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              UMT-TechVerse 2026 Event Timeline. Date: _______________<br />
+              UMT-TechVerse 2026 Event Timeline.<br />
               Timing: 8:30 AM – 5:30 PM (Each Day)<br />
               Venue: University of Management and Technology (UMT), Lahore<br />
               Organized by: UMT Inter AI Club, UMT ACM, UMT Gaming Lounge, UMT Cyber Security Club, UMT IEEE Student Branch.
