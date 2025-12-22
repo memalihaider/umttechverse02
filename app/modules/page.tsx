@@ -100,7 +100,7 @@ export default function ModulesPage() {
                 className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Hover Glow */}
-                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/10 group-hover:via-purple-600/5 group-hover:to-blue-600/10 transition-all duration-500" />
+                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/10 group-hover:via-purple-600/5 group-hover:to-blue-600/10 transition-all duration-500 pointer-events-none" />
 
                 <div className="h-32 sm:h-36 md:h-40 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
                   <img
@@ -141,7 +141,7 @@ export default function ModulesPage() {
                       rel={module.guidebook ? 'noopener noreferrer' : undefined}
                       className={`inline-block px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${module.guidebook ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-blue-400/30 text-blue-200 cursor-not-allowed opacity-60'}`}
                     >
-                      View GuideBook
+                      Download GuideBook
                     </a>
                   </div>
                 </div>
