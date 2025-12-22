@@ -370,7 +370,7 @@ export default function LandingPage() {
             >
               <div className="flex items-center gap-3">
                 <span className="text-2xl">🗓️</span>
-                <span className="text-yellow-300 font-semibold">Starts: 20th Dec</span>
+                <span className="text-yellow-300 font-semibold">Starts: 15th Dec</span>
               </div>
               <div className="w-px h-4 bg-white/10 hidden sm:block" />
               <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ export default function LandingPage() {
               <div className="w-px h-4 bg-white/10 hidden sm:block" />
               <div className="flex items-center gap-3">
                 <span className="text-2xl">📝</span>
-                <span className="text-yellow-300 font-semibold">Phase 01: 31st Dec</span>
+                <span className="text-yellow-300 font-semibold">Phase 01 Completed: 31st Dec</span>
               </div>
             </motion.div>
           </div>
@@ -452,10 +452,10 @@ export default function LandingPage() {
                 </h3>
                 <div className="space-y-8 relative before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-px before:bg-white/10">
                   {[
-                    { step: 1, title: "Product Development", date: "20 Dec - 5 Jan", desc: "Build your MVP with core features.", color: "bg-blue-500" },
-                    { step: 2, title: "Selection Round", date: "6 Jan - 9 Jan", desc: "Top 30 products selected for finals.", color: "bg-green-500" },
-                    { step: 3, title: "Product Enhancement", date: "10 Jan - 16 Jan", desc: "Convert MVP to complete product.", color: "bg-orange-500" },
-                    { step: 4, title: "Mini Shark Tank Finale", date: "16 Jan", desc: "Pitch to investors and industry leaders.", color: "bg-red-500" },
+                    { step: 1, title: "Product Development", date: "15th Dec - 31st Jan", desc: "Build your MVP with core features.", color: "bg-blue-500" },
+                    { step: 2, title: "Selection Round", date: "1st Jan - 4th Jan", desc: "Top 30 products selected for finals.", color: "bg-green-500" },
+                    { step: 3, title: "Product Enhancement", date: "5th Jan - 10th Jan", desc: "Convert MVP to complete product.", color: "bg-orange-500" },
+                    { step: 4, title: "Mini Shark Tank Finale", date: "11th Jan", desc: "Pitch to investors and industry leaders.", color: "bg-red-500" },
                   ].map((item, idx) => (
                     <div key={idx} className="relative pl-12">
                       <div className={cn("absolute left-0 top-1 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold z-10", item.color)}>

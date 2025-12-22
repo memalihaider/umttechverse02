@@ -140,14 +140,6 @@ const modules = [
     runnerUpPrize: 10000
   },
   {
-    name: 'Sumo War Robot',
-    fee: 2000,
-    contactPerson: 'Junaid - +92 324 4768248',
-    teamSize: '1-3 members',
-    winnerPrize: 15000,
-    runnerUpPrize: 10000
-  },
-  {
     name: 'Tekken 8',
     fee: 1000,
     contactPerson: 'Zain - +92 331 5758888',
