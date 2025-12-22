@@ -170,14 +170,6 @@ const modules = [
     teamSize: '1-3 members',
     winnerPrize: 30000,
     runnerUpPrize: 15000
-  },
-  {
-    name: 'Operation CyberQuest',
-    fee: 2500,
-    contactPerson: 'Ali Iftikhar - +92 309 5420081',
-    teamSize: '1 member',
-    winnerPrize: 25000,
-    runnerUpPrize: 15000
   }
 ]
 
