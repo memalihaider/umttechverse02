@@ -155,14 +155,14 @@ const modules = [
     winnerPrize: 20000,
     runnerUpPrize: 10000
   },
-  // {
-  //   name: 'Valorant',
-  //   fee: 2500,
-  //   contactPerson: 'Muhammad Moeed - +92 324 4932912',
-  //   teamSize: '5 members + 1 sub',
-  //   winnerPrize: 25000,
-  //   runnerUpPrize: 10000
-  // },
+  {
+    name: 'Valorant',
+    fee: 2500,
+    contactPerson: 'Muhammad Moeed - +92 324 4932912',
+    teamSize: '5 members + 1 sub',
+    winnerPrize: 25000,
+    runnerUpPrize: 10000
+  },
   {
     name: 'Web Hackathon',
     fee: 2500,
@@ -226,6 +226,40 @@ export default function RegistrationForm() {
   const [mathProblem, setMathProblem] = useState<{ question: string; answer: number }>({ question: '', answer: 0 })
   const [mathAnswer, setMathAnswer] = useState('')
   const [mathError, setMathError] = useState('')
+
+  // Module registration counts state
+  const [moduleRegistrationCounts, setModuleRegistrationCounts] = useState<{ [key: string]: number }>({})
+  const [loadingCounts, setLoadingCounts] = useState(false)
+
+  // Fetch module registration counts
+  useEffect(() => {
+    const fetchRegistrationCounts = async () => {
+      setLoadingCounts(true)
+      try {
+        // Fetch counts for multiple modules with limits
+        const modulesToFetch = ['Valorant', 'PUBG Mobile']
+        for (const moduleName of modulesToFetch) {
+          const response = await fetch(`/api/module-registration-count?module=${moduleName}`)
+          if (response.ok) {
+            const data = await response.json()
+            setModuleRegistrationCounts(prev => ({
+              ...prev,
+              [data.module]: data.count
+            }))
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching registration counts:', error)
+      } finally {
+        setLoadingCounts(false)
+      }
+    }
+
+    fetchRegistrationCounts()
+    // Refresh counts every 30 seconds to keep it updated
+    const interval = setInterval(fetchRegistrationCounts, 30000)
+    return () => clearInterval(interval)
+  }, [])
 
   // Memoized calculations for performance
   const selectedModule = useMemo(() => {
@@ -456,6 +490,18 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Check if Valorant registration has reached limit
+    if (formData.module === 'Valorant' && (moduleRegistrationCounts['Valorant'] || 0) >= 15) {
+      alert('Valorant registration is currently full (15/15). Please choose another module.')
+      return
+    }
+
+    // Check if PUBG Mobile registration has reached limit
+    if (formData.module === 'PUBG Mobile' && (moduleRegistrationCounts['PUBG Mobile'] || 0) >= 44) {
+      alert('PUBG Mobile registration is currently full (44/44). Please choose another module.')
+      return
+    }
+
     // Pre-submit: ensure all required leader fields are present (ambassadorCode is explicitly optional)
     const missingLeaderFields: string[] = []
     if (!formData.name || formData.name.trim() === '') missingLeaderFields.push('Full Name')
@@ -609,13 +655,13 @@ export default function RegistrationForm() {
   }
 
   return (
-    <div className="w-full p-4 sm:p-6 lg:p-8">
+    <div className="w-full p-2 sm:p-4 md:p-6 lg:p-8">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <h3 className="text-lg sm:text-xl font-bold text-purple-400 mb-3 uppercase tracking-wider">
+        <div className="text-center mb-8 sm:mb-10">
+          <h3 className="text-sm sm:text-lg md:text-xl font-bold text-purple-400 mb-2 sm:mb-3 uppercase tracking-wider">
             Powered By Largify Solutions
           </h3>
-          <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
             Fill out the form below to register for your chosen module and join Techverse 2026. We recommend using a desktop for best experience.
           </p>
         </div>
@@ -753,12 +799,58 @@ export default function RegistrationForm() {
                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none appearance-none"
               >
                 <option value="" className="bg-black text-gray-400">Select a module to participate in</option>
-                {modules.map((module) => (
-                  <option key={module.name} value={module.name} className="bg-black text-white">
-                    {module.name} - PKR {module.fee.toLocaleString()} ({module.teamSize})
-                  </option>
-                ))}
+                {modules.map((module) => {
+                  // Check if module has a registration limit
+                  const moduleLimits: { [key: string]: number } = {
+                    'Valorant': 15,
+                    'PUBG Mobile': 44
+                  }
+                  
+                  const limit = moduleLimits[module.name]
+                  const currentCount = moduleRegistrationCounts[module.name] || 0
+                  const isLimitReached = limit && currentCount >= limit
+                  
+                  // Hide module if limit is reached
+                  if (isLimitReached) {
+                    return null
+                  }
+                  
+                  // Show count if limit is defined
+                  const displayName = limit 
+                    ? `${module.name} - PKR ${module.fee.toLocaleString()} (${currentCount}/${limit}) (${module.teamSize})`
+                    : `${module.name} - PKR ${module.fee.toLocaleString()} (${module.teamSize})`
+                  
+                  return (
+                    <option key={module.name} value={module.name} className="bg-black text-white">
+                      {displayName}
+                    </option>
+                  )
+                })}
               </select>
+              {(moduleRegistrationCounts['Valorant'] >= 15 || moduleRegistrationCounts['PUBG Mobile'] >= 44) && (
+                <div className="mt-3 space-y-2">
+                  {moduleRegistrationCounts['Valorant'] >= 15 && (
+                    <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                      <p className="text-sm text-red-400 flex items-center">
+                        <svg className="w-4 h-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 2.526a6 6 0 008.367 8.364z" clipRule="evenodd" />
+                        </svg>
+                        <span><strong>Valorant</strong> registration is currently full (15/15). Please choose another module.</span>
+                      </p>
+                    </div>
+                  )}
+                  {moduleRegistrationCounts['PUBG Mobile'] >= 44 && (
+                    <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                      <p className="text-sm text-red-400 flex items-center">
+                        <svg className="w-4 h-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 2.526a6 6 0 008.367 8.364z" clipRule="evenodd" />
+                        </svg>
+                        <span><strong>PUBG Mobile</strong> registration is currently full (44/44). Please choose another module.</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
               {/* Team Name */}
@@ -790,64 +882,64 @@ export default function RegistrationForm() {
                   return selectedModule ? (
                     <div className="space-y-6">
                       {/* Module Info Cards */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4h10M7 4v10a2 2 0 002 2h6a2 2 0 002-2V4" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Module</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Module</p>
                           </div>
-                          <p className="text-white text-lg font-medium">{selectedModule.name}</p>
+                          <p className="text-white text-sm sm:text-lg font-medium line-clamp-2">{selectedModule.name}</p>
                         </div>
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Team Size</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Team Size</p>
                           </div>
-                          <p className="text-white text-lg font-medium">{selectedModule.teamSize}</p>
+                          <p className="text-white text-sm sm:text-lg font-medium">{selectedModule.teamSize}</p>
                         </div>
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Contact</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Contact</p>
                           </div>
-                          <p className="text-white text-lg font-medium break-all">{selectedModule.contactPerson}</p>
+                          <p className="text-white text-xs sm:text-base font-medium break-all">{selectedModule.contactPerson}</p>
                         </div>
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-white mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-white mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Entry Fee</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Entry Fee</p>
                           </div>
-                          <p className="text-white text-2xl font-bold">PKR {selectedModule.fee.toLocaleString()}</p>
+                          <p className="text-white text-lg sm:text-2xl font-bold">PKR {selectedModule.fee.toLocaleString()}</p>
                         </div>
                       </div>
 
                       {/* Prize Information */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-yellow-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Winner Prize</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Winner Prize</p>
                           </div>
-                          <p className="text-yellow-400 text-2xl font-bold">PKR {selectedModule.winnerPrize.toLocaleString()}</p>
+                          <p className="text-yellow-400 text-base sm:text-2xl font-bold">PKR {selectedModule.winnerPrize.toLocaleString()}</p>
                         </div>
-                        <div className="bg-black/40 rounded-xl p-4 border border-white/10">
+                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
                           <div className="flex items-center mb-2">
-                            <svg className="w-5 h-5 text-gray-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                             </svg>
-                            <p className="text-gray-400 font-medium text-sm">Runner-up Prize</p>
+                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Runner-up Prize</p>
                           </div>
-                          <p className="text-white text-2xl font-bold">PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
+                          <p className="text-white text-base sm:text-2xl font-bold">PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
                         </div>
                       </div>
                     </div>
@@ -1307,19 +1399,19 @@ export default function RegistrationForm() {
               <h2 className="text-2xl font-bold text-white">Security Verification</h2>
             </div>
             <div className="space-y-6">
-              <div className="bg-black/40 rounded-xl p-6 border border-white/10">
-                <p className="text-lg text-gray-300 mb-4">
+              <div className="bg-black/40 rounded-xl p-4 sm:p-6 border border-white/10">
+                <p className="text-base sm:text-lg text-gray-300 mb-4">
                   Please solve this simple math problem to verify you are human:
                 </p>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  <div className="flex items-center">
-                    <span className="text-3xl font-bold text-white mr-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <span className="text-2xl sm:text-3xl font-bold text-white break-all">
                       {mathProblem.question}
                     </span>
                     <button
                       type="button"
                       onClick={generateMathProblem}
-                      className="inline-flex items-center px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                      className="inline-flex items-center px-2 sm:px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 transition-all duration-300 shrink-0"
                       title="Generate new problem"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1327,7 +1419,7 @@ export default function RegistrationForm() {
                       </svg>
                     </button>
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <input
                       type="number"
                       value={mathAnswer}
@@ -1335,26 +1427,26 @@ export default function RegistrationForm() {
                         setMathAnswer(e.target.value)
                         if (mathError) setMathError('')
                       }}
-                      className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none ${
+                      className={`w-full bg-black/40 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none text-sm sm:text-base ${
                         mathError ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                       }`}
-                      placeholder="Enter your answer"
+                      placeholder="Answer"
                       required
                     />
                   </div>
                 </div>
                 {mathError && (
-                  <p className="mt-3 text-sm text-red-400 flex items-center">
-                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                  <p className="mt-3 text-xs sm:text-sm text-red-400 flex items-center">
+                    <svg className="w-4 h-4 mr-1 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg>
                     {mathError}
                   </p>
                 )}
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <p className="text-sm text-gray-400 flex items-start">
-                  <svg className="w-5 h-5 text-white mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-3 sm:p-4">
+                <p className="text-xs sm:text-sm text-gray-400 flex items-start">
+                  <svg className="w-4 sm:w-5 h-4 sm:h-5 text-white mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                   </svg>
                   <span><strong className="text-white">Security Check:</strong> This helps prevent automated submissions and ensures only real users can register for Techverse 2026.</span>
