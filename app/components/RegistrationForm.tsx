@@ -233,32 +233,47 @@ export default function RegistrationForm() {
 
   // Fetch module registration counts
   useEffect(() => {
+    let isMounted = true
     const fetchRegistrationCounts = async () => {
-      setLoadingCounts(true)
       try {
+        setLoadingCounts(true)
         // Fetch counts for multiple modules with limits
         const modulesToFetch = ['Valorant', 'PUBG Mobile']
+        const counts: { [key: string]: number } = {}
+        
         for (const moduleName of modulesToFetch) {
-          const response = await fetch(`/api/module-registration-count?module=${moduleName}`)
-          if (response.ok) {
-            const data = await response.json()
-            setModuleRegistrationCounts(prev => ({
-              ...prev,
-              [data.module]: data.count
-            }))
+          try {
+            const response = await fetch(`/api/module-registration-count?module=${moduleName}`)
+            if (response.ok) {
+              const data = await response.json()
+              counts[data.module] = data.count
+            }
+          } catch (error) {
+            console.error(`Error fetching count for ${moduleName}:`, error)
           }
+        }
+        
+        if (isMounted) {
+          setModuleRegistrationCounts(counts)
         }
       } catch (error) {
         console.error('Error fetching registration counts:', error)
       } finally {
-        setLoadingCounts(false)
+        if (isMounted) {
+          setLoadingCounts(false)
+        }
       }
     }
 
+    // Initial fetch
     fetchRegistrationCounts()
-    // Refresh counts every 30 seconds to keep it updated
-    const interval = setInterval(fetchRegistrationCounts, 30000)
-    return () => clearInterval(interval)
+    // Refresh counts every 60 seconds to reduce network load
+    const interval = setInterval(fetchRegistrationCounts, 60000)
+    
+    return () => {
+      isMounted = false
+      clearInterval(interval)
+    }
   }, [])
 
   // Memoized calculations for performance
@@ -741,7 +756,7 @@ export default function RegistrationForm() {
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     maxLength={15}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
                     placeholder="+92 300 1234567"
                   />
                   <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your correct phone number, we can verify by calling you.</p>
@@ -757,7 +772,7 @@ export default function RegistrationForm() {
                     required
                     value={formData.university}
                     onChange={handleInputChange}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
                     placeholder="University of Management and Technology"
                   />
                 </div>
@@ -770,7 +785,7 @@ export default function RegistrationForm() {
                     required
                     value={formData.rollNo}
                     onChange={handleInputChange}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all duration-300 text-sm sm:text-base lg:text-lg shadow-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
                     placeholder="Your roll number"
                   />
                 </div>
@@ -1163,7 +1178,7 @@ export default function RegistrationForm() {
                       <button
                         type="button"
                         onClick={() => removeTeamMember(index)}
-                        className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 hover:bg-red-800/30 transition-all duration-300 self-start sm:self-auto"
+                        className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 hover:bg-red-800/20 transition-colors duration-200 self-start sm:self-auto"
                       >
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -1256,7 +1271,7 @@ export default function RegistrationForm() {
                 type="button"
                 onClick={addTeamMember}
                 disabled={!(Number.isFinite(slotsRemaining) ? slotsRemaining > 0 : true)}
-                className={`inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                className={`inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-colors duration-200 shadow-lg ${
                   Number.isFinite(slotsRemaining) && slotsRemaining <= 0 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -1307,7 +1322,7 @@ export default function RegistrationForm() {
               <button
                 type="button"
                 onClick={() => setShowBankDetails(!showBankDetails)}
-                className="mt-4 inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="mt-4 inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-colors duration-200 shadow-lg"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {showBankDetails ? (
@@ -1411,7 +1426,7 @@ export default function RegistrationForm() {
                     <button
                       type="button"
                       onClick={generateMathProblem}
-                      className="inline-flex items-center px-2 sm:px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 transition-all duration-300 shrink-0"
+                      className="inline-flex items-center px-2 sm:px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 transition-colors duration-200 shrink-0"
                       title="Generate new problem"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1459,7 +1474,7 @@ export default function RegistrationForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center items-center py-5 px-8 border border-white/10 rounded-2xl shadow-2xl text-xl font-bold text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-3xl"
+              className="w-full flex justify-center items-center py-5 px-8 border border-white/10 rounded-2xl shadow-lg text-xl font-bold text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
             >
               {loading ? (
                 <div className="flex items-center">
