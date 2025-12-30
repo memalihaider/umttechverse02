@@ -1359,9 +1359,8 @@ export default function RegistrationForm() {
                   </p>
                 </div>
               </div>
-            </div>
-            <div>
-              <label htmlFor="paymentReceipt" className="block text-sm font-medium text-gray-300 mb-4">
+              <div>
+                <label htmlFor="paymentReceipt" className="block text-sm font-medium text-gray-300 mb-4">
                 Upload Payment Receipt
               </label>
               <div className="relative">
