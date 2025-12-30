@@ -1322,60 +1322,62 @@ export default function RegistrationForm() {
               <button
                 type="button"
                 onClick={() => setShowBankDetails(!showBankDetails)}
-                className="mt-4 inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-colors duration-200 shadow-lg"
+                className="mt-4 inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-all duration-200 shadow-lg will-change-colors"
               >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  {showBankDetails ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  )}
+                <svg className="w-5 h-5 mr-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{transform: showBankDetails ? 'rotate(180deg)' : 'rotate(0deg)'}}>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
                 {showBankDetails ? 'Hide Bank Details' : 'View Bank Details'}
               </button>
-              {showBankDetails && (
+              <div 
+                className="overflow-hidden transition-all duration-300 ease-out will-change-[max-height]"
+                style={{
+                  maxHeight: showBankDetails ? '500px' : '0px',
+                  opacity: showBankDetails ? 1 : 0,
+                }}
+              >
                 <div className="mt-6 p-6 bg-black/40 border border-white/10 rounded-xl shadow-lg">
                   <h3 className="text-xl font-bold mb-4 text-white flex items-center">
-                    <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     Bank Details
                   </h3>
-                  <div className="grid grid-cols-1 gap-4 text-sm sm:text-base text-gray-300">
+                  <div className="space-y-4 text-sm sm:text-base text-gray-300">
                     <div className="space-y-3">
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">Account Title:</span>
-                        <span className="text-gray-300 wrap-break-word">University of Management and Technology (UMT)</span>
-                      </p>
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">Bank Name:</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">Account Title:</span>
+                        <span className="text-gray-300 word-break">University of Management and Technology (UMT)</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">Bank Name:</span>
                         <span className="text-gray-300">Habib Bank Limited</span>
-                      </p>
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">Account Number:</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">Account Number:</span>
                         <span className="text-gray-300 font-mono">53737000007252</span>
-                      </p>
+                      </div>
                     </div>
                     <div className="space-y-3">
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">IBAN:</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">IBAN:</span>
                         <span className="text-gray-300 font-mono break-all">PK10 HABB 0053737000007252</span>
-                      </p>
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">Branch Code:</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">Branch Code:</span>
                         <span className="text-gray-300 font-mono">5373</span>
-                      </p>
-                      <p className="flex flex-col sm:flex-row sm:justify-between">
-                        <span className="font-semibold text-white mb-1 sm:mb-0">SWIFT Code:</span>
+                      </div>
+                      <div className="flex flex-col sm:flex-row sm:justify-between">
+                        <span className="font-semibold text-white mb-1 sm:mb-0 inline-block">SWIFT Code:</span>
                         <span className="text-gray-300 font-mono">HABBPKKA</span>
-                      </p>
+                      </div>
                     </div>
                   </div>
                   <p className="mt-4 text-sm text-gray-400 bg-white/5 p-3 rounded-lg border border-white/10">
                     <strong className="text-white">Branch:</strong> UMT Branch, Lahore
                   </p>
                 </div>
-              )}
+              </div>
             </div>
             <div>
               <label htmlFor="paymentReceipt" className="block text-sm font-medium text-gray-300 mb-4">
