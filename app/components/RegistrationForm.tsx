@@ -1314,29 +1314,10 @@ export default function RegistrationForm() {
                     ) : (
                       'Please transfer the exact amount for your selected module. Hostel accommodation fees (if selected) will be collected separately at the venue.'
                     )}
-                    <br />
-                    Click &quot;View Bank Details&quot; to see the account information.
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowBankDetails(!showBankDetails)}
-                className="mt-4 inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-all duration-200 shadow-lg will-change-colors"
-              >
-                <svg className="w-5 h-5 mr-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{transform: showBankDetails ? 'rotate(180deg)' : 'rotate(0deg)'}}>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-                {showBankDetails ? 'Hide Bank Details' : 'View Bank Details'}
-              </button>
-              <div 
-                className="overflow-hidden transition-all duration-300 ease-out will-change-[max-height]"
-                style={{
-                  maxHeight: showBankDetails ? '500px' : '0px',
-                  opacity: showBankDetails ? 1 : 0,
-                }}
-              >
-                <div className="mt-6 p-6 bg-black/40 border border-white/10 rounded-xl shadow-lg">
+              <div className="mt-6 p-6 bg-black/40 border border-white/10 rounded-xl shadow-lg">
                   <h3 className="text-xl font-bold mb-4 text-white flex items-center">
                     <svg className="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
