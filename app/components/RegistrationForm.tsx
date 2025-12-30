@@ -155,14 +155,14 @@ const modules = [
     winnerPrize: 20000,
     runnerUpPrize: 10000
   },
-  {
-    name: 'Valorant',
-    fee: 2500,
-    contactPerson: 'Muhammad Moeed - +92 324 4932912',
-    teamSize: '5 members + 1 sub',
-    winnerPrize: 25000,
-    runnerUpPrize: 10000
-  },
+  // {
+  //   name: 'Valorant',
+  //   fee: 2500,
+  //   contactPerson: 'Muhammad Moeed - +92 324 4932912',
+  //   teamSize: '5 members + 1 sub',
+  //   winnerPrize: 25000,
+  //   runnerUpPrize: 10000
+  // },
   {
     name: 'Web Hackathon',
     fee: 2500,
