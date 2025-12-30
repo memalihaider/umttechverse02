@@ -469,7 +469,7 @@ export default function RegistrationForm() {
 
     setTeamLimitError('')
     setTeamMembers(prev => [...prev, { name: '', email: '', university: '', rollNo: '', cnic: '' }])
-  }, [selectedModule, teamMembers, maxTeamSize])
+  }, [selectedModule, maxTeamSize])
 
   const removeTeamMember = useCallback((index: number) => {
     setTeamMembers(prev => {
@@ -892,10 +892,8 @@ export default function RegistrationForm() {
                   </svg>
                   Module Details
                 </h3>
-                {(() => {
-                  const selectedModule = modules.find(m => m.name === formData.module)
-                  return selectedModule ? (
-                    <div className="space-y-6">
+                {selectedModule ? (
+                  <div className="space-y-6">
                       {/* Module Info Cards */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
@@ -958,9 +956,8 @@ export default function RegistrationForm() {
                         </div>
                       </div>
                     </div>
-                  ) : null
-                })()}
-              </div>
+                  ) : null}
+                </div>
             )}
           </div>
 
@@ -1204,14 +1201,7 @@ export default function RegistrationForm() {
                       <input
                         type="email"
                         value={member.email}
-                        onChange={(e) => {
-                          handleTeamMemberChange(index, 'email', e.target.value)
-                          if (e.target.value) {
-                            validateEmail(e.target.value, `teamMember-${index}`)
-                          } else {
-                            setEmailErrors(prev => ({ ...prev, [`teamMember-${index}`]: '' }))
-                          }
-                        }}
+                        onChange={(e) => handleTeamMemberChange(index, 'email', e.target.value)}
                         required
                         className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none ${
                           emailErrors[`teamMember-${index}`] ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
