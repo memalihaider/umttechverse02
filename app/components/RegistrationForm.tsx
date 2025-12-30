@@ -324,6 +324,215 @@ export default function RegistrationForm() {
     return moduleFee + hostelFee
   }, [moduleFee, hostelFee])
 
+  // Memoize module details to prevent expensive re-renders on mobile
+  const moduleDetailsJSX = useMemo(() => {
+    if (!selectedModule) return null
+
+    return (
+      <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+        <h3 className="text-xl font-bold mb-6 text-white flex items-center">
+          <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Module Details
+        </h3>
+        <div className="space-y-6">
+          {/* Module Info Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4h10M7 4v10a2 2 0 002 2h6a2 2 0 002-2V4" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Module</p>
+              </div>
+              <p className="text-white text-sm sm:text-lg font-medium line-clamp-2">{selectedModule.name}</p>
+            </div>
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Team Size</p>
+              </div>
+              <p className="text-white text-sm sm:text-lg font-medium">{selectedModule.teamSize}</p>
+            </div>
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Contact</p>
+              </div>
+              <p className="text-white text-xs sm:text-base font-medium break-all">{selectedModule.contactPerson}</p>
+            </div>
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-white mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Entry Fee</p>
+              </div>
+              <p className="text-white text-lg sm:text-2xl font-bold">PKR {selectedModule.fee.toLocaleString()}</p>
+            </div>
+          </div>
+
+          {/* Prize Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Winner Prize</p>
+              </div>
+              <p className="text-yellow-400 text-base sm:text-2xl font-bold">PKR {selectedModule.winnerPrize.toLocaleString()}</p>
+            </div>
+            <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
+              <div className="flex items-center mb-2">
+                <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                </svg>
+                <p className="text-gray-400 font-medium text-xs sm:text-sm">Runner-up Prize</p>
+              </div>
+              <p className="text-white text-base sm:text-2xl font-bold">PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }, [selectedModule])
+
+  // Memoize team members section to prevent expensive re-renders on mobile
+  const teamMembersSectionJSX = useMemo(() => {
+    if (!formData.module) return null
+
+    return (
+      <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm">
+        <div className="flex items-center mb-8">
+          <div className="shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-white">Team Members</h2>
+        </div>
+        <p className="text-gray-300 mb-6 leading-relaxed">
+          You are the team leader. Add your team members below (optional - only add if you have team members).
+        </p>
+        {teamMembers.length === 0 && (
+          <div className="mb-6 p-4 border border-dashed border-white/20 rounded-xl bg-white/5 text-gray-400">
+            No team members added yet. Click <span className="font-semibold text-white">Add Team Member</span> to include your teammates (optional).
+          </div>
+        )}
+        {teamMembers.map((member, index) => (
+          <div key={index} className="space-y-6 mb-6 p-6 bg-black/40 rounded-xl border border-white/10 shadow-lg">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+              <h3 className="text-lg font-semibold text-white flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Team Member {index + 1}
+              </h3>
+              {teamMembers.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => removeTeamMember(index)}
+                  className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 self-start sm:self-auto"
+                >
+                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  Remove
+                </button>
+              )}
+            </div>
+            <div className="grid grid-cols-1 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                <input
+                  type="text"
+                  value={member.name}
+                  onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
+                  required
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
+                  placeholder="Enter full name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input
+                  type="email"
+                  value={member.email}
+                  onChange={(e) => handleEmailChange(e, `teamMember-${index}-email`)}
+                  required
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
+                  placeholder="Enter email address"
+                />
+                {emailErrors[`teamMember-${index}-email`] && (
+                  <p className="mt-1 text-sm text-red-400">{emailErrors[`teamMember-${index}-email`]}</p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">University</label>
+                <input
+                  type="text"
+                  value={member.university}
+                  onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
+                  required
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
+                  placeholder="Enter university name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Roll Number</label>
+                <input
+                  type="text"
+                  value={member.rollNo}
+                  onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
+                  required
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
+                  placeholder="Enter roll number"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">CNIC (Optional)</label>
+                <input
+                  type="text"
+                  value={member.cnic || ''}
+                  onChange={(e) => handleTeamMemberChange(index, 'cnic', e.target.value)}
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
+                  placeholder="XXXXX-XXXXXXX-X"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={addTeamMember}
+            disabled={!(Number.isFinite(slotsRemaining) ? slotsRemaining > 0 : true)}
+            className={`inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 shadow-lg ${
+              Number.isFinite(slotsRemaining) && slotsRemaining <= 0 ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            {Number.isFinite(slotsRemaining) ? (slotsRemaining > 0 ? 'Add Team Member' : `Max ${maxTeamSize} reached`) : 'Add Team Member'}
+          </button>
+          {Number.isFinite(slotsRemaining) && (
+            <p className="text-sm text-gray-400">Slots remaining (including you): {slotsRemaining}</p>
+          )}
+          {teamLimitError && (
+            <p className="text-sm text-red-400">{teamLimitError}</p>
+          )}
+        </div>
+      </div>
+    )
+  }, [formData.module, teamMembers, slotsRemaining, maxTeamSize, teamLimitError, emailErrors])
+
   // Debounced email validation
   const emailValidationTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -884,81 +1093,7 @@ export default function RegistrationForm() {
               </div>
 
             {/* Module Details Display */}
-            {formData.module && (
-              <div className="bg-white/5 rounded-xl p-6 border border-white/10">
-                <h3 className="text-xl font-bold mb-6 text-white flex items-center">
-                  <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Module Details
-                </h3>
-                {selectedModule ? (
-                  <div className="space-y-6">
-                      {/* Module Info Cards */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4h10M7 4v10a2 2 0 002 2h6a2 2 0 002-2V4" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Module</p>
-                          </div>
-                          <p className="text-white text-sm sm:text-lg font-medium line-clamp-2">{selectedModule.name}</p>
-                        </div>
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Team Size</p>
-                          </div>
-                          <p className="text-white text-sm sm:text-lg font-medium">{selectedModule.teamSize}</p>
-                        </div>
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Contact</p>
-                          </div>
-                          <p className="text-white text-xs sm:text-base font-medium break-all">{selectedModule.contactPerson}</p>
-                        </div>
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10 md:col-span-2">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-white mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Entry Fee</p>
-                          </div>
-                          <p className="text-white text-lg sm:text-2xl font-bold">PKR {selectedModule.fee.toLocaleString()}</p>
-                        </div>
-                      </div>
-
-                      {/* Prize Information */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Winner Prize</p>
-                          </div>
-                          <p className="text-yellow-400 text-base sm:text-2xl font-bold">PKR {selectedModule.winnerPrize.toLocaleString()}</p>
-                        </div>
-                        <div className="bg-black/40 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-white/10">
-                          <div className="flex items-center mb-2">
-                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400 mr-2 sm:mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                            </svg>
-                            <p className="text-gray-400 font-medium text-xs sm:text-sm">Runner-up Prize</p>
-                          </div>
-                          <p className="text-white text-base sm:text-2xl font-bold">PKR {selectedModule.runnerUpPrize.toLocaleString()}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-            )}
+            {formData.module && moduleDetailsJSX}
           </div>
 
           {/* Ambassador Code Section */}
