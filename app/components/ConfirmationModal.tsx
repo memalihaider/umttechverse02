@@ -59,7 +59,7 @@ export default function ConfirmationModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Enhanced background overlay with animated gradient */}
       <div
         className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-blue-900/80 to-indigo-900/80 backdrop-blur-md"
@@ -67,7 +67,7 @@ export default function ConfirmationModal({
       />
 
       {/* Enhanced modal content with glassmorphism effect */}
-      <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full mx-auto border border-white/20 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-500">
+      <div className="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full mx-auto border border-white/20 max-h-[90vh] overflow-y-auto">
         {/* Decorative gradient border */}
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 p-[1px]">
           <div className="h-full w-full rounded-3xl bg-white/95 backdrop-blur-xl"></div>
@@ -77,20 +77,20 @@ export default function ConfirmationModal({
           {/* Success icon with animation */}
           <div className="flex justify-center mb-6">
             <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg animate-in bounce-in duration-700">
+              <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
                 <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               {/* Animated rings */}
-              <div className="absolute inset-0 rounded-full border-4 border-green-400/30 animate-ping"></div>
-              <div className="absolute inset-2 rounded-full border-2 border-green-400/20 animate-ping animation-delay-300"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-green-400/30"></div>
+              <div className="absolute inset-2 rounded-full border-2 border-green-400/20"></div>
             </div>
           </div>
 
           {/* Title with enhanced styling */}
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2 animate-in slide-in-from-top duration-500">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
               {title}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mx-auto"></div>
@@ -98,14 +98,14 @@ export default function ConfirmationModal({
 
           {/* Message with better typography */}
           <div className="text-center mb-8">
-            <p className="text-gray-700 text-lg leading-relaxed animate-in slide-in-from-bottom duration-500 animation-delay-200">
+            <p className="text-gray-700 text-lg leading-relaxed">
               {message}
             </p>
           </div>
 
           {/* Enhanced registration codes section */}
           {registrationCodes && (
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-100 mb-8 animate-in slide-in-from-bottom duration-500 animation-delay-400">
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 border border-purple-100 mb-8">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center mr-3">
                   <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -150,7 +150,7 @@ export default function ConfirmationModal({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               type="button"
-              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 animate-in slide-in-from-left duration-500 animation-delay-600"
+              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold shadow-lg"
               onClick={() => router.push(redirectTo)}
             >
               <span className="flex items-center justify-center">
@@ -163,7 +163,7 @@ export default function ConfirmationModal({
 
             <button
               type="button"
-              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 animate-in slide-in-from-right duration-500 animation-delay-700"
+              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg"
               onClick={() => window.open('https://mail.google.com', '_blank')}
             >
               <span className="flex items-center justify-center">
@@ -194,7 +194,7 @@ export default function ConfirmationModal({
 
             <button
               type="button"
-              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 animate-in slide-in-from-bottom duration-500 animation-delay-800"
+              className="flex-1 sm:flex-none px-8 py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl font-semibold shadow-lg"
               onClick={onClose}
             >
               <span className="flex items-center justify-center">

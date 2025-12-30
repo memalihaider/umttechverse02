@@ -702,7 +702,7 @@ export default function RegistrationForm() {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -715,7 +715,7 @@ export default function RegistrationForm() {
                   required
                   value={formData.email}
                   onChange={(e) => handleEmailChange(e, 'email')}
-                  className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all ${
+                  className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 ${
                     emailErrors.email ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/50' : ''
                   }`}
                   placeholder="your.email@example.com"
@@ -741,7 +741,7 @@ export default function RegistrationForm() {
                     value={formData.cnic}
                     onChange={handleCNICChange}
                     maxLength={17}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50"
                     placeholder="12345-1234567-1"
                   />
                   <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your CNIC</p>
@@ -756,7 +756,7 @@ export default function RegistrationForm() {
                     value={formData.phone}
                     onChange={handlePhoneChange}
                     maxLength={15}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-sm sm:text-base lg:text-lg"
                     placeholder="+92 300 1234567"
                   />
                   <p className="mt-2 text-xs sm:text-sm text-purple-400">Enter your correct phone number, we can verify by calling you.</p>
@@ -772,7 +772,7 @@ export default function RegistrationForm() {
                     required
                     value={formData.university}
                     onChange={handleInputChange}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-sm sm:text-base lg:text-lg"
                     placeholder="University of Management and Technology"
                   />
                 </div>
@@ -785,7 +785,7 @@ export default function RegistrationForm() {
                     required
                     value={formData.rollNo}
                     onChange={handleInputChange}
-                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-colors duration-200 text-sm sm:text-base lg:text-lg hover:border-purple-400/60"
+                    className="w-full bg-black/60 border-2 border-purple-500/40 rounded-lg sm:rounded-xl px-3 sm:px-5 py-3 sm:py-4 text-white placeholder-purple-400 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-sm sm:text-base lg:text-lg"
                     placeholder="Your roll number"
                   />
                 </div>
@@ -811,7 +811,7 @@ export default function RegistrationForm() {
                 required
                 value={formData.module}
                 onChange={handleInputChange}
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none appearance-none"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none appearance-none"
               >
                 <option value="" className="bg-black text-gray-400">Select a module to participate in</option>
                 {modules.map((module) => {
@@ -879,7 +879,7 @@ export default function RegistrationForm() {
                   value={formData.teamName || ''}
                   onChange={handleInputChange}
                   placeholder="Enter your team's name"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                 />
               </div>
 
@@ -983,7 +983,7 @@ export default function RegistrationForm() {
                 value={formData.ambassadorCode}
                 onChange={handleInputChange}
                 placeholder="Enter ambassador code for 10% discount"
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
               />
               <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
                 <p className="text-sm text-gray-400 flex items-start">
@@ -1009,7 +1009,7 @@ export default function RegistrationForm() {
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-6">Hostel Accommodation (Optional)</label>
               <div className="space-y-4">
-                <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer">
+                <div className="bg-black/40 rounded-xl p-5 border border-white/10 cursor-pointer">
                   <label className="flex items-start cursor-pointer">
                     <input
                       type="radio"
@@ -1025,7 +1025,7 @@ export default function RegistrationForm() {
                     </div>
                   </label>
                 </div>
-                <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer">
+                <div className="bg-black/40 rounded-xl p-5 border border-white/10 cursor-pointer">
                   <label className="flex items-start cursor-pointer">
                     <input
                       type="radio"
@@ -1041,7 +1041,7 @@ export default function RegistrationForm() {
                     </div>
                   </label>
                 </div>
-                <div className="bg-black/40 rounded-xl p-5 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer">
+                <div className="bg-black/40 rounded-xl p-5 border border-white/10 cursor-pointer">
                   <label className="flex items-start cursor-pointer">
                     <input
                       type="radio"
@@ -1178,7 +1178,7 @@ export default function RegistrationForm() {
                       <button
                         type="button"
                         onClick={() => removeTeamMember(index)}
-                        className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 hover:bg-red-800/20 transition-colors duration-200 self-start sm:self-auto"
+                        className="inline-flex items-center px-3 py-1.5 border border-red-500/50 rounded-lg text-sm font-medium text-red-300 bg-red-900/20 self-start sm:self-auto"
                       >
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -1195,7 +1195,7 @@ export default function RegistrationForm() {
                         value={member.name}
                         onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
                         required
-                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                         placeholder="Enter full name"
                       />
                     </div>
@@ -1213,7 +1213,7 @@ export default function RegistrationForm() {
                           }
                         }}
                         required
-                        className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none ${
+                        className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none ${
                           emailErrors[`teamMember-${index}`] ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                         }`}
                         placeholder="member.email@example.com"
@@ -1235,7 +1235,7 @@ export default function RegistrationForm() {
                           value={member.university}
                           onChange={(e) => handleTeamMemberChange(index, 'university', e.target.value)}
                           required
-                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                           placeholder="University name"
                         />
                       </div>
@@ -1246,7 +1246,7 @@ export default function RegistrationForm() {
                           value={member.rollNo}
                           onChange={(e) => handleTeamMemberChange(index, 'rollNo', e.target.value)}
                           required
-                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                           placeholder="Roll number"
                         />
                       </div>
@@ -1259,7 +1259,7 @@ export default function RegistrationForm() {
                           maxLength={15}
                           onChange={(e) => handleTeamMemberChange(index, 'cnic', e.target.value)}
                           required
-                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none"
+                          className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                           placeholder="xxxxx-xxxxxxx-x"
                         />
                       </div>
@@ -1271,7 +1271,7 @@ export default function RegistrationForm() {
                 type="button"
                 onClick={addTeamMember}
                 disabled={!(Number.isFinite(slotsRemaining) ? slotsRemaining > 0 : true)}
-                className={`inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 hover:bg-white/10 transition-colors duration-200 shadow-lg ${
+                className={`inline-flex items-center px-6 py-3 border border-white/10 rounded-xl text-sm font-semibold text-white bg-white/5 shadow-lg ${
                   Number.isFinite(slotsRemaining) && slotsRemaining <= 0 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
@@ -1369,7 +1369,7 @@ export default function RegistrationForm() {
                   id="paymentReceipt"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="w-full text-sm text-gray-300 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20 file:border-white/10 transition-all duration-300 shadow-lg hover:shadow-xl file:transition-all file:duration-300 file:shadow-lg file:hover:shadow-xl file:cursor-pointer"
+                  className="w-full text-sm text-gray-300 file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white file:border-white/10 shadow-lg file:shadow-lg file:cursor-pointer"
                   required={true}
                 />
               </div>
@@ -1408,7 +1408,7 @@ export default function RegistrationForm() {
                     <button
                       type="button"
                       onClick={generateMathProblem}
-                      className="inline-flex items-center px-2 sm:px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 hover:bg-white/10 transition-colors duration-200 shrink-0"
+                      className="inline-flex items-center px-2 sm:px-3 py-2 border border-white/10 rounded-lg text-sm font-medium text-gray-300 bg-white/5 shrink-0"
                       title="Generate new problem"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1424,7 +1424,7 @@ export default function RegistrationForm() {
                         setMathAnswer(e.target.value)
                         if (mathError) setMathError('')
                       }}
-                      className={`w-full bg-black/40 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 transition-all duration-300 outline-none text-sm sm:text-base ${
+                      className={`w-full bg-black/40 border border-white/10 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none text-sm sm:text-base ${
                         mathError ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
                       }`}
                       placeholder="Answer"
@@ -1456,11 +1456,11 @@ export default function RegistrationForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center items-center py-5 px-8 border border-white/10 rounded-2xl shadow-lg text-xl font-bold text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="w-full flex justify-center items-center py-5 px-8 border border-white/10 rounded-2xl shadow-lg text-xl font-bold text-black bg-white focus:outline-none focus:ring-4 focus:ring-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <div className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-4 h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="-ml-1 mr-4 h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>

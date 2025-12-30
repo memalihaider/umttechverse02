@@ -786,7 +786,7 @@ export default function LandingPage() {
               {
                 name: "Largify Solutions",
                 type: "Platinum Sponsor",
-                logo: "https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1764806400&v=beta&t=58Fapum4pT-21AY9fGzegVYhxIT139Ko7ucxhVch0qM",
+                logo: "https://media.licdn.com/dms/image/v2/D4D0BAQEalSVncub82w/company-logo_100_100/B4DZgkOgXkHsAU-/0/1752954439639/largify_solutions_limited_logo?e=1768435200&v=beta&t=hy2_qK4pThassQ4uq2vs_sSHbNTu4U_a-wBgZ6Yfw9g",
                 link: "https://www.largifysolutions.com/",
                 color: "from-blue-500/10 to-cyan-500/10"
               },
@@ -976,21 +976,21 @@ export default function LandingPage() {
                     title: 'President',
                     name: 'M Shehryar Rana',
                     desc: 'Visionary leader guiding Techverse Ch 02 - 2026',
-                    img: 'https://media.licdn.com/dms/image/v2/D4D03AQF5wOLnSr9mBg/profile-displayphoto-scale_200_200/B4DZkYmQ79HYAo-/0/1757054309182?e=1764806400&v=beta&t=1v5LFJj2adtOAXAwvKxjOIZaNZcLRr2yz0VTCQY03Gw',
+                    img: '',
                     linkedin: 'https://www.linkedin.com/in/muhammad-sheharyar-shahzad-rana/'
                   },
                   {
                     title: 'Vice President',
                     name: 'M Hussnain Mahmood',
                     desc: 'Strategic Marketing Supervisor and Operations',
-                    img: 'https://media.licdn.com/dms/image/v2/D4D03AQFrVRhVwcmvAA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710865419519?e=1764806400&v=beta&t=bKkuuumUItNggpxMk1hqmeQAWTz0EcAl4XcN_KvTzqc',
+                    img: '',
                     linkedin: 'https://www.linkedin.com/in/husnain-mehmood-b977362bb/'
                   },
                   {
                     title: 'Female Vice President',
                     name: 'Syeda Khadija Sultan',
                     desc: 'Supervisor Module Leads & Creatives',
-                    img: 'https://media.licdn.com/dms/image/v2/D4D03AQGk6QiTuRoUVA/profile-displayphoto-scale_200_200/B4DZhH6j3IHwAY-/0/1753553223248?e=1764806400&v=beta&t=SBvOZrn3vERLC_vrF7QHPS5gzwMZl7Am04yNThwjYTo',
+                    img: '',
                     linkedin: '#'
                   }
                 ].map((exec, idx) => (
@@ -1056,28 +1056,28 @@ export default function LandingPage() {
                     title: 'Secretary General',
                     name: 'Muhammad Ali Haider',
                     desc: 'Administrative leadership & External Affairs',
-                    img: 'https://media.licdn.com/dms/image/v2/D4D03AQH43chbjV5ocA/profile-displayphoto-shrink_200_200/B4DZTaWUsJG8Ag-/0/1738830076288?e=1764806400&v=beta&t=meGZU8WcE-TMc76SRgHgAfBRdMd9p0Hl5M1THuPWt9A',
+                    img: '',
                     linkedin: 'https://linkedin.com/in/memalihaider'
                   },
                   {
                     title: 'General Secretary',
                     name: 'Abdul Wahab',
                     desc: 'Supervisor Registration and Industrial Panel',
-                    img: 'https://res.cloudinary.com/dggbhgqib/image/upload/v1763073103/Abdul_Wahab_General_Secretary_-_ABDUL_WAHAB_q1ilad.png',
+                    img: '',
                     linkedin: '#'
                   },
                   {
                     title: 'Director General',
                     name: 'Rehan',
                     desc: 'Supervisor IT and Rooms Operations',
-                    img: 'https://res.cloudinary.com/dggbhgqib/image/upload/v1763463589/WhatsApp_Image_2025-11-18_at_11.22.15_nn2bel.jpg',
+                    img: '',
                     linkedin: '#'
                   },
                   {
                     title: 'Media Secretary',
-                    name: 'M Saad Ahmad',
+                    name: 'M Asad',
                     desc: 'Media relations and publicity',
-                    img: 'https://res.cloudinary.com/dggbhgqib/image/upload/v1763073167/Teamdirector_posts_-_Saad_Ahmed_ewvjg6.png',
+                    img: '',
                     linkedin: '#'
                   }
                 ].map((exec, idx) => (

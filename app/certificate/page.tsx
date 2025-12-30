@@ -283,9 +283,7 @@ export default function CertificatePage() {
         </div>
 
         {/* Verification Form */}
-        <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 mb-12 shadow-2xl relative overflow-hidden group">
-          {/* Hover Glow */}
-          <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/5 group-hover:via-purple-600/5 group-hover:to-blue-600/5 transition-all duration-500" />
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 mb-12 shadow-2xl relative overflow-hidden">
           
           <div className="relative z-10">
             <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
@@ -310,7 +308,7 @@ export default function CertificatePage() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder={isServiceAvailable ? "Enter your full name" : "Available Jan 13, 2026"}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="space-y-2">
@@ -324,7 +322,7 @@ export default function CertificatePage() {
                     value={formData.cnic}
                     onChange={handleInputChange}
                     placeholder={isServiceAvailable ? "Enter your CNIC" : "Available Jan 13, 2026"}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
                 <div className="space-y-2">
@@ -338,7 +336,7 @@ export default function CertificatePage() {
                     value={formData.uniqueId}
                     onChange={handleInputChange}
                     placeholder={isServiceAvailable ? "ID from email" : "Available Jan 13, 2026"}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -356,7 +354,7 @@ export default function CertificatePage() {
                 <button
                   type="submit"
                   disabled={loading || !isServiceAvailable}
-                  className="w-full flex justify-center items-center gap-2 py-4 px-6 rounded-xl text-sm font-bold text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-lg shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[position:left_center]"
+                  className="w-full flex justify-center items-center gap-2 py-4 px-6 rounded-xl text-sm font-bold text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 shadow-lg shadow-purple-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -454,7 +452,7 @@ export default function CertificatePage() {
               <button
                 onClick={handleDownload}
                 disabled={!isServiceAvailable}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-bold text-white bg-linear-to-r from-green-600 via-emerald-600 to-green-600 bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-lg shadow-green-500/20 transform hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm font-bold text-white bg-linear-to-r from-green-600 via-emerald-600 to-green-600 shadow-lg shadow-green-500/20"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

@@ -18,8 +18,8 @@ export default function ModulesPage() {
       {/* Animated background particles */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(76,29,149,0.1),rgba(0,0,0,0))]" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] animate-pulse delay-1000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]" />
         
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
@@ -33,7 +33,7 @@ export default function ModulesPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-purple-500" />
               <span className="text-sm font-medium text-purple-300 tracking-wider uppercase">Explore Competitions</span>
             </div>
             
@@ -51,7 +51,7 @@ export default function ModulesPage() {
 
           <div className="mt-12 max-w-2xl mx-auto mb-16">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-linear-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-500" />
+              <div className="absolute -inset-1 bg-linear-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-2xl opacity-20 blur" />
               <div className="relative bg-black/50 backdrop-blur-xl rounded-2xl border border-white/10 p-2 flex items-center gap-4">
                 <div className="pl-4 text-gray-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@ export default function ModulesPage() {
                 {query && (
                   <button
                     onClick={() => setQuery('')}
-                    className="p-2 rounded-xl hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                    className="p-2 rounded-xl text-gray-400"
                   >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -97,10 +97,10 @@ export default function ModulesPage() {
               filtered.map((module, index) => (
               <div
                 key={index}
-                className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2"
+                className="group relative bg-white/5 rounded-3xl overflow-hidden border border-white/10"
               >
                 {/* Hover Glow */}
-                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/10 group-hover:via-purple-600/5 group-hover:to-blue-600/10 transition-all duration-500 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 pointer-events-none" />
 
                 <div className="h-32 sm:h-36 md:h-40 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center overflow-hidden">
                   <img
@@ -124,11 +124,11 @@ export default function ModulesPage() {
                       'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center'
                     }
                     alt={module.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="p-3 sm:p-4 md:p-5">
-                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2 group-hover:text-cyan-300 transition-colors duration-300">{module.name}</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2">{module.name}</h3>
                   <div className="space-y-1 text-sm text-purple-200">
                     <p><span className="font-medium">Fee:</span> PKR {module.fee}</p>
                     <p><span className="font-medium">Team Size:</span> {module.teamSize}</p>
@@ -139,7 +139,7 @@ export default function ModulesPage() {
                       href={module.guidebook || '#'}
                       target={module.guidebook ? '_blank' : undefined}
                       rel={module.guidebook ? 'noopener noreferrer' : undefined}
-                      className={`inline-block px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors ${module.guidebook ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-blue-400/30 text-blue-200 cursor-not-allowed opacity-60'}`}
+                      className={`inline-block px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium ${module.guidebook ? 'bg-blue-500 text-white' : 'bg-blue-400/30 text-blue-200 cursor-not-allowed opacity-60'}`}
                     >
                       Download GuideBook
                     </a>

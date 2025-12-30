@@ -110,7 +110,7 @@ export default function BusinessInnovationSignIn() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 hover:from-blue-700 hover:via-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 transition-all duration-300 transform hover:scale-105"
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50"
               >
                 {loading ? 'Signing In...' : 'Sign In'}
               </button>
@@ -120,7 +120,7 @@ export default function BusinessInnovationSignIn() {
           <div className="mt-6 text-center">
             <p className="text-sm text-purple-400">
               Don&apos;t have an access code?{' '}
-              <a href="/register" className="text-blue-400 hover:text-blue-300 transition-colors">
+              <a href="/register" className="text-blue-400">
                 Register for Business Innovation
               </a>
             </p>

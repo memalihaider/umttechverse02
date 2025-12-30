@@ -30,8 +30,7 @@ export default function RulesPage() {
 
         <div className="space-y-8">
           {/* General Rules Section */}
-          <div className="group relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden hover:border-purple-500/30 transition-all duration-500">
-            <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/5 group-hover:via-purple-600/5 group-hover:to-blue-600/5 transition-all duration-500" />
+          <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden">
             
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-6">
@@ -56,7 +55,7 @@ export default function RulesPage() {
                   { title: "Punctuality", desc: "Late arrivals may lead to disqualification or denied entry." },
                   { title: "Performance boundaries", desc: "Unruly or offensive behavior will result in immediate action." }
                 ].map((item, i) => (
-                  <li key={i} className="bg-white/5 rounded-xl p-4 border border-white/5 hover:bg-white/10 transition-colors">
+                  <li key={i} className="bg-white/5 rounded-xl p-4 border border-white/5">
                     <strong className="block text-purple-300 mb-1">{item.title}</strong>
                     <span className="text-sm text-gray-400">{item.desc}</span>
                   </li>
@@ -66,8 +65,7 @@ export default function RulesPage() {
           </div>
 
           {/* Terms and Conditions Section */}
-          <div className="group relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden hover:border-purple-500/30 transition-all duration-500">
-            <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/5 group-hover:via-purple-600/5 group-hover:to-blue-600/5 transition-all duration-500" />
+          <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden">
             
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-6">
@@ -105,8 +103,7 @@ export default function RulesPage() {
           </div>
 
           {/* Privacy Policy Section */}
-          <div className="group relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden hover:border-purple-500/30 transition-all duration-500">
-            <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 via-purple-600/0 to-purple-600/0 group-hover:from-purple-600/5 group-hover:via-purple-600/5 group-hover:to-blue-600/5 transition-all duration-500" />
+          <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 overflow-hidden">
             
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-6">
@@ -141,7 +138,7 @@ export default function RulesPage() {
           <div className="text-center py-8">
             <h2 className="text-xl font-semibold text-white mb-2">Have Questions?</h2>
             <p className="text-gray-400">
-              Contact us at <a href="mailto:techverse@umt.edu.pk" className="text-purple-400 hover:text-purple-300 transition-colors">techverse@umt.edu.pk</a>
+              Contact us at <a href="mailto:techverse@umt.edu.pk" className="text-purple-400">techverse@umt.edu.pk</a>
             </p>
           </div>
         </div>
