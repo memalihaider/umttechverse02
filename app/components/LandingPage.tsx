@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react'
 import { modules } from '@/lib/modules'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Calendar, Rocket, Target, Trophy, Users, Zap, ArrowRight, Play, ExternalLink, ChevronUp } from 'lucide-react'
 
@@ -20,34 +19,23 @@ interface Executive {
   linkedin: string
 }
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 }
-}
-
-const staggerContainer = {
-  initial: {},
-  whileInView: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  },
-  viewport: { once: true }
-}
 
 export default function LandingPage() {
   const [selectedExecutive, setSelectedExecutive] = useState<Executive | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,16 +51,16 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#030014] text-white overflow-x-hidden selection:bg-purple-500/30">
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 z-[100] origin-left"
-        style={{ scaleX }}
-      />
+      {/* Scroll Progress Bar - Desktop Only */}
+      {!isMobile && (
+        <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 z-[100] origin-left" 
+             style={{ transform: 'scaleX(0)' }} />
+      )}
 
       {/* Enhanced Animated Background */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse delay-700" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('/grid.svg')] bg-center [mask-image:radial-gradient(white,transparent_85%)] opacity-20" />
       </div>
 
@@ -81,24 +69,13 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8"
-            >
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
               </span>
               <span className="text-sm font-medium text-purple-200">Registration is now open!</span>
-            </motion.div>
+            </div>
 
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-8">
               <span className="inline-block bg-linear-to-b from-white to-white/60 bg-clip-text text-transparent">
@@ -115,14 +92,11 @@ export default function LandingPage() {
               Join the brightest minds for 7 days of non-stop technological excellence.
             </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+            <div
               className="mb-12"
             >
               <Countdown targetDate="2026-01-05T09:00:00+05:00" label="Main Event Starts In" variant="compact" />
-            </motion.div>
+            </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
               <Link
@@ -154,7 +128,7 @@ export default function LandingPage() {
                 <span className="font-medium">PKR 480K+ Prize Pool</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Decorative elements */}
@@ -165,11 +139,8 @@ export default function LandingPage() {
       {/* Stats Section */}
       <section className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
+          <div 
+           
             className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8"
           >
             {[
@@ -178,9 +149,9 @@ export default function LandingPage() {
               { label: 'Prize Pool', value: '480K+', color: 'from-cyan-500 to-teal-500' },
               { label: 'Days', value: '7', color: 'from-teal-500 to-purple-500' },
             ].map((stat, i) => (
-              <motion.div
+              <div
                 key={i}
-                variants={fadeInUp}
+               
                 className="relative group"
               >
                 <div className="absolute -inset-px bg-linear-to-r from-white/10 to-white/5 rounded-3xl" />
@@ -192,9 +163,9 @@ export default function LandingPage() {
                     {stat.label}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -205,48 +176,36 @@ export default function LandingPage() {
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/3 border border-white/10 backdrop-blur-md mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
               <span className="text-sm font-medium text-purple-300 tracking-wider uppercase">About Techverse 2026</span>
-            </motion.div>
+            </div>
             
-            <motion.h2 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <h2 
+             
               className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tight"
             >
               Pakistan's Premier <br />
               <span className="bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 Technology Event
               </span>
-            </motion.h2>
+            </h2>
             
-            <motion.p 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <p 
+             
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
             >
               Techverse 2026 brings together the brightest minds in technology, innovation, and creativity. 
               From AI and cybersecurity to gaming and robotics, experience the future today.
-            </motion.p>
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-stretch">
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="group relative p-8 rounded-3xl bg-white/2 border border-white/10 backdrop-blur-sm hover:bg-white/4 transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
@@ -257,13 +216,10 @@ export default function LandingPage() {
                 To create a platform where technology enthusiasts can showcase their skills, learn from peers,
                 and compete in an environment that fosters innovation and collaboration.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="group relative p-8 rounded-3xl bg-white/2 border border-white/10 backdrop-blur-sm hover:bg-white/4 transition-all duration-500"
             >
               <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
@@ -274,15 +230,12 @@ export default function LandingPage() {
                 Intense competitions, networking opportunities, workshops, and prizes worth over PKR 480,000.
                 Join us for 7 days of non-stop technological excellence.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           {/* Highlights Grid */}
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
+          <div 
+           
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-12"
           >
             {[
@@ -293,18 +246,18 @@ export default function LandingPage() {
               { icon: "🏢", label: "UMT Lahore", color: "text-orange-400" },
               { icon: "⏰", label: "7 Days", color: "text-pink-400" },
             ].map((item, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                variants={fadeInUp}
+               
                 className="p-4 rounded-2xl bg-white/2 border border-white/5 text-center hover:bg-white/5 transition-colors"
               >
                 <div className="text-2xl mb-2">{item.icon}</div>
                 <div className={cn("text-xs font-bold uppercase tracking-wider", item.color)}>
                   {item.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -316,56 +269,41 @@ export default function LandingPage() {
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 backdrop-blur-md mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
               <span className="text-sm font-medium text-yellow-300 tracking-wider uppercase">Signature Module</span>
-            </motion.div>
+            </div>
             
-            <motion.h2 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <h2 
+             
               className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tight"
             >
               Business Innovation <br />
               <span className="bg-linear-to-r from-yellow-400 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
                 Challenge 2026
               </span>
-            </motion.h2>
+            </h2>
             
-            <motion.p 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <p 
+             
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-12"
             >
               Techverse 2026's flagship competition where entrepreneurship meets technology.
               Transform your innovative ideas into real business solutions.
-            </motion.p>
+            </p>
 
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div
+             
               className="mb-12"
             >
               <Countdown targetDate="2025-12-20T00:00:00+05:00" label="Module starts in" variant="large" />
-            </motion.div>
+            </div>
 
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="flex flex-wrap items-center justify-center gap-6 p-6 rounded-3xl bg-white/2 border border-white/10 backdrop-blur-sm max-w-3xl mx-auto"
             >
               <div className="flex items-center gap-3">
@@ -382,16 +320,13 @@ export default function LandingPage() {
                 <span className="text-2xl">📝</span>
                 <span className="text-yellow-300 font-semibold">Phase 01 Completed: 31st Dec</span>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8 items-start">
             {/* Left Side - Challenge Details */}
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="space-y-6"
             >
               <div className="p-8 rounded-3xl bg-white/2 border border-white/10 backdrop-blur-sm">
@@ -468,14 +403,11 @@ export default function LandingPage() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Side - Features & CTA */}
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="space-y-6"
             >
               <div className="p-8 rounded-3xl bg-white/2 border border-white/10 backdrop-blur-sm">
@@ -549,7 +481,7 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -557,45 +489,42 @@ export default function LandingPage() {
       {/* Enhanced Explore Modules Section */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
+          <div 
+           
             className="relative p-12 sm:p-20 rounded-[40px] bg-white/2 border border-white/10 backdrop-blur-xl overflow-hidden text-center"
           >
             {/* Background Glows */}
             <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-blue-600/10 via-purple-600/10 to-cyan-600/10 pointer-events-none" />
             
             <div className="relative z-10">
-              <motion.div 
-                variants={fadeInUp}
+              <div 
+               
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/3 border border-white/10 backdrop-blur-md mb-8"
               >
                 <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
                 <span className="text-sm font-medium text-cyan-300 tracking-wider uppercase">Competition Modules</span>
-              </motion.div>
+              </div>
 
-              <motion.h2 
-                variants={fadeInUp}
+              <h2 
+               
                 className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tight"
               >
                 Discover All <br />
                 <span className="bg-linear-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                   16+ Modules
                 </span>
-              </motion.h2>
+              </h2>
 
-              <motion.p 
-                variants={fadeInUp}
+              <p 
+               
                 className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed mb-12"
               >
                 From AI and cybersecurity to gaming and robotics - find your perfect challenge 
                 and compete with the best minds in the country.
-              </motion.p>
+              </p>
 
-              <motion.div 
-                variants={staggerContainer}
+              <div 
+               
                 className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
               >
                 {[
@@ -604,18 +533,18 @@ export default function LandingPage() {
                   { label: "Participants", value: "2000+", color: "text-pink-400" },
                   { label: "Duration", value: "7 Days", color: "text-orange-400" },
                 ].map((item, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
-                    variants={fadeInUp}
+                   
                     className="p-6 rounded-3xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] transition-colors"
                   >
                     <div className={cn("text-3xl font-black mb-1", item.color)}>{item.value}</div>
                     <div className="text-xs font-bold text-gray-500 uppercase tracking-wider">{item.label}</div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
 
-              <motion.div variants={fadeInUp}>
+              <div>
                 <Link
                   href="/modules"
                   className="group relative inline-flex items-center gap-3 px-12 py-6 rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-white font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-blue-500/25"
@@ -623,9 +552,9 @@ export default function LandingPage() {
                   EXPLORE ALL MODULES
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </Link>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -633,48 +562,36 @@ export default function LandingPage() {
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div 
+             
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-md mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
               <span className="text-sm font-medium text-blue-300 tracking-wider uppercase">Partner Communities</span>
-            </motion.div>
+            </div>
             
-            <motion.h2 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <h2 
+             
               className="text-4xl sm:text-5xl md:text-6xl font-black mb-8 tracking-tight"
             >
               Collaborating <br />
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 Clubs & Platforms
               </span>
-            </motion.h2>
+            </h2>
             
-            <motion.p 
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <p 
+             
               className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
             >
               These amazing clubs made Techverse 2026 possible through their collaboration and support.
-            </motion.p>
+            </p>
           </div>
 
           
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
+          <div 
+           
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
             {[
@@ -728,12 +645,12 @@ export default function LandingPage() {
                 color: "from-cyan-600/20 to-blue-600/20"
               }
             ].map((club, idx) => (
-              <motion.a
+              <a
                 key={idx}
                 href={club.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={fadeInUp}
+               
                 className="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm hover:bg-white/[0.04] transition-all duration-500 text-center flex flex-col items-center"
               >
                 <div className={cn("w-24 h-24 rounded-2xl overflow-hidden mb-6 p-2 bg-gradient-to-br border border-white/10 group-hover:scale-110 transition-transform duration-500", club.color)}>
@@ -750,9 +667,9 @@ export default function LandingPage() {
                 <div className="mt-auto text-xs font-bold text-blue-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                   Visit Community →
                 </div>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -760,11 +677,8 @@ export default function LandingPage() {
       <section id="sponsors" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div
+             
             >
               <h2 className="text-4xl sm:text-6xl font-black text-white mb-6 tracking-tighter">
                 OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">SPONSORS</span>
@@ -772,14 +686,11 @@ export default function LandingPage() {
               <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                 Empowering the next generation of tech leaders through strategic partnerships.
               </p>
-            </motion.div>
+            </div>
           </div>
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
+          <div 
+           
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
             {[
@@ -833,12 +744,12 @@ export default function LandingPage() {
                 color: "from-indigo-500/10 to-purple-500/10"
               }
             ].map((sponsor, idx) => (
-              <motion.a
+              <a
                 key={idx}
                 href={sponsor.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={fadeInUp}
+               
                 className="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm hover:bg-white/[0.04] transition-all duration-500 text-center flex flex-col items-center"
               >
                 <div className={cn("w-24 h-24 rounded-2xl overflow-hidden mb-6 p-4 bg-gradient-to-br border border-white/10 group-hover:scale-110 transition-transform duration-500 flex items-center justify-center", sponsor.color)}>
@@ -855,17 +766,14 @@ export default function LandingPage() {
                 <div className="mt-auto text-xs font-bold text-gray-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                   Visit Website →
                 </div>
-              </motion.a>
+              </a>
             ))}
-          </motion.div>
+          </div>
 
           {/* View All Sponsors CTA */}
           <div className="mt-20 text-center">
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div
+             
               className="inline-block p-1 rounded-[2rem] bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-white/10 backdrop-blur-xl"
             >
               <Link
@@ -877,7 +785,7 @@ export default function LandingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -886,11 +794,8 @@ export default function LandingPage() {
       <section id="highlights" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-black/40">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div
+             
             >
               <h2 className="text-4xl sm:text-6xl font-black text-white mb-6 tracking-tighter">
                 EVENT <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">HIGHLIGHTS</span>
@@ -898,7 +803,7 @@ export default function LandingPage() {
               <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                 Relive the most intense moments and groundbreaking innovations from our previous chapters.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -908,12 +813,9 @@ export default function LandingPage() {
               { id: "KT-3yPu1D44", title: "Techverse Is Back", desc: "Celebrating our winners and their journeys", aspect: "aspect-[9/16]" },
               { id: "i-mDriHWHkY", title: "Preparation Highlights", desc: "Behind the scenes of Pakistan's biggest tech event", aspect: "aspect-[9/16]" }
             ].map((video, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                variants={fadeInUp}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true }}
+               
                 className={cn(
                   "group relative rounded-3xl overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-sm hover:bg-white/[0.05] transition-all duration-500",
                   video.aspect === "aspect-video" ? "lg:col-span-3" : "lg:col-span-1"
@@ -927,7 +829,7 @@ export default function LandingPage() {
                     <p className="text-sm text-gray-400 line-clamp-1">{video.desc}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -937,11 +839,8 @@ export default function LandingPage() {
       <section id="organizers" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true }}
+            <div
+             
             >
               <h2 className="text-4xl sm:text-6xl font-black text-white mb-6 tracking-tighter">
                 THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">EXECUTIVES</span>
@@ -949,26 +848,20 @@ export default function LandingPage() {
               <p className="text-gray-400 text-lg max-w-2xl mx-auto">
                 The visionary leadership team dedicated to bringing you Pakistan's premier technology event.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           <div className="space-y-24">
             {/* Executive Leadership */}
             <div>
-              <motion.h3 
-                variants={fadeInUp}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true }}
+              <h3 
+               
                 className="text-2xl font-bold text-blue-400 mb-12 text-center uppercase tracking-widest"
               >
                 Executive Leadership
-              </motion.h3>
-              <motion.div 
-                variants={staggerContainer}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true }}
+              </h3>
+              <div 
+               
                 className="grid grid-cols-1 md:grid-cols-3 gap-8"
               >
                 {[
@@ -994,9 +887,9 @@ export default function LandingPage() {
                     linkedin: '#'
                   }
                 ].map((exec, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
-                    variants={fadeInUp}
+                   
                     className="group relative p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm hover:bg-white/[0.04] transition-all duration-500 text-center cursor-pointer"
                     onClick={() => {
                       setSelectedExecutive({
@@ -1028,27 +921,21 @@ export default function LandingPage() {
                         </svg>
                       </a>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </div>
 
             {/* Executive Council */}
             <div>
-              <motion.h3 
-                variants={fadeInUp}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true }}
+              <h3 
+               
                 className="text-2xl font-bold text-purple-400 mb-12 text-center uppercase tracking-widest"
               >
                 Executive Council
-              </motion.h3>
-              <motion.div 
-                variants={staggerContainer}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true }}
+              </h3>
+              <div 
+               
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
               >
                 {[
@@ -1081,9 +968,9 @@ export default function LandingPage() {
                     linkedin: '#'
                   }
                 ].map((exec, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
-                    variants={fadeInUp}
+                   
                     className="group p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] transition-all duration-300 text-center cursor-pointer"
                     onClick={() => {
                       setSelectedExecutive({
@@ -1108,9 +995,9 @@ export default function LandingPage() {
                     <h4 className="text-[10px] font-bold text-purple-500 uppercase tracking-widest mb-1">{exec.title}</h4>
                     <h3 className="text-lg font-bold text-white mb-1">{exec.name}</h3>
                     <p className="text-gray-500 text-xs leading-relaxed">{exec.desc}</p>
-                  </motion.div>
+                  </div>
                 ))}
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -1119,10 +1006,7 @@ export default function LandingPage() {
       {/* Registration CTA Section */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="relative rounded-[40px] overflow-hidden bg-gradient-to-br from-blue-600 to-purple-600 p-12 sm:p-20 text-center"
           >
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
@@ -1149,7 +1033,7 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1157,18 +1041,12 @@ export default function LandingPage() {
       <Footer />
 
       {/* Executive Modal */}
-      <AnimatePresence>
+      
         {isModalOpen && selectedExecutive && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div 
             className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4"
           >
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            <div 
               className="bg-white/[0.03] border border-white/10 rounded-[32px] max-w-lg w-full overflow-hidden shadow-2xl"
             >
               <div className="p-8 sm:p-12">
@@ -1218,25 +1096,22 @@ export default function LandingPage() {
                   </button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
+      
 
       {/* Back to Top Button */}
-      <AnimatePresence>
+      
         {showBackToTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
+          <button
             onClick={scrollToTop}
             className="fixed bottom-8 right-8 z-50 p-4 rounded-2xl bg-purple-600 text-white shadow-2xl shadow-purple-500/20 hover:bg-purple-500 transition-all duration-300 group"
           >
             <ChevronUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
-          </motion.button>
+          </button>
         )}
-      </AnimatePresence>
+      
     </div>
   )
 }
