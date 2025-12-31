@@ -155,14 +155,14 @@ const modules = [
     winnerPrize: 20000,
     runnerUpPrize: 10000
   },
-  {
-    name: 'Valorant',
-    fee: 2500,
-    contactPerson: 'Muhammad Moeed - +92 324 4932912',
-    teamSize: '5 members + 1 sub',
-    winnerPrize: 25000,
-    runnerUpPrize: 10000
-  },
+  // {
+  //   name: 'Valorant',
+  //   fee: 2500,
+  //   contactPerson: 'Muhammad Moeed - +92 324 4932912',
+  //   teamSize: '5 members + 1 sub',
+  //   winnerPrize: 25000,
+  //   runnerUpPrize: 10000
+  // },
   {
     name: 'Web Hackathon',
     fee: 2500,
@@ -226,55 +226,6 @@ export default function RegistrationForm() {
   const [mathProblem, setMathProblem] = useState<{ question: string; answer: number }>({ question: '', answer: 0 })
   const [mathAnswer, setMathAnswer] = useState('')
   const [mathError, setMathError] = useState('')
-
-  // Module registration counts state
-  const [moduleRegistrationCounts, setModuleRegistrationCounts] = useState<{ [key: string]: number }>({})
-  const [loadingCounts, setLoadingCounts] = useState(false)
-
-  // Fetch module registration counts
-  useEffect(() => {
-    let isMounted = true
-    const fetchRegistrationCounts = async () => {
-      try {
-        setLoadingCounts(true)
-        // Fetch counts for multiple modules with limits
-        const modulesToFetch = ['Valorant', 'PUBG Mobile']
-        const counts: { [key: string]: number } = {}
-        
-        for (const moduleName of modulesToFetch) {
-          try {
-            const response = await fetch(`/api/module-registration-count?module=${moduleName}`)
-            if (response.ok) {
-              const data = await response.json()
-              counts[data.module] = data.count
-            }
-          } catch (error) {
-            console.error(`Error fetching count for ${moduleName}:`, error)
-          }
-        }
-        
-        if (isMounted) {
-          setModuleRegistrationCounts(counts)
-        }
-      } catch (error) {
-        console.error('Error fetching registration counts:', error)
-      } finally {
-        if (isMounted) {
-          setLoadingCounts(false)
-        }
-      }
-    }
-
-    // Initial fetch
-    fetchRegistrationCounts()
-    // Refresh counts every 60 seconds to reduce network load
-    const interval = setInterval(fetchRegistrationCounts, 60000)
-    
-    return () => {
-      isMounted = false
-      clearInterval(interval)
-    }
-  }, [])
 
   // Memoized calculations for performance
   const selectedModule = useMemo(() => {
@@ -586,7 +537,7 @@ export default function RegistrationForm() {
     if (!formData.module) return null
 
     return (
-      <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm">
+      <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl">
         <div className="flex items-center mb-8">
           <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -644,19 +595,9 @@ export default function RegistrationForm() {
                   value={member.email}
                   onChange={(e) => handleTeamMemberChange(index, 'email', e.target.value)}
                   required
-                  className={`w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none ${
-                    emailErrors[`teamMember-${index}`] ? 'border-red-500/60 focus:ring-red-400 focus:border-red-400' : ''
-                  }`}
+                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-white/20 focus:border-white/20 outline-none"
                   placeholder="member.email@example.com"
                 />
-                {emailErrors[`teamMember-${index}`] && (
-                  <p className="mt-2 text-sm text-red-400 flex items-center">
-                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {emailErrors[`teamMember-${index}`]}
-                  </p>
-                )}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -721,22 +662,10 @@ export default function RegistrationForm() {
         </div>
       </div>
     )
-  }, [formData.module, teamMembers, slotsRemaining, maxTeamSize, teamLimitError, emailErrors])
+  }, [formData.module, teamMembers, slotsRemaining, maxTeamSize, teamLimitError])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    // Check if Valorant registration has reached limit
-    if (formData.module === 'Valorant' && (moduleRegistrationCounts['Valorant'] || 0) >= 15) {
-      alert('Valorant registration is currently full (15/15). Please choose another module.')
-      return
-    }
-
-    // Check if PUBG Mobile registration has reached limit
-    if (formData.module === 'PUBG Mobile' && (moduleRegistrationCounts['PUBG Mobile'] || 0) >= 44) {
-      alert('PUBG Mobile registration is currently full (44/44). Please choose another module.')
-      return
-    }
 
     // Pre-submit: ensure all required leader fields are present (ambassadorCode is explicitly optional)
     const missingLeaderFields: string[] = []
@@ -904,7 +833,7 @@ export default function RegistrationForm() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Personal Information Section */}
-          <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm">
+          <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl">
             <div className="flex items-center mb-8">
               <div className="shrink-0 w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mr-4 text-blue-400">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1036,57 +965,13 @@ export default function RegistrationForm() {
               >
                 <option value="" className="bg-black text-gray-400">Select a module to participate in</option>
                 {modules.map((module) => {
-                  // Check if module has a registration limit
-                  const moduleLimits: { [key: string]: number } = {
-                    'Valorant': 15,
-                    'PUBG Mobile': 44
-                  }
-                  
-                  const limit = moduleLimits[module.name]
-                  const currentCount = moduleRegistrationCounts[module.name] || 0
-                  const isLimitReached = limit && currentCount >= limit
-                  
-                  // Hide module if limit is reached
-                  if (isLimitReached) {
-                    return null
-                  }
-                  
-                  // Show count if limit is defined
-                  const displayName = limit 
-                    ? `${module.name} - PKR ${module.fee.toLocaleString()} (${currentCount}/${limit}) (${module.teamSize})`
-                    : `${module.name} - PKR ${module.fee.toLocaleString()} (${module.teamSize})`
-                  
                   return (
                     <option key={module.name} value={module.name} className="bg-black text-white">
-                      {displayName}
+                      {module.name} - PKR {module.fee.toLocaleString()} ({module.teamSize})
                     </option>
                   )
                 })}
               </select>
-              {(moduleRegistrationCounts['Valorant'] >= 15 || moduleRegistrationCounts['PUBG Mobile'] >= 44) && (
-                <div className="mt-3 space-y-2">
-                  {moduleRegistrationCounts['Valorant'] >= 15 && (
-                    <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                      <p className="text-sm text-red-400 flex items-center">
-                        <svg className="w-4 h-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 2.526a6 6 0 008.367 8.364z" clipRule="evenodd" />
-                        </svg>
-                        <span><strong>Valorant</strong> registration is currently full (15/15). Please choose another module.</span>
-                      </p>
-                    </div>
-                  )}
-                  {moduleRegistrationCounts['PUBG Mobile'] >= 44 && (
-                    <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
-                      <p className="text-sm text-red-400 flex items-center">
-                        <svg className="w-4 h-4 mr-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 2.526a6 6 0 008.367 8.364z" clipRule="evenodd" />
-                        </svg>
-                        <span><strong>PUBG Mobile</strong> registration is currently full (44/44). Please choose another module.</span>
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
 
               {/* Team Name */}
@@ -1237,7 +1122,7 @@ export default function RegistrationForm() {
 
           {/* Total Amount Display */}
           {formData.module && (
-            <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm">
+            <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl">
               <div className="flex items-center mb-8">
                 <div className="shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1293,7 +1178,7 @@ export default function RegistrationForm() {
 
           {teamMembersSectionJSX}
 
-          <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm">
+          <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl">
             <div className="flex items-center mb-8">
               <div className="shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
