@@ -192,7 +192,7 @@ export default function TimelinesPage() {
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-3 px-4 text-gray-300"></td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 1: 10:30 AM – 11:30 AM</td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 1: 10:00 AM – 11:30 AM</td>
                     <td className="py-3 px-4 text-gray-300">Topic: From Problem to Startup: How Real Businesses Are Built<br />Speaker: Muhammad Ali Haider<br />Founder, Largify Solutions</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
                   </tr>
@@ -210,13 +210,13 @@ export default function TimelinesPage() {
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-3 px-4 text-gray-300 font-semibold">Day 3 – 7th January</td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 2: 1:00 PM – 3:00 PM</td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 2: 12:30 PM – 3:00 PM</td>
                     <td className="py-3 px-4 text-gray-300">Topic: Future-Forward STEAM: Breakthroughs in AI, Robotics & Machine Learning<br />Speaker: Maryam Fatima</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-3 px-4 text-gray-300 font-semibold">Day 4 – 8th January</td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 3: 11:00 AM – 12:00 PM</td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 3: 10:30 AM – 12:00 PM</td>
                     <td className="py-3 px-4 text-gray-300">Topic: How to Launch Your Idea in Industry & Market It<br />By: Elevion Solutions</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603</td>
                   </tr>
