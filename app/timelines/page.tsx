@@ -156,7 +156,7 @@ export default function TimelinesPage() {
             </div>
           </div>
 
-          {/* Business Innovation Phase 3 */}
+          {/* Business Innovation (BI) – Complete Timeline */}
           <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm mb-8">
             <div className="flex items-center mb-6">
               <div className="shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
@@ -164,36 +164,84 @@ export default function TimelinesPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-white">Business Innovation Phase 3 Timeline</h2>
+              <h2 className="text-2xl font-bold text-white">Business Innovation (BI) Phase 03 – Complete Timeline</h2>
+              <span className="text-sm text-purple-300 ml-4">📅 5th January – 11th January 2026</span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-white/10">
+                    <th className="py-3 px-4 text-white font-semibold">Day</th>
                     <th className="py-3 px-4 text-white font-semibold">Time</th>
-                    <th className="py-3 px-4 text-white font-semibold">Dates</th>
+                    <th className="py-3 px-4 text-white font-semibold">Activity</th>
                     <th className="py-3 px-4 text-white font-semibold">Labs</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300">10:00 AM – 05:30 PM</td>
-                    <td className="py-3 px-4 text-gray-300">5th – 7th Jan 2026 (Monday to Wednesday)</td>
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 1 – 5th January</td>
+                    <td className="py-3 px-4 text-gray-300">Entry: 9:30 AM</td>
+                    <td className="py-3 px-4 text-gray-300"></td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300">10:00AM – 5:30PM</td>
-                    <td className="py-3 px-4 text-gray-300">8th Jan 2026 Thursday</td>
+                    <td className="py-3 px-4 text-gray-300"></td>
+                    <td className="py-3 px-4 text-gray-300">Module Initialization: 10:00 AM</td>
+                    <td className="py-3 px-4 text-gray-300"></td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300"></td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 1: 10:30 AM – 11:30 AM</td>
+                    <td className="py-3 px-4 text-gray-300">Topic: From Problem to Startup: How Real Businesses Are Built<br />Speaker: Muhammad Ali Haider<br />Founder, Largify Solutions</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300"></td>
+                    <td className="py-3 px-4 text-gray-300">Onwards</td>
+                    <td className="py-3 px-4 text-gray-300">Product Refinement Activities</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 2 – 6th January</td>
+                    <td className="py-3 px-4 text-gray-300">Business Innovation Product Refinement Day</td>
+                    <td className="py-3 px-4 text-gray-300">Focus on problem enhancement, and business model building.</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 3 – 7th January</td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 2: 1:00 PM – 3:00 PM</td>
+                    <td className="py-3 px-4 text-gray-300">Topic: Future-Forward STEAM: Breakthroughs in AI, Robotics & Machine Learning<br />Speaker: Maryam Fatima</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 4 – 8th January</td>
+                    <td className="py-3 px-4 text-gray-300">Workshop 3: 11:00 AM – 12:00 PM</td>
+                    <td className="py-3 px-4 text-gray-300">Topic: How to Launch Your Idea in Industry & Market It<br />By: Elevion Solutions</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300">10:00AM – 5:30PM</td>
-                    <td className="py-3 px-4 text-gray-300">9th – 10th Jan 2026 (Friday to Saturday)</td>
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 5 – 9th January</td>
+                    <td className="py-3 px-4 text-gray-300">Business Innovation Product Refinement Day</td>
+                    <td className="py-3 px-4 text-gray-300">Market fit, pitching clarity, and execution strategy.</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 6 – 10th January</td>
+                    <td className="py-3 px-4 text-gray-300">Final Refinement & Pitch Preparation</td>
+                    <td className="py-3 px-4 text-gray-300">Last improvements before evaluation.</td>
+                    <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 7 – 11th January</td>
+                    <td className="py-3 px-4 text-gray-300">Judgement Day<br />10:00 AM – 12:00 PM</td>
+                    <td className="py-3 px-4 text-gray-300">Final evaluation and results InshaAllah.</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <p className="text-sm text-gray-400 mt-4">A full journey from problem → product → market → judgement 🚀<br />Built to turn ideas into real businesses.</p>
           </div>
 
           {/* Day 1 */}
