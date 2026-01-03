@@ -107,14 +107,14 @@ const modules = [
     winnerPrize: 15000,
     runnerUpPrize: 10000
   },
-  {
-    name: 'PUBG Mobile',
-    fee: 2000,
-    contactPerson: 'Mueez - +92 307 8630935',
-    teamSize: '2-4 members',
-    winnerPrize: 20000,
-    runnerUpPrize: 10000
-  },
+  // {
+  //   name: 'PUBG Mobile',
+  //   fee: 2000,
+  //   contactPerson: 'Mueez - +92 307 8630935',
+  //   teamSize: '2-4 members',
+  //   winnerPrize: 20000,
+  //   runnerUpPrize: 10000
+  // },
   {
     name: 'Scavenger Hunt',
     fee: 2000,
