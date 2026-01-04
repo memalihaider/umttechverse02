@@ -59,38 +59,38 @@ const isValidAmbassadorCode = (code: string | undefined): boolean => {
 }
 
 const modules = [
-  {
-    name: 'Business Innovation - Idea to Startup',
-    fee: 3999,
-    contactPerson: 'Largify Solutions - +966 59 736 9443 & +92 309 699 3535',
-    teamSize: '1-5 members',
-    winnerPrize: 40000,
-    runnerUpPrize: 30000
-  },
-  {
-    name: 'AI Hackathon',
-    fee: 2500,
-    contactPerson: 'Umair Khan - +92 308 6707770',
-    teamSize: '2-4 members',
-    winnerPrize: 30000,
-    runnerUpPrize: 15000
-  },
-  {
-    name: 'Cyber Hackathon',
-    fee: 1500,
-    contactPerson: 'Nabaha Umar - +92 349 4709369',
-    teamSize: '1-3 members',
-    winnerPrize: 30000,
-    runnerUpPrize: 15000
-  },
-  {
-    name: 'FIFA 26',
-    fee: 1000,
-    contactPerson: 'Asad - +92 324 8443622',
-    teamSize: 'Individual/Team',
-    winnerPrize: 20000,
-    runnerUpPrize: 10000
-  },
+  // {
+  //   name: 'Business Innovation - Idea to Startup',
+  //   fee: 3999,
+  //   contactPerson: 'Largify Solutions - +966 59 736 9443 & +92 309 699 3535',
+  //   teamSize: '1-5 members',
+  //   winnerPrize: 40000,
+  //   runnerUpPrize: 30000
+  // },
+  // {
+  //   name: 'AI Hackathon',
+  //   fee: 2500,
+  //   contactPerson: 'Umair Khan - +92 308 6707770',
+  //   teamSize: '2-4 members',
+  //   winnerPrize: 30000,
+  //   runnerUpPrize: 15000
+  // },
+  // {
+  //   name: 'Cyber Hackathon',
+  //   fee: 1500,
+  //   contactPerson: 'Nabaha Umar - +92 349 4709369',
+  //   teamSize: '1-3 members',
+  //   winnerPrize: 30000,
+  //   runnerUpPrize: 15000
+  // },
+  // {
+  //   name: 'FIFA 26',
+  //   fee: 1000,
+  //   contactPerson: 'Asad - +92 324 8443622',
+  //   teamSize: 'Individual/Team',
+  //   winnerPrize: 20000,
+  //   runnerUpPrize: 10000
+  // },
   {
     name: 'Line Following Robot',
     fee: 1500,
@@ -115,22 +115,22 @@ const modules = [
   //   winnerPrize: 20000,
   //   runnerUpPrize: 10000
   // },
-  {
-    name: 'Scavenger Hunt',
-    fee: 2000,
-    contactPerson: 'Zunaira Maalik - +92 342 5486444',
-    teamSize: '3-5 members',
-    winnerPrize: 15000,
-    runnerUpPrize: 10000
-  },
-  {
-    name: 'Speed Programming',
-    fee: 2500,
-    contactPerson: 'Ali Raza - +92 313 0669834',
-    teamSize: '1-3 members',
-    winnerPrize: 30000,
-    runnerUpPrize: 15000
-  },
+  // {
+  //   name: 'Scavenger Hunt',
+  //   fee: 2000,
+  //   contactPerson: 'Zunaira Maalik - +92 342 5486444',
+  //   teamSize: '3-5 members',
+  //   winnerPrize: 15000,
+  //   runnerUpPrize: 10000
+  // },
+  // {
+  //   name: 'Speed Programming',
+  //   fee: 2500,
+  //   contactPerson: 'Ali Raza - +92 313 0669834',
+  //   teamSize: '1-3 members',
+  //   winnerPrize: 30000,
+  //   runnerUpPrize: 15000
+  // },
   {
     name: 'Speed Wiring',
     fee: 1500,
@@ -139,14 +139,14 @@ const modules = [
     winnerPrize: 15000,
     runnerUpPrize: 10000
   },
-  {
-    name: 'Tekken 8',
-    fee: 1000,
-    contactPerson: 'Zain - +92 331 5758888',
-    teamSize: 'Individual',
-    winnerPrize: 20000,
-    runnerUpPrize: 10000
-  },
+  // {
+  //   name: 'Tekken 8',
+  //   fee: 1000,
+  //   contactPerson: 'Zain - +92 331 5758888',
+  //   teamSize: 'Individual',
+  //   winnerPrize: 20000,
+  //   runnerUpPrize: 10000
+  // },
   {
     name: 'UI/UX Competition',
     fee: 2000,
@@ -163,14 +163,14 @@ const modules = [
   //   winnerPrize: 25000,
   //   runnerUpPrize: 10000
   // },
-  {
-    name: 'Web Hackathon',
-    fee: 2500,
-    contactPerson: 'Muhammad Faizan - +92 341 4123652',
-    teamSize: '1-3 members',
-    winnerPrize: 30000,
-    runnerUpPrize: 15000
-  }
+  // {
+  //   name: 'Web Hackathon',
+  //   fee: 2500,
+  //   contactPerson: 'Muhammad Faizan - +92 341 4123652',
+  //   teamSize: '1-3 members',
+  //   winnerPrize: 30000,
+  //   runnerUpPrize: 15000
+  // }
 ]
 
 // Parse a human-readable teamSize string (e.g. "1-5 members", "2-4 members", "Individual/Team", "5 members + 1 sub")
