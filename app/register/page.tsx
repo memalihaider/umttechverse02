@@ -3,29 +3,6 @@ import Link from 'next/link'
 export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-black overflow-x-hidden scroll-smooth selection:bg-purple-500/30">
-      {/* Meta Pixel Code */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '2345026272590389');
-            fbq('track', 'PageView');
-          `,
-        }}
-      />
-      <noscript>
-        <img height="1" width="1" style={{ display: 'none' }}
-        src="https://www.facebook.com/tr?id=2345026272590389&ev=PageView&noscript=1"
-        />
-      </noscript>
-      {/* End Meta Pixel Code */}
       {/* Background Effects */}
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px]" />
