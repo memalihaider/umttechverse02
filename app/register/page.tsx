@@ -1,4 +1,3 @@
-import RegistrationForm from '../components/RegistrationForm'
 import Link from 'next/link'
 
 export default function RegisterPage() {
@@ -48,24 +47,39 @@ export default function RegisterPage() {
           </Link>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md">
-              <span className="text-xs sm:text-sm font-medium text-blue-300">Join the Revolution</span>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center">
+            <div className="inline-block mb-4 px-4 py-2 rounded-full border border-red-500/30 bg-red-500/10 backdrop-blur-md">
+              <span className="text-sm font-medium text-red-300">Registration Portal Closed</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent mb-4 sm:mb-6">
-              Register for Techverse 2026
+            <h1 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-white via-red-200 to-pink-200 bg-clip-text text-transparent mb-6">
+              Registration Portal is Now Closed
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
-              Secure your spot in the biggest tech event of the year. Fill out the form below to get started.
+            <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8">
+              Thank you for your interest in Techverse 2026! The registration portal has been closed. 
+              If you have any questions regarding your registration, please contact us at the event email.
             </p>
-          </div>
-          
-          <div className="relative">
-            {/* Form Glow Effect */}
-            <div className="absolute -inset-1 bg-linear-to-r from-purple-600 to-blue-600 rounded-3xl blur opacity-20" />
-            <div className="relative bg-black/40 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden">
-              <RegistrationForm />
+            
+            <div className="relative">
+              {/* Closed Message Glow Effect */}
+              <div className="absolute -inset-1 bg-linear-to-r from-red-600 to-pink-600 rounded-3xl blur opacity-20" />
+              <div className="relative bg-black/40 backdrop-blur-xl rounded-3xl border border-red-500/20 overflow-hidden p-8 md:p-12">
+                <div className="text-center">
+                  <svg className="w-16 h-16 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <h2 className="text-xl md:text-2xl font-semibold text-white mb-3">Registrations are No Longer Accepted</h2>
+                  <p className="text-gray-300 mb-6">
+                    The registration deadline has passed. We appreciate your interest in our event!
+                  </p>
+                  <Link
+                    href="/"
+                    className="inline-flex items-center px-6 py-3 rounded-full bg-purple-600 hover:bg-purple-700 text-white font-semibold transition-all duration-300"
+                  >
+                    Return to Home
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
