@@ -70,12 +70,6 @@ export default function TimelinesPage() {
                     <td className="py-3 px-4 text-gray-300">Panel Talk - AI-Proof Yourself: Navigating Your Tech Career in 2026</td>
                     <td className="py-3 px-4 text-gray-300">Hakeem Saeed Hall</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300">10:00 AM – 01:00 PM</td>
-                    <td className="py-3 px-4 text-gray-300">Business Innovation Workshop by Founder Business Innovation Muhammad Ali Haider on Startup Innovation</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  
                 </tbody>
               </table>
             </div>
@@ -156,7 +150,7 @@ export default function TimelinesPage() {
             </div>
           </div>
 
-          {/* Business Innovation (BI) – Complete Timeline */}
+          {/* Business Innovation Phase 3 TimeLine */}
           <div className="bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10 shadow-xl backdrop-blur-sm mb-8">
             <div className="flex items-center mb-6">
               <div className="shrink-0 w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mr-4 border border-white/10">
@@ -164,84 +158,36 @@ export default function TimelinesPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-white">Business Innovation (BI) Phase 03 – Complete Timeline</h2>
-              <span className="text-sm text-purple-300 ml-4">📅 5th January – 11th January 2026</span>
+              <h2 className="text-2xl font-bold text-white">Business Innovation Phase 3 TimeLine</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="py-3 px-4 text-white font-semibold">Day</th>
                     <th className="py-3 px-4 text-white font-semibold">Time</th>
-                    <th className="py-3 px-4 text-white font-semibold">Activity</th>
+                    <th className="py-3 px-4 text-white font-semibold">Dates</th>
                     <th className="py-3 px-4 text-white font-semibold">Labs</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 1 – 5th January</td>
-                    <td className="py-3 px-4 text-gray-300">Entry: 9:30 AM</td>
-                    <td className="py-3 px-4 text-gray-300"></td>
+                    <td className="py-3 px-4 text-gray-300">10:00 AM – 05:30 PM</td>
+                    <td className="py-3 px-4 text-gray-300">5th – 7th Jan 2026 (Monday to Wednesday)</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300"></td>
-                    <td className="py-3 px-4 text-gray-300">Module Initialization: 10:00 AM</td>
-                    <td className="py-3 px-4 text-gray-300"></td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300"></td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 1: 10:00 AM – 11:30 AM</td>
-                    <td className="py-3 px-4 text-gray-300">Topic: From Problem to Startup: How Real Businesses Are Built<br />Speaker: Muhammad Ali Haider<br />Founder, Largify Solutions</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300"></td>
-                    <td className="py-3 px-4 text-gray-300">Onwards</td>
-                    <td className="py-3 px-4 text-gray-300">Product Refinement Activities</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 2 – 6th January</td>
-                    <td className="py-3 px-4 text-gray-300">Business Innovation Product Refinement Day</td>
-                    <td className="py-3 px-4 text-gray-300">Focus on problem enhancement, and business model building.</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 3 – 7th January</td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 2: 12:30 PM – 3:00 PM</td>
-                    <td className="py-3 px-4 text-gray-300">Topic: Future-Forward STEAM: Breakthroughs in AI, Robotics & Machine Learning<br />Speaker: Maryam Fatima</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603, 604</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 4 – 8th January</td>
-                    <td className="py-3 px-4 text-gray-300">Workshop 3: 10:30 AM – 12:00 PM</td>
-                    <td className="py-3 px-4 text-gray-300">Topic: How to Launch Your Idea in Industry & Market It<br />By: Elevion Solutions</td>
+                    <td className="py-3 px-4 text-gray-300">10:00AM – 5:30PM</td>
+                    <td className="py-3 px-4 text-gray-300">8th Jan 2026 Thursday</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST1 – 603</td>
                   </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 5 – 9th January</td>
-                    <td className="py-3 px-4 text-gray-300">Business Innovation Product Refinement Day</td>
-                    <td className="py-3 px-4 text-gray-300">Market fit, pitching clarity, and execution strategy.</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 6 – 10th January</td>
-                    <td className="py-3 px-4 text-gray-300">Final Refinement & Pitch Preparation</td>
-                    <td className="py-3 px-4 text-gray-300">Last improvements before evaluation.</td>
-                    <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
-                  </tr>
                   <tr>
-                    <td className="py-3 px-4 text-gray-300 font-semibold">Day 7 – 11th January</td>
-                    <td className="py-3 px-4 text-gray-300">Judgement Day<br />10:00 AM – 12:00 PM</td>
-                    <td className="py-3 px-4 text-gray-300">Final evaluation and results InshaAllah.</td>
+                    <td className="py-3 px-4 text-gray-300">10:00AM – 5:30PM</td>
+                    <td className="py-3 px-4 text-gray-300">9th – 10th Jan 2026 (Friday to Saturday)</td>
                     <td className="py-3 px-4 text-gray-300">CB1/SST – 603, 601</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-sm text-gray-400 mt-4">A full journey from problem → product → market → judgement 🚀<br />Built to turn ideas into real businesses.</p>
           </div>
 
           {/* Day 1 */}
@@ -267,14 +213,14 @@ export default function TimelinesPage() {
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">08:30 AM – 09:30 AM</td><td className="py-3 px-4 text-gray-300">Registration & Welcome Briefing</td><td className="py-3 px-4 text-gray-300">CB1 Ground Floor</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">09:30 AM – 11:00 AM</td><td className="py-3 px-4 text-gray-300">Opening Ceremony</td><td className="py-3 px-4 text-gray-300">Hakeem Saeed Hall</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30pm</td><td className="py-3 px-4 text-gray-300">AI Hackathon</td><td className="py-3 px-4 text-gray-300">STD 611, 412 (FYP Lab 1 & 2)</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">FIFA 26</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">Tekken</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">FIFA 26</td><td className="py-3 px-4 text-gray-300">CB1 505A</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">Tekken</td><td className="py-3 px-4 text-gray-300">CB1 304B</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">Valorant</td><td className="py-3 px-4 text-gray-300">CB1 604</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">PUBG</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30 AM – 5:30 PM</td><td className="py-3 px-4 text-gray-300">PUBG</td><td className="py-3 px-4 text-gray-300">SEN 407, 307</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:30AM – 4:30 PM</td><td className="py-3 px-4 text-gray-300">Speed Programming</td><td className="py-3 px-4 text-gray-300">CB1/SST1 605</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">2:30PM – 5:30PM</td><td className="py-3 px-4 text-gray-300">Speed Wiring</td><td className="py-3 px-4 text-gray-300">CB1/SST1 403</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">1:30PM – 04:30PM</td><td className="py-3 px-4 text-gray-300">Speaker Session: Blockchain Beyond Hype: Real-World Adoption, Market Potential, and the Future of Talent</td><td className="py-3 px-4 text-gray-300">Saleem Asghar Hall</td></tr>
-                  <tr><td className="py-3 px-4 text-gray-300">05:30 PM onwards</td><td className="py-3 px-4 text-gray-300">Gaming Night</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr><td className="py-3 px-4 text-gray-300">05:30 PM onwards</td><td className="py-3 px-4 text-gray-300">Gaming Night</td><td className="py-3 px-4 text-gray-300">CB2 905</td></tr>
                 </tbody>
               </table>
             </div>
@@ -302,11 +248,11 @@ export default function TimelinesPage() {
                 <tbody>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">09:00 AM – 10:00 AM</td><td className="py-3 px-4 text-gray-300">Registration & Welcome Briefing</td><td className="py-3 px-4 text-gray-300">CB1 Ground Floor</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">10:00 AM – 05:30 PM</td><td className="py-3 px-4 text-gray-300">AI Hackathon</td><td className="py-3 px-4 text-gray-300">STD 611, 412 (FYP Lab 1 & 2)</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">FIFA 26</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">Tekken</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">FIFA 26</td><td className="py-3 px-4 text-gray-300">CB1 505A</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">Tekken</td><td className="py-3 px-4 text-gray-300">CB1 304B</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">Valorant</td><td className="py-3 px-4 text-gray-300">CB1/SST1 604</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM – 2:30PM</td><td className="py-3 px-4 text-gray-300">Cyber Hackathon</td><td className="py-3 px-4 text-gray-300">CB1/SST1 605, 607</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">PUBG</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">11:00AM -5:30PM</td><td className="py-3 px-4 text-gray-300">PUBG</td><td className="py-3 px-4 text-gray-300">SEN 407, 307</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">10:00AM -1:30PM</td><td className="py-3 px-4 text-gray-300">LFR</td><td className="py-3 px-4 text-gray-300">Hakeem Saeed Hall</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">2:00PM – 5:30PM</td><td className="py-3 px-4 text-gray-300">Obstacle</td><td className="py-3 px-4 text-gray-300">Hakeem Saeed Hall</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">10:00AM – 6:00PM</td><td className="py-3 px-4 text-gray-300">UI/UX</td><td className="py-3 px-4 text-gray-300">CB1/SST1 606, 610</td></tr>
@@ -341,7 +287,7 @@ export default function TimelinesPage() {
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">9:30AM-11:00AM</td><td className="py-3 px-4 text-gray-300">AI Hackathon+ Submission</td><td className="py-3 px-4 text-gray-300">STD 611, 412 (FYP Lab 1 & 2)</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">9:30AM-1:00PM</td><td className="py-3 px-4 text-gray-300">Scavenger Hunt</td><td className="py-3 px-4 text-gray-300">CB1 403 OR CB1 Ground Floor</td></tr>
                   <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">10:00AM- 1:00PM</td><td className="py-3 px-4 text-gray-300">Judging</td><td className="py-3 px-4 text-gray-300">--</td></tr>
-                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">01:30 PM – 04:30 PM</td><td className="py-3 px-4 text-gray-300">Awards & Certificates Distribution</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
+                  <tr className="border-b border-white/5"><td className="py-3 px-4 text-gray-300">01:30 PM – 04:30 PM</td><td className="py-3 px-4 text-gray-300">Awards & Certificates Distribution</td><td className="py-3 px-4 text-gray-300">Saleem Asghar Hall</td></tr>
                   <tr><td className="py-3 px-4 text-gray-300">04:30 PM onwards</td><td className="py-3 px-4 text-gray-300">Formal Dinner</td><td className="py-3 px-4 text-gray-300">TBA</td></tr>
                 </tbody>
               </table>
