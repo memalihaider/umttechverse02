@@ -12,7 +12,6 @@ const navigationLinks = [
   { href: '/modules', label: 'Modules' },
   { href: '/#organizers', label: 'Executives' },
   { href: '/business-innovation', label: 'BI' },
-  { href: '/certificate', label: 'Certificate' },
   { href: '/rules', label: 'Rules' },
   { href: '/timelines', label: 'Timelines' },
 ]
