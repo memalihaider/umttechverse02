@@ -145,6 +145,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'drive.google.com',
       },
+      {
+        protocol: 'https',
+        hostname: 's3.us-east-1.amazonaws.com',
+      },
     ],
     // Security: Only allow images from trusted domains
     dangerouslyAllowSVG: false,

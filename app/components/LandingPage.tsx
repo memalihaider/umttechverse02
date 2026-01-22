@@ -730,10 +730,10 @@ export default function LandingPage() {
                 color: "from-cyan-500/10 to-blue-500/10"
               },
               {
-                name: "Ranchers",
+                name: "MSM Recipies",
                 type: "Platinum Sponsor",
-                logo: "https://rancherscafe.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FLogo.9137e136.png&w=256&q=75",
-                link: "https://rancherscafe.com",
+                logo: "https://s3.us-east-1.amazonaws.com/em-cdn.eatmubarak.pk/restaurant_new/55880/logo/1738579010.png",
+                link: "https://www.msmrecipes.com",
                 color: "from-yellow-500/10 to-orange-500/10"
               },
               {
